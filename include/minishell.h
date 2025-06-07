@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 19:44:12 by codespace         #+#    #+#             */
-/*   Updated: 2025/06/06 21:00:47 by codespace        ###   ########.fr       */
+/*   Updated: 2025/06/06 23:57:43 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,22 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+
+// ------------------------ //
+// ESTRUCTURA DE COMANDO    //
+// ------------------------ //
+
+typedef struct s_cmd
+{
+    char        **argv;          // argumentos: argv[0] es el comando
+    char        *redir_in;       // fichero para redirección de entrada (< o <<)
+    char        *redir_out;      // fichero para redirección de salida (> o >>)
+    int         append_out;      // 1 si es >>, 0 si es >
+    int         heredoc;         // 1 si redir_in es heredoc (<<)
+    struct s_cmd *next;          // siguiente comando en el pipeline
+}   t_cmd;
+
+
 // ------------------------ //
 // ESTRUCTURA PRINCIPAL     //
 // ------------------------ //
@@ -86,6 +102,7 @@ typedef struct s_shell
 	int			stdin_backup;  // copia de stdin
 	int			stdout_backup; // copia de stdout
 }	t_shell;
+
 
 // ------------------------ //
 // FUNCIONES DEL SHELL      //
@@ -106,6 +123,9 @@ char		*ft_strinquotes(char *str, int *expand);
 void		ft_add_token(t_shell *shell, char *value, t_token_type type, int in_quotes, int expand);
 int			ft_add_redirection(t_shell *shell, char *line);
 int			ft_add_word(t_shell *shell, char *line);
+t_cmd		*cmd_new(void);
+t_cmd		*parse_commands(t_token *tokens);
+void		free_cmds(t_cmd *cmd);
 
 // Tokens
 void		free_tokens(char **tokens);

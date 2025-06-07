@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:42:49 by codespace         #+#    #+#             */
-/*   Updated: 2025/06/06 20:43:11 by codespace        ###   ########.fr       */
+/*   Updated: 2025/06/06 23:54:01 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,14 @@ void	parse_and_execute(t_shell *shell, char *line)
 	// 2. Expande variables en tokens marcados con .expand
 	expand_tokens(shell);
 
-	// 3. Aquí podrías parsear tokens → comandos (más adelante)
-	// shell->cmds = parse_commands(shell->tokens);
+	// 3. Parse tokens → comandos
+	t_cmd *cmds = parse_commands(shell->tokens);
 
-	// 4. Ejecutar los comandos (cuando esté implementado)
-	// execute_commands(shell);
+	// 4. Ejecutar los comandos
+	// execute_commands(shell, cmds); // <-- esta función la vas a implementar después
 
 	// 5. Liberar recursos
+	free_cmds(cmds);
 	free_tokens(shell->tokens);
 	shell->tokens = NULL;
 }
