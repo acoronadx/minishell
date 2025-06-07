@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:52:39 by codespace         #+#    #+#             */
-/*   Updated: 2025/06/06 20:58:02 by codespace        ###   ########.fr       */
+/*   Updated: 2025/06/07 01:27:55 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,7 @@ int	ft_add_word(t_shell *shell, char *line)
 	int		len = 0;
 	char	*word;
 
-	while (line[len] && !ft_isspace(line[len])
-		&& !ft_isredirection(line[len])
-		&& !ft_ispipe(line[len])
-		&& !ft_isquote(line[len]))
+	while (line[len] && !ft_issymbol)
 		len++;
 	if (len == 0)
 		return (0);

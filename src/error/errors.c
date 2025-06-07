@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:45:41 by codespace         #+#    #+#             */
-/*   Updated: 2025/06/06 20:46:02 by codespace        ###   ########.fr       */
+/*   Updated: 2025/06/07 00:37:57 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,15 @@ void	ft_print_exit_sys_error(t_shell *shell, const char *msg, int code)
 		perror("minishell");
 	shell->exit_status = code;
 	exit(code);
+}
+
+t_cmd	*print_syntax_error(const char *unexpected)
+{
+	if (!unexpected)
+		ft_dprintf(2,
+			"minishell: syntax error near unexpected token `newline'\n");
+	else
+		ft_dprintf(2,
+			"minishell: syntax error near unexpected token `%s'\n", unexpected);
+	return (NULL);
 }

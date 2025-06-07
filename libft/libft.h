@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 16:15:28 by rarodri2          #+#    #+#             */
-/*   Updated: 2025/06/03 16:12:49 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/07 01:12:53 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int					ft_isdigit(int c);
 int					ft_isprint(int c);
 int					ft_isspace(int c);
 int					ft_isquote(int c);
+int					ft_issymbol(char c);
 char				*ft_itoa(int n);
 void				*ft_memchr(const void *s, int c, size_t n);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);

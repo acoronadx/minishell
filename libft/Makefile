@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+         #
+#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 15:09:12 by rarodri2          #+#    #+#              #
-#    Updated: 2025/06/03 16:13:15 by acoronad         ###   ########.fr        #
+#    Updated: 2025/06/07 01:13:25 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ DPRINTF_DIR = ft_dprintf
 DPRINTF_LIB = $(DPRINTF_DIR)/libftdprintf.a
 
 SRCS = ft_atoi.c ft_atol.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
-	ft_isascii.c ft_isdigit.c ft_isprint.c ft_isspace.c ft_isquote.c ft_itoa.c ft_memchr.c \
+	ft_isascii.c ft_isdigit.c ft_isprint.c ft_isspace.c ft_isquote.c ft_issymbol.c ft_itoa.c ft_memchr.c \
 	ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c ft_putchar_fd.c \
 	ft_putendl_fd.c ft_putnbr_fd.c ft_putstr_fd.c ft_split.c ft_strchr.c \
 	ft_strdup.c ft_strldup.c ft_striteri.c ft_strjoin.c ft_strjoin_free.c ft_strlcat.c ft_strlcpy.c \

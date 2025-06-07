@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 19:44:12 by codespace         #+#    #+#             */
-/*   Updated: 2025/06/06 23:57:43 by codespace        ###   ########.fr       */
+/*   Updated: 2025/06/07 01:17:40 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,13 +125,16 @@ int			ft_add_redirection(t_shell *shell, char *line);
 int			ft_add_word(t_shell *shell, char *line);
 t_cmd		*cmd_new(void);
 t_cmd		*parse_commands(t_token *tokens);
-void		free_cmds(t_cmd *cmd);
+int			parse_redirections(t_cmd *cmd, t_token **tokens);
+t_cmd		*free_cmds(t_cmd *cmd);
+t_cmd		*check_pipe_syntax(t_token *tokens, t_cmd *head);
 
 // Tokens
 void		free_tokens(char **tokens);
 int			ft_ispipe(int c);
 int			ft_isenvvar(int c);
 int			ft_isredirection(int c);
+int			ft_isspecial_in_double_quotes(char c);
 
 // Expansión
 char	*expand_value(t_shell *shell, char *str);
