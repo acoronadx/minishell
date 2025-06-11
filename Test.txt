@@ -1,0 +1,7 @@
+#!/bin/bash
+#!/ruta/a/minishell
+
+bash -c 'set -e; comando1; comando2'
+
+./minishell -c 'set -e; comando1; comando2'
+
