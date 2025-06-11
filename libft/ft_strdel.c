@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.h                                           :+:      :+:    :+:   */
+/*   ft_ft_strdel.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/07 00:38:08 by codespace         #+#    #+#             */
-/*   Updated: 2025/06/07 00:39:45 by codespace        ###   ########.fr       */
+/*   Created: 2025/06/10 13:06:10 by acoronad          #+#    #+#             */
+/*   Updated: 2025/06/10 13:07:09 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERRORS_H
-# define ERRORS_H
+#include "libft.h"
 
-# include "minishell.h"
-
-t_cmd	*print_syntax_error(const char *unexpected);
-
-#endif
+void	ft_strdel(char **str)
+{
+	if (str && *str)
+	{
+		free(*str);
+		*str = NULL;
+	}
+}

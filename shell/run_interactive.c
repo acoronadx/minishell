@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   run_interactive.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/06 19:32:28 by codespace         #+#    #+#             */
-/*   Updated: 2025/06/06 19:42:04 by codespace        ###   ########.fr       */
+/*   Created: 2025/06/10 13:09:44 by acoronad          #+#    #+#             */
+/*   Updated: 2025/06/10 13:40:24 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,12 @@ static char	*read_full_line(void)
 	return (line);
 }
 
-int	main(int argc, char **argv, char **envp)
+void	run_interactive(char **envp)
 {
 	char	*line;
-	t_shell	shell;
+//	t_shell	shell;
 
-	(void)argc;
-	(void)argv;
-	init_shell(&shell, envp);
+//	init_shell();
 	while (1)
 	{
 		line = read_full_line();
@@ -69,9 +67,9 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (*line)
 			add_history(line);
-		parse_and_execute(&shell, line);
-//		free(line);
+		parse_and_execute();
+//		ft_strdel(&line);
 	}
-	cleanup_shell(&shell);
-	return (0); //¿?
+//	cleanup_shell;
+	rl_clear_history();
 }

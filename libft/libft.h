@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 16:15:28 by rarodri2          #+#    #+#             */
-/*   Updated: 2025/06/07 01:12:53 by codespace        ###   ########.fr       */
+/*   Updated: 2025/06/10 13:08:18 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ char				*ft_strldup(const char *s, size_t size);
 char				*ft_strcat(char *dest, const char *src);
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
 char				*ft_strjoin(char const *s1, char const *s2);
-char				*ft_strjoin_free(char *s1, char *s2);
+char				*ft_strjoin_free_s1(char *s1, char *s2);
+char				*ft_strjoin_free_s2(char *s1, char *s2);
+char				*ft_strjoin_free_both(char *s1, char *s2);
+void				ft_strdel(char **str);
 size_t				ft_strlcat(char *dst, const char *src, size_t size);
 size_t				ft_strlcpy(char *dst, const char *src, size_t size);
 int					ft_strlen(const char *str);
