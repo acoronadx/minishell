@@ -6,11 +6,26 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 05:11:35 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 05:49:36 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 07:41:22 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "exec.h"
+#include "env.h"
+
+static void	free_envp(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp && envp[i])
+	{
+		free(envp[i]);
+		i++;
+	}
+	free(envp);
+}
 
 static void	child_execve(char **argv, t_shell *shell)
 {

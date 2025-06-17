@@ -6,14 +6,21 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 16:27:52 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/11 16:27:55 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 08:35:57 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXPAND_H
 # define EXPAND_H
 
+# include "env.h"
+# include "lexer.h"
 # include "minishell.h"
+# include "parser.h"
+# include "ast.h"
+
+typedef struct s_ast t_ast;
+typedef struct s_shell t_shell;
 
 /*
 ** Expande las variables presentes en el string 'str' usando el entorno de shell.
@@ -25,8 +32,7 @@ char	*expand_token(const char *str, t_shell *shell);
 ** Expande todas las variables de los argumentos de cada comando de la lista.
 ** Solo expande si el argumento no está entre comillas simples.
 */
-void	expand_variables(t_command *cmd_list, t_shell *shell);
-
+void	expand_variables(t_shell *shell);
 /*
 ** Busca el valor de una variable en la lista enlazada de entorno.
 ** Devuelve un puntero a value o "" si no existe la variable.

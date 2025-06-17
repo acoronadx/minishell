@@ -1,32 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_exec.c                                       :+:      :+:    :+:   */
+/*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/11 14:49:39 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 09:10:26 by acoronad         ###   ########.fr       */
+/*   Created: 2025/06/17 08:56:24 by acoronad          #+#    #+#             */
+/*   Updated: 2025/06/17 08:56:29 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "parser.h"
-#include "exec.h"
-#include "expand.h"
-#include "ast.h"
+#ifndef SIGNALS_H
+# define SIGNALS_H
 
-void	parse_and_execute(t_shell *shell)
-{
-	shell->ast = parser_line(shell);
-	if (!shell->ast)
-		return ;
-	expand_variables(shell);
-	if (!check_syntax(shell->ast))
-	{
-		ft_dprintf(2, "minishell: syntax error\n");
-		return ;
-	}
-	execute_ast(shell->ast, shell);
-}
+void	setup_signals(void);
 
+#endif

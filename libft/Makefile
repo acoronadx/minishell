@@ -35,7 +35,7 @@ SRCS = \
 	ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c \
 	ft_tolower.c ft_toupper.c ft_printf.c ft_putchar.c ft_puthex.c \
 	ft_putnbr.c ft_putptr.c ft_putstr.c ft_putunsigned.c ft_strcat.c \
-	get_next_line.c \
+	get_next_line.c ft_realloc.c \
 	gnl/get_next_line.c gnl/get_next_line_utils.c
 
 # Object files / Archivos objeto

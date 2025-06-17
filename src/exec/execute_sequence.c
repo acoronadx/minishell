@@ -6,11 +6,13 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 05:05:58 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 05:06:00 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 07:52:51 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "exec.h"
+#include "ast.h"
 
 int	execute_sequence(t_ast *node, t_shell *shell)
 {

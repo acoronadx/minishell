@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 13:10:22 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 06:03:09 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 08:56:44 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,13 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "libft.h"
+#include "env.h"
+#include "lexer.h"
+#include "signals.h"
 
-#include "includes/env.h"
-#include "includes/ast.h"
-#include "includes/lexer.h"
-#include "includes/parser.h"
-#include "includes/expand.h"
+typedef struct s_ast t_ast;
+typedef struct s_shell t_shell;
+typedef struct s_token t_token;
 
 typedef struct s_shell
 {
@@ -45,34 +46,33 @@ typedef struct s_shell
 	int			is_script;      // 1 si ejecuta script, 0 si no
 	int			is_one_command; // 1 si está en modo -c, 0 si no
 	int			should_exit;    // 1 si se debe salir del shell,
-	// Puedes añadir más campos si necesitas (por ejemplo, flags de modo, etc)
 }	t_shell;
 
+// Inicialización y limpieza del shell
 void	init_shell(t_shell *shell, char **envp);
-void	print_usage(const char *invalid);
+void	free_strtab(char **tab);
+void	cleanup_shell(t_shell *shell);
+void	cleanup_loop(t_shell *shell);
+
+// Liberación de memoria de estructuras
+void	free_token_list(t_token *tok);
+void	free_ast(t_ast *node);
+
+// Funciones de ayuda/uso/version
 void	print_help(void);
+void	print_usage(const char *invalid);
 void	print_version(void);
 int		handle_help_version(int argc, char **argv);
-void	setup_signals(void);
-void	run_interactive(t_shell *shell);
-void	execute_one_command(const char *command, char **envp);
-void	execute_script(const char *filename, t_shell *shell);
-int		is_builtin(char *cmd);
-int		execute_builtin(char **argv, t_shell *shell);
-int		execute_ast(t_ast *node, t_shell *shell);
-int		ft_quotes_closed(const char *line);
-void	handle_sigint(int sig);
-void	setup_signals(void);
-void	free_token_list(t_token *tok);
-void	clean_line(char **line);
-void	cleanup_loop(t_shell *shell);
-void	cleanup_shell(t_shell shell);
-t_ast	*parser_line(t_shell *shell);
+
+// Ejecución principal del shell
 void	parse_and_execute(t_shell *shell);
+int		check_syntax(t_ast *ast);
+
+// Modo interactivo
+void	run_interactive(t_shell *shell);
+char	*read_full_line(t_shell *shell);
 
 #endif
-
-
 
 /*
 Las flags de modo en el contexto de un shell (como bash o tu minishell) son variables o campos que indican en qué “modo” está funcionando el shell, o qué opciones/funcionalidades están activas en ese momento.

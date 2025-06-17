@@ -6,11 +6,13 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:38:03 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/13 20:01:30 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 08:08:23 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parser.h"
+#include "ast.h"
 
 /*
 ** and_or := pipeline ( ( '&&' | '||' ) pipeline )*

@@ -6,12 +6,21 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:24:41 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 04:34:15 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 08:47:34 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AST_H
 # define AST_H
+
+# include "lexer.h"
+# include "minishell.h"
+# include "env.h"
+# include "parser.h"
+# include "exec.h"
+
+typedef struct s_ast t_ast;
+typedef struct s_shell t_shell;
 
 typedef enum e_node_type
 {
@@ -34,5 +43,16 @@ typedef struct s_ast
 	struct s_ast	*left;
 	struct s_ast	*right;
 }	t_ast;
+
+// Declaraciones de AST utils
+void	ast_free(t_ast *node);
+t_ast	*ast_copy(t_ast *node);
+t_ast	*ast_new(t_node_type type, char **argv, char *filename, int redir_type,
+t_ast	*left, t_ast *right);
+char	**ft_strdup_array(char **array);
+int		ft_str_array_len(char **array);
+
+// Declaraciones de build_ast
+t_ast	*build_ast(t_token *tokens);
 
 #endif

@@ -6,11 +6,13 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:46:24 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 05:02:37 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 08:54:51 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "exec.h"
+#include "parser.h"
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -31,10 +33,10 @@ int	main(int argc, char **argv, char **envp)
 	else if (argc > 1)
 	{
 		print_usage(argv[1]);
-		cleanup_shell(shell);
+		cleanup_shell(&shell);
 		return (2);
 	}
-	cleanup_shell(shell);
+	cleanup_shell(&shell);
 	return (shell.exit_status);
 }
 

@@ -6,11 +6,13 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:20:33 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 05:00:44 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 07:54:43 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "exec.h"
+#include "parser.h"
 
 /*
 ** Ejecuta un solo comando, como en 'bash -c "comando"'.

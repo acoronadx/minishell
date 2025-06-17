@@ -6,11 +6,14 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 14:51:59 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 04:22:07 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 08:38:07 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parser.h"
+#include "lexer.h"
+#include "ast.h"
 
 /*
 ** Parses the raw input line into an abstract syntax tree (AST).

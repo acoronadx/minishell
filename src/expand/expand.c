@@ -6,11 +6,13 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 16:12:35 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/11 16:26:35 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 08:53:48 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "expand.h"
+#include "env.h"
 
 /*
 ** Expande las variables presentes en el string str usando el entorno shell.
@@ -49,26 +51,20 @@ char	*expand_token(const char *str, t_shell *shell)
 ** Expande todas las variables de los argumentos de cada comando de la lista.
 ** Solo expande si el argumento no está entre comillas simples.
 */
-void	expand_variables(t_command *cmd_list, t_shell *shell)
+void	expand_variables(t_shell *shell)
 {
-	t_command	*cmd;
-	t_token		*arg;
-	char		*expanded;
+	t_token	*arg;
+	char	*expanded;
 
-	cmd = cmd_list;
-	while (cmd)
+	arg = shell->tokens;
+	while (arg)
 	{
-		arg = cmd->args;
-		while (arg)
+		if (arg->quoted != SINGLE_QUOTE)
 		{
-			if (arg->quoted != SINGLE_QUOTE)
-			{
-				expanded = expand_token(arg->value, shell);
-				free(arg->value);
-				arg->value = expanded;
-			}
-			arg = arg->next;
+			expanded = expand_token(arg->value, shell);
+			free(arg->value);
+			arg->value = expanded;
 		}
-		cmd = cmd->next;
+		arg = arg->next;
 	}
 }

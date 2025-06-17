@@ -6,22 +6,14 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:38:38 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/13 20:02:05 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 08:57:58 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parser.h"
+#include "ast.h"
 
-/*
-** next_token:
-** Avanza el puntero actual de token al siguiente elemento de la lista.
-** Se usa para recorrer la lista de tokens generada por el lexer.
-*/
-void	next_token(t_token **cur)
-{
-	if (*cur)
-		*cur = (*cur)->next;
-}
 
 // pipeline: comando | comando
 t_ast	*parse_pipeline(t_token **cur)

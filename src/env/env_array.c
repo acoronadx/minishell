@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:32:01 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 05:17:47 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 08:15:07 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	**env_list_to_envp(t_env *env)
 		if (env->exported)
 		{
 			tmp = ft_strjoin(env->key, "=");
-			envp[i] = ft_strjoin_free(tmp, env->value, 1);
+			envp[i] = ft_strjoin_free_s1(tmp, env->value);
 			i++;
 		}
 		env = env->next;

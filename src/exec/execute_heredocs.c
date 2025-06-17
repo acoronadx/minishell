@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 05:58:04 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 05:58:06 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 07:54:26 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	read_heredoc_lines(const char *delim, int write_fd)
 		line = get_next_line(0);
 		if (!line)
 			break;
-		if (ft_strcmp(line, delim) == 0)
+		if (ft_strcmp(line, (char *)delim) == 0)
 		{
 			free(line);
 			break;

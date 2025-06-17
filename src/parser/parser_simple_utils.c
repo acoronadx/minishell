@@ -6,11 +6,13 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 19:05:39 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 06:11:30 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 08:06:41 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parser.h"
+#include "ast.h"
 
 /*
 ** parse_group:

@@ -6,11 +6,12 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:30:30 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/11 15:58:48 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 08:25:06 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "env.h"
 
 /*
 ** get_env_node
@@ -22,7 +23,7 @@
 **   env: inicio de la lista enlazada de variables de entorno (t_env*)
 **   key: clave a buscar (ej: "PATH")
 */
-t_env	*get_env_node(t_env *env, const char *key)
+t_env	*get_env_node(t_env *env, char *key)
 {
 	while (env)
 	{
@@ -43,7 +44,7 @@ t_env	*get_env_node(t_env *env, const char *key)
 **   env: inicio de la lista enlazada de variables de entorno (t_env*)
 **   key: clave a buscar (ej: "PATH")
 */
-char	*get_env_value_any(t_env *env, const char *key)
+char	*get_env_value_any(t_env *env, char *key)
 {
 	t_env	*node;
 
@@ -63,7 +64,7 @@ char	*get_env_value_any(t_env *env, const char *key)
 **   env: inicio de la lista enlazada de variables de entorno (t_env*)
 **   key: clave a buscar (ej: "PATH")
 */
-char	*get_env_value(t_env *env, const char *key)
+char	*get_env_value(t_env *env, char *key)
 {
 	t_env	*node;
 

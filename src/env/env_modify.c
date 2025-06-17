@@ -6,11 +6,12 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:31:07 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/11 15:58:53 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 08:24:31 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "env.h"
 
 /*
 ** add_env_var
@@ -25,7 +26,7 @@
 **   value: valor de la variable (puede ser NULL)
 **   exported: 1 si la variable debe ser exportada, 0 si es solo local
 */
-int	add_env_var(t_env **env, const char *key, const char *value, int exported)
+int	add_env_var(t_env **env, char *key, char *value, int exported)
 {
 	t_env	*node;
 
@@ -52,7 +53,7 @@ int	add_env_var(t_env **env, const char *key, const char *value, int exported)
 **   value: nuevo valor (puede ser NULL)
 **   exported: nuevo estado de exportación (1 o 0)
 */
-int	update_env_var(t_env *env, const char *key, const char *value, int exported)
+int	update_env_var(t_env *env, char *key, char *value, int exported)
 {
 	t_env	*node;
 
@@ -76,7 +77,7 @@ int	update_env_var(t_env *env, const char *key, const char *value, int exported)
 **   env: puntero doble al inicio de la lista de entorno
 **   key: nombre de la variable a eliminar
 */
-int	remove_env_var(t_env **env, const char *key)
+int	remove_env_var(t_env **env, char *key)
 {
 	t_env	*curr;
 	t_env	*prev;

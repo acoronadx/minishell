@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 16:15:28 by rarodri2          #+#    #+#             */
-/*   Updated: 2025/06/11 13:00:22 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 07:58:25 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# include "ft_dprintf/ft_dprintf.h"
 
 # define BUFFER_SIZE 512
 
@@ -99,5 +100,6 @@ int					ft_putnbr(int nb);
 int					ft_puthex(unsigned long n, int uppercase);
 int					ft_putunsigned(unsigned int nb);
 int					ft_putptr(void *ptr);
+void				*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 
 #endif

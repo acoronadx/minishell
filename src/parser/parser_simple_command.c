@@ -6,11 +6,13 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:39:45 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/13 19:36:22 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 08:07:41 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parser.h"
+#include "ast.h"
 
 /*
 ** is_lparen:
@@ -22,24 +24,6 @@ static int	is_lparen(t_token *tok)
 	if (!tok)
 		return (0);
 	return (tok->type == T_LPAREN);
-}
-
-/*
-** is_redirection:
-** Devuelve 1 si el token actual es algún tipo de redirección.
-** Así se detectan tokens como >, >>, <, <<, 2>, &> y variantes.
-** Permite separar los tokens de redirección de los de palabra/argumento.
-*/
-static int	is_redirection(t_token *tok)
-{
-	if (!tok)
-		return (0);
-	return (tok->type == T_REDIR_IN || tok->type == T_REDIR_OUT
-		|| tok->type == T_APPEND || tok->type == T_HEREDOC
-		|| tok->type == T_APPEND_ERR || tok->type == T_REDIR_ERR
-		|| tok->type == T_REDIR_ALL || tok->type == T_APPEND_ALL
-		|| tok->type == T_FORCE_OUT || tok->type == T_DUP_IN
-		|| tok->type == T_DUP_OUT || tok->type == T_HEREDOC_STR);
 }
 
 /*
@@ -96,9 +80,28 @@ t_ast	*parse_simple_command(t_token **cur)
 		return (redir_head);
 	if (!parse_redirections(cur, &redir_head, &redir_tail))
 	{
-		free_tab(argv);
+		free_strtab(argv);
 		return (NULL);
 	}
 	cmd = create_command_node(argv, redir_head);
 	return (cmd);
+}
+
+/*
+** is_redirection:
+** Devuelve 1 si el token actual es algún tipo de redirección.
+** Así se detectan tokens como >, >>, <, <<, 2>, &> y variantes.
+** Permite separar los tokens de redirección de los de palabra/argumento.
+*/
+
+int	is_redirection(t_token *tok)
+{
+	if (!tok)
+		return (0);
+	return (tok->type == T_REDIR_IN || tok->type == T_REDIR_OUT
+		|| tok->type == T_APPEND || tok->type == T_HEREDOC
+		|| tok->type == T_APPEND_ERR || tok->type == T_REDIR_ERR
+		|| tok->type == T_REDIR_ALL || tok->type == T_APPEND_ALL
+		|| tok->type == T_FORCE_OUT || tok->type == T_DUP_IN
+		|| tok->type == T_DUP_OUT || tok->type == T_HEREDOC_STR);
 }

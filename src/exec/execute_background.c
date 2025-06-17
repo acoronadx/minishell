@@ -6,11 +6,13 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 05:07:27 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 05:07:30 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 07:53:07 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "exec.h"
+#include "ast.h"
 
 int	execute_background(t_ast *node, t_shell *shell)
 {

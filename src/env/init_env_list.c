@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:28:27 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/11 15:58:58 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 08:23:06 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 ** Devuelve un puntero al nuevo nodo, o NULL si falla el malloc.
 ** El campo .next se inicializa a NULL.
 */
-static t_env	*env_create(const char *key, const char *value, int exported)
+t_env	*env_create(char *key, char *value, int exported)
 {
 	t_env	*new;
 
@@ -45,7 +45,7 @@ static t_env	*env_create(const char *key, const char *value, int exported)
 ** Si no, recorre la lista y lo añade al final.
 ** No hace nada si alguno de los punteros es NULL.
 */
-static void	env_add_back(t_env **env, t_env *new)
+void	env_add_back(t_env **env, t_env *new)
 {
 	t_env	*tmp;
 

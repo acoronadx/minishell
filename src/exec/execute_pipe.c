@@ -6,11 +6,13 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 05:08:40 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 05:51:52 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 07:53:24 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "exec.h"
+#include "ast.h"
 
 static void	close_pipe(int *fd)
 {

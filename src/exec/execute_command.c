@@ -6,11 +6,32 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 05:05:09 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 06:05:21 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 07:49:09 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "exec.h"
+
+int	restore_and_return(int stdin_copy, int stdout_copy, int ret)
+{
+	dup2(stdin_copy, 0);
+	dup2(stdout_copy, 1);
+	close(stdin_copy);
+	close(stdout_copy);
+	return (ret);
+}
+
+int	apply_all_redirections(t_ast *redir, int in, int out)
+{
+	while (redir)
+	{
+		if (apply_redirection(redir) != 0)
+			return (restore_and_return(in, out, 1));
+		redir = redir->right;
+	}
+	return (0);
+}
 
 int	apply_redirection(t_ast *redir)
 {
@@ -37,20 +58,28 @@ int	apply_redirection(t_ast *redir)
 
 int	execute_command(t_ast *node, t_shell *shell)
 {
-	t_ast	*redir;
+	int		stdin_copy;
+	int		stdout_copy;
 	int		status;
 
 	if (!node || !node->argv || !node->argv[0])
 		return (0);
-	redir = node->right;
-	while (redir)
+	stdin_copy = dup(0);
+	stdout_copy = dup(1);
+	if (apply_all_redirections(node->right, stdin_copy, stdout_copy))
+		return (1);
+	/*if (is_builtin(node->argv[0]))
 	{
-		if (apply_redirection(redir) != 0)
-			return (1);
-		redir = redir->right;
+		status = execute_builtin(node->argv, shell);
+		dup2(stdin_copy, 0);
+		dup2(stdout_copy, 1);
+		close(stdin_copy);
+		close(stdout_copy);
+		return (status);
 	}
-	if (is_builtin(node->argv[0]))
-		return (execute_builtin(node->argv, shell));
+		*/
+	close(stdin_copy);
+	close(stdout_copy);
 	status = fork_execve(node->argv, shell);
 	return (status);
 }

@@ -6,11 +6,14 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 03:25:37 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 04:24:53 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 08:04:29 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "ast.h"
+#include "lexer.h"
+#include "parser.h"
 
 void	free_token_list(t_token *tok)
 {
@@ -26,7 +29,7 @@ void	free_token_list(t_token *tok)
 	}
 }
 
-static void	free_strtab(char **tab)
+void	free_strtab(char **tab)
 {
 	int	i;
 

@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 13:26:15 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/11 14:35:37 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 08:44:25 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,16 @@ void	setup_signals(void)
 {
 	struct sigaction	sa;
 
-	sa.sa_handler = handle_sigint;   // Handler para SIGINT (Ctrl+C)
-	sa.sa_flags = SA_RESTART;        // Reinicia syscalls interrumpidas
-	sa.sa_mask = 0;                  // No bloquea otras señales en el handler
-	sigaction(SIGINT, &sa, 0);       // Asocia SIGINT a handle_sigint
+	sa.sa_handler = handle_sigint;
+	sa.sa_flags = SA_RESTART;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGINT, &sa, 0);
 
-	sa.sa_handler = handle_sigquit;  // Handler para SIGQUIT (Ctrl+\)
-	sa.sa_flags = SA_RESTART;        // Reinicia syscalls interrumpidas
-	sa.sa_mask = 0;                  // No bloquea otras señales en el handler
-	sigaction(SIGQUIT, &sa, 0);      // Asocia SIGQUIT a handle_sigquit
+	sa.sa_handler = handle_sigquit;
+	sa.sa_flags = SA_RESTART;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGQUIT, &sa, 0);
 }
-
 /************************************************************
 ** Minishell - Signal Handling / Gestión de señales
 **

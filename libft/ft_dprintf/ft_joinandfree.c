@@ -6,11 +6,12 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 20:25:07 by acoronad          #+#    #+#             */
-/*   Updated: 2025/05/30 12:57:55 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 09:05:25 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_dprintf.h"
+#include "../libft.h"
 
 char	*ft_joinandfreestr(char *s1, const char *s2)
 {

@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 06:02:29 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 06:02:40 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 07:49:54 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	is_builtin(char *cmd)
 		return (1);
 	return (0);
 }
-
+/*
 int	execute_builtin(char **argv, t_shell *shell)
 {
 	if (ft_strcmp(argv[0], "echo") == 0)
@@ -51,3 +51,4 @@ int	execute_builtin(char **argv, t_shell *shell)
 		return (builtin_exit(argv, shell));
 	return (1);
 }
+*/

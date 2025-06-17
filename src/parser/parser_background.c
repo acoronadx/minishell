@@ -6,18 +6,23 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:36:56 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/13 20:01:43 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 08:58:04 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parser.h"
 
-static void	next_token(t_token **cur)
+/*
+** next_token:
+** Avanza el puntero actual de token al siguiente elemento de la lista.
+** Se usa para recorrer la lista de tokens generada por el lexer.
+*/
+void	next_token(t_token **cur)
 {
 	if (*cur)
 		*cur = (*cur)->next;
 }
-
 /*
 ** background := sequence ( '&' sequence )*
 */
