@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_exec.c                                       :+:      :+:    :+:   */
+/*   execute_sequence.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/11 14:49:39 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 04:29:45 by acoronad         ###   ########.fr       */
+/*   Created: 2025/06/17 05:05:58 by acoronad          #+#    #+#             */
+/*   Updated: 2025/06/17 05:06:00 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parse_and_execute(t_shell *shell)
+int	execute_sequence(t_ast *node, t_shell *shell)
 {
-	shell->ast = parser_line(shell);
-	if (!shell->ast)
-		return ;
-	expand_variables(shell->ast, shell->env);
-	if (!check_syntax(shell->ast))
-	{
-		ft_dprintf(2, "minishell: syntax error\n");
-		return ;
-	}
-	execute_ast(shell->ast, shell);
+	int	status;
+
+	status = 0;
+	if (node->left)
+		status = execute_ast(node->left, shell);
+	if (node->right)
+		status = execute_ast(node->right, shell);
+	return (status);
 }

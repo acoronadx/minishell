@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_exec.c                                       :+:      :+:    :+:   */
+/*   execute_background.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/11 14:49:39 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 04:29:45 by acoronad         ###   ########.fr       */
+/*   Created: 2025/06/17 05:07:27 by acoronad          #+#    #+#             */
+/*   Updated: 2025/06/17 05:07:30 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parse_and_execute(t_shell *shell)
+int	execute_background(t_ast *node, t_shell *shell)
 {
-	shell->ast = parser_line(shell);
-	if (!shell->ast)
-		return ;
-	expand_variables(shell->ast, shell->env);
-	if (!check_syntax(shell->ast))
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == 0)
 	{
-		ft_dprintf(2, "minishell: syntax error\n");
-		return ;
+		execute_ast(node->left, shell);
+		exit(0);
 	}
-	execute_ast(shell->ast, shell);
+	if (node->right)
+		return (execute_ast(node->right, shell));
+	return (0);
 }

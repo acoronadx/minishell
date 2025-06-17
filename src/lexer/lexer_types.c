@@ -6,15 +6,14 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 16:42:46 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/11 16:45:34 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/11 17:02:47 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-** Detecta operadores de pipe, or, and, background (&).
-** Devuelve el tipo específico o T_UNKNOWN.
+** Detecta operadores de pipe, or, and, background (&), y paréntesis y llaves.
 */
 t_token_type	get_pipe_and_or(const char *str, int len)
 {
@@ -26,16 +25,26 @@ t_token_type	get_pipe_and_or(const char *str, int len)
 		return (T_AND);
 	if (len == 1 && str[0] == '&')
 		return (T_BG);
+	if (len == 1 && str[0] == '(')
+		return (T_LPAREN);
+	if (len == 1 && str[0] == ')')
+		return (T_RPAREN);
+	if (len == 1 && str[0] == '{')
+		return (T_LBRACE);
+	if (len == 1 && str[0] == '}')
+		return (T_RBRACE);
 	return (T_UNKNOWN);
 }
 
 /*
-** Detecta ; y redirecciones de entrada (<, <<, <<<, <&).
+** Detecta ;, = y redirecciones de entrada (<, <<, <<<, <&).
 */
 t_token_type	get_semi_redir_left(const char *str, int len)
 {
 	if (len == 1 && str[0] == ';')
 		return (T_SEMI);
+	if (len == 1 && str[0] == '=')
+		return (T_EQUAL);
 	if (len == 1 && str[0] == '<')
 		return (T_REDIR_IN);
 	if (len == 2 && str[0] == '<' && str[1] == '<')

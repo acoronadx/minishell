@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 13:09:44 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/11 14:40:25 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 04:52:18 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,32 +30,31 @@ static int	ft_quotes_closed(const char *line)
 	return ((single % 2 == 0) && (double_ % 2 == 0));
 }
 
-char	*read_full_line(void)
+char	*read_full_line(t_shell *shell)
 {
-	char	*line;
 	char	*next;
 
-	line = readline("\001\033[1;35m\002minishell$ \001\033[0m\002");
-	if (!line)
+	shell->line = readline("\001\033[1;35m\002minishell$ \001\033[0m\002");
+	if (!shell->line)
 		return (NULL);
-	while (!ft_quotes_closed(line))
+	while (!ft_quotes_closed(shell->line))
 	{
 		next = readline("> ");
 		if (!next)
 		{
-			ft_strdel(&line);
+			ft_strdel(&shell->line);
 			return (NULL);
 		}
-		line = ft_strjoin_free_s1(line, "\n");
-		if (!line)
+		shell->line = ft_strjoin_free_s1(shell->line, "\n");
+		if (!shell->line)
 		{
 			ft_strdel(&next);
 			return (NULL);
 		}
-		line = ft_strjoin_free_s1(line, next);
+		shell->line = ft_strjoin_free_s1(shell->line, next);
 		ft_strdel(&next);
 	}
-	return (line);
+	return (shell->line);
 }
 
 /*
@@ -63,20 +62,28 @@ char	*read_full_line(void)
 ** Lee, ejecuta y libera cada línea.
 ** Imprime "exit" si recibe EOF (Ctrl-D), igual que bash.
 */
-void	run_interactive(char **envp)
-{
-	char	*line;
 
-	line = read_full_line();
-	while (line)
+void	run_interactive(t_shell *shell)
+{
+	shell->is_interactive = 1;
+	while (1)
 	{
-		if (*line)
+		if (shell->line)
 		{
-			add_history(line);
-			parse_and_execute(line, envp);
+			free(shell->line);
+			shell->line = NULL;
 		}
-		ft_strdel(&line);
-		line = read_full_line();
+		shell->line = read_full_line(shell);
+		if (!shell->line)
+			break;
+		if (*(shell->line))
+		{
+			add_history(shell->line);
+			parse_and_execute(shell);
+		}
+		cleanup_loop(shell);
+		if (shell->should_exit)
+			break;
 	}
 	write(1, "exit\n", 5);
 	rl_clear_history();

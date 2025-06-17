@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_exec.c                                       :+:      :+:    :+:   */
+/*   parser_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/11 14:49:39 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 04:29:45 by acoronad         ###   ########.fr       */
+/*   Created: 2025/06/11 14:51:59 by acoronad          #+#    #+#             */
+/*   Updated: 2025/06/17 04:22:07 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parse_and_execute(t_shell *shell)
+/*
+** Parses the raw input line into an abstract syntax tree (AST).
+** Returns a pointer to the root node or NULL on error.
+*/
+
+t_ast	*parser_line(t_shell *shell)
 {
-	shell->ast = parser_line(shell);
+	shell->tokens = lexer(shell->line);
+	if (!shell->tokens)
+		return (NULL);
+	shell->ast = build_ast(shell->tokens);
+	free_token_list(shell->tokens);
+	shell->tokens = NULL;
 	if (!shell->ast)
-		return ;
-	expand_variables(shell->ast, shell->env);
-	if (!check_syntax(shell->ast))
 	{
-		ft_dprintf(2, "minishell: syntax error\n");
-		return ;
+		ft_dprintf(2, "minishell: syntax error near unexpected token\n");
+		return (NULL);
 	}
-	execute_ast(shell->ast, shell);
+	return (shell->ast);
 }

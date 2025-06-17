@@ -6,17 +6,27 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 12:22:19 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/11 13:07:37 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 04:57:35 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute_script(const char *filename, char **envp)
+void clean_line(char **line)
+{
+	if (*line)
+	{
+		free(*line);
+		*line = NULL;
+	}
+}
+
+void	execute_script(const char *filename, t_shell *shell)
 {
 	int		fd;
 	char	*line;
 
+	shell->is_script = 1;
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{
@@ -26,8 +36,11 @@ void	execute_script(const char *filename, char **envp)
 	line = get_next_line(fd);
 	while (line)
 	{
-		parse_and_execute(line, envp);
-		free(line);
+		if (shell->line)
+			clean_line(&shell->line);
+		shell->line = line;
+		parse_and_execute(shell);
+		cleanup_loop(shell);
 		line = get_next_line(fd);
 	}
 	close(fd);

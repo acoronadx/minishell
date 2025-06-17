@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 16:36:48 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/11 16:57:04 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/11 17:03:56 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ t_token_type	get_token_type(const char *str, int len)
 {
 	t_token_type	type;
 
-	type = get_pipe_and_or(str, len);
+	type = get_pipe_and_or(str, len); // ahora detecta también paréntesis y llaves
 	if (type != T_UNKNOWN)
 		return (type);
-	type = get_semi_redir_left(str, len);
+	type = get_semi_redir_left(str, len); // ahora detecta también =
 	if (type != T_UNKNOWN)
 		return (type);
 	type = get_redir_right(str, len);

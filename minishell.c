@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:46:24 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/11 14:38:27 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 05:02:37 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,30 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	extern volatile sig_atomic_t	g_signal;
+	t_shell	shell;
+	int		ret;
 
 	setup_signals();
+	ret = handle_help_version(argc, argv);
+	if (ret != -1)
+		return (ret);
+	init_shell(&shell, envp);
 	if (argc == 3 && ft_strcmp(argv[1], "-c") == 0)
-		execute_one_command(argv[2], envp);
+		execute_one_command(argv[2], &shell);
 	else if (argc == 2 && argv[1][0] != '-')
-		execute_script(argv[1], envp);
-	else if (argc == 2 && ft_strcmp(argv[1], "--help") == 0)
-	{
-		print_help();
-		return (0);
-	}
-	else if (argc == 2 && ft_strcmp(argv[1], "--version") == 0)
-	{
-		print_version();
-		return (0);
-	}
+		execute_script(argv[1], &shell);
 	else if (argc == 1 && isatty(0))
-		run_interactive(envp);
+		run_interactive(&shell);
 	else if (argc > 1)
 	{
 		print_usage(argv[1]);
+		cleanup_shell(shell);
 		return (2);
 	}
-	return (0);
+	cleanup_shell(shell);
+	return (shell.exit_status);
 }
+
 
 /************************************************************
 ** Minishell - Main function / Función principal

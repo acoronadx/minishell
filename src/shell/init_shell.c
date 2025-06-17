@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_version.c                                    :+:      :+:    :+:   */
+/*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/11 12:07:42 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/11 12:07:46 by acoronad         ###   ########.fr       */
+/*   Created: 2025/06/17 03:25:09 by acoronad          #+#    #+#             */
+/*   Updated: 2025/06/17 04:47:08 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_version(void)
+void	init_shell(t_shell *shell, char **envp)
 {
-	ft_dprintf(1, "minishell, version 1.0\n");
+	shell->env = init_env_list(envp);
+	shell->line = NULL;
+	shell->tokens = NULL;
+	shell->ast = NULL;
+	shell->exit_status = 0;
+	shell->is_interactive = 0;
+	shell->is_script = 0;
+	shell->is_one_command = 0;
+	shell->should_exit = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:32:52 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/11 15:58:45 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 03:52:12 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@ void	free_env_list(t_env *env)
 	while (env)
 	{
 		tmp = env->next;
-		free(env->key);
-		free(env->value);
+		if (env->key)
+			free(env->key);
+		if (env->value)
+			free(env->value);
 		free(env);
 		env = tmp;
 	}
