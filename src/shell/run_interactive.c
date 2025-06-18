@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 13:09:44 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 04:52:18 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 20:36:07 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,13 @@ char	*read_full_line(t_shell *shell)
 {
 	char	*next;
 
+	setup_prompt_signals();
 	shell->line = readline("\001\033[1;35m\002minishell$ \001\033[0m\002");
 	if (!shell->line)
 		return (NULL);
 	while (!ft_quotes_closed(shell->line))
 	{
+		setup_prompt_signals();
 		next = readline("> ");
 		if (!next)
 		{
@@ -68,6 +70,7 @@ void	run_interactive(t_shell *shell)
 	shell->is_interactive = 1;
 	while (1)
 	{
+		setup_prompt_signals(); // <-- Instala handlers antes de cada readline
 		if (shell->line)
 		{
 			free(shell->line);
@@ -79,7 +82,9 @@ void	run_interactive(t_shell *shell)
 		if (*(shell->line))
 		{
 			add_history(shell->line);
-			parse_and_execute(shell);
+			setup_ignore_signals(); // Ignora SIGINT/SIGQUIT mientras esperas hijos
+			parse_and_execute(shell); // Aquí haces fork/exec, etc.
+			setup_prompt_signals(); // Vuelve a instalar handlers tras esperar a los hijos
 		}
 		cleanup_loop(shell);
 		if (shell->should_exit)
@@ -88,6 +93,7 @@ void	run_interactive(t_shell *shell)
 	write(1, "exit\n", 5);
 	rl_clear_history();
 }
+
 
 /************************************************************
 ** Minishell - Input Reading with Quote Handling

@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 05:05:09 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 07:49:09 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:44:20 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	execute_command(t_ast *node, t_shell *shell)
 	int		stdin_copy;
 	int		stdout_copy;
 	int		status;
+	char	*path;
 
 	if (!node || !node->argv || !node->argv[0])
 		return (0);
@@ -68,18 +69,20 @@ int	execute_command(t_ast *node, t_shell *shell)
 	stdout_copy = dup(1);
 	if (apply_all_redirections(node->right, stdin_copy, stdout_copy))
 		return (1);
-	/*if (is_builtin(node->argv[0]))
+	/*
+	if (is_builtin(node->argv[0]))
 	{
 		status = execute_builtin(node->argv, shell);
-		dup2(stdin_copy, 0);
-		dup2(stdout_copy, 1);
-		close(stdin_copy);
-		close(stdout_copy);
-		return (status);
+		return (restore_and_return(stdin_copy, stdout_copy, status));
 	}
-		*/
-	close(stdin_copy);
-	close(stdout_copy);
-	status = fork_execve(node->argv, shell);
-	return (status);
+	*/
+	path = find_in_path(node->argv[0], shell->env);
+	if (!path)
+	{
+		ft_dprintf(2, "minishell: %s: command not found\n", node->argv[0]);
+		return (restore_and_return(stdin_copy, stdout_copy, 127));
+	}
+	status = fork_execve_with_path(path, node->argv, shell);
+	free(path);
+	return (restore_and_return(stdin_copy, stdout_copy, status));
 }

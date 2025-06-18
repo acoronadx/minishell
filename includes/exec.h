@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 06:55:33 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 08:35:46 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:38:31 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,6 @@ void	cleanup_loop(t_shell *shell);
 int	apply_redirection(t_ast *redir);
 int	is_builtin(char *cmd);
 int	execute_builtin(char **argv, t_shell *shell);
-int	fork_execve(char **argv, t_shell *shell);
+int	fork_execve_with_path(char *path, char **argv, t_shell *shell);
 
 #endif

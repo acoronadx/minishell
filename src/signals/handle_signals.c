@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 13:26:15 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 08:44:25 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 20:36:26 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,20 @@
 // y 'sig_atomic_t' es seguro de modificar dentro de un handler de señal.
 volatile sig_atomic_t	g_signal = 0;
 
+
+void	setup_prompt_signals(void)
+{
+	disable_vquit();
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, handle_sigquit);
+}
+
+void	setup_ignore_signals(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+}
+
 /*
 ** Handler para SIGINT (Ctrl+C)
 ** Se llama automáticamente cuando el usuario pulsa Ctrl+C.
@@ -26,14 +40,13 @@ volatile sig_atomic_t	g_signal = 0;
 */
 void	handle_sigint(int sig)
 {
-	(void)sig;                       // Evita warning por parámetro no usado
-	g_signal = 1;                    // Marca que se recibió SIGINT
-	write(1, "\nminishell$ ", 12);   // Muestra prompt en nueva línea
-	rl_on_new_line();                // Notifica a readline de nueva línea
-	rl_replace_line("", 0);          // Borra la línea que el usuario escribía
-	rl_redisplay();                  // Redibuja el prompt limpio
+	(void)sig;
+	g_signal = 1;
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }
-
 /*
 ** Handler para SIGQUIT (Ctrl+\)
 ** Se llama automáticamente cuando el usuario pulsa Ctrl+\.
@@ -52,18 +65,10 @@ void	handle_sigquit(int sig)
 */
 void	setup_signals(void)
 {
-	struct sigaction	sa;
-
-	sa.sa_handler = handle_sigint;
-	sa.sa_flags = SA_RESTART;
-	sigemptyset(&sa.sa_mask);
-	sigaction(SIGINT, &sa, 0);
-
-	sa.sa_handler = handle_sigquit;
-	sa.sa_flags = SA_RESTART;
-	sigemptyset(&sa.sa_mask);
-	sigaction(SIGQUIT, &sa, 0);
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, handle_sigquit);
 }
+
 /************************************************************
 ** Minishell - Signal Handling / Gestión de señales
 **

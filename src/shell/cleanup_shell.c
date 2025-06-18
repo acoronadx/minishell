@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 03:25:37 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 08:04:29 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 20:19:06 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "ast.h"
 #include "lexer.h"
 #include "parser.h"
+#include "signals.h"
 
 void	free_token_list(t_token *tok)
 {
@@ -100,4 +101,5 @@ void	cleanup_shell(t_shell *shell)
 		free_ast(shell->ast);
 		shell->ast = NULL;
 	}
+		restore_vquit();
 }

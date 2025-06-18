@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:24:41 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 08:47:34 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:14:50 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,8 @@ int		ft_str_array_len(char **array);
 
 // Declaraciones de build_ast
 t_ast	*build_ast(t_token *tokens);
+
+int	check_syntax(t_ast *node);
+
 
 #endif

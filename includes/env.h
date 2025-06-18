@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:27:22 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 08:22:35 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/17 19:13:11 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,10 @@ void	env_add_back(t_env **env, t_env *new);
 
 // init_env_list.c
 t_env	*init_env_list(char **envp);
+
+// find_in_path.c
+char	*join_path(char *dir, char *cmd);
+char	*find_in_path(char *cmd, t_env *env);
+char	*find_in_dirs(char **dirs, char *cmd);
 
 #endif
