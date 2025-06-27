@@ -6,40 +6,25 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:46:24 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 08:54:51 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/27 14:39:40 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "exec.h"
-#include "parser.h"
+#include "signals.h"
+//#include "exec.h"
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
 	int		ret;
 
-	setup_signals();
-	ret = handle_help_version(argc, argv);
-	if (ret != -1)
-		return (ret);
-	init_shell(&shell, envp);
-	if (argc == 3 && ft_strcmp(argv[1], "-c") == 0)
-		execute_one_command(argv[2], &shell);
-	else if (argc == 2 && argv[1][0] != '-')
-		execute_script(argv[1], &shell);
-	else if (argc == 1 && isatty(0))
-		run_interactive(&shell);
-	else if (argc > 1)
-	{
-		print_usage(argv[1]);
-		cleanup_shell(&shell);
-		return (2);
-	}
+	if (init_shell_name(&shell, argv) != 0)
+		return (1);
+	ret = run_shell_modes(argc, argv, envp, &shell);
 	cleanup_shell(&shell);
-	return (shell.exit_status);
+	return (ret);
 }
-
 
 /************************************************************
 ** Minishell - Main function / Función principal

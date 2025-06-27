@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 13:09:44 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 20:36:07 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/27 20:12:47 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,18 @@ char	*read_full_line(t_shell *shell)
 		next = readline("> ");
 		if (!next)
 		{
-			ft_strdel(&shell->line);
+			free(shell->line);
+			shell->line = NULL;
 			return (NULL);
 		}
 		shell->line = ft_strjoin_free_s1(shell->line, "\n");
 		if (!shell->line)
 		{
-			ft_strdel(&next);
+			free(next);
 			return (NULL);
 		}
 		shell->line = ft_strjoin_free_s1(shell->line, next);
-		ft_strdel(&next);
+		free(next);
 	}
 	return (shell->line);
 }
@@ -83,7 +84,12 @@ void	run_interactive(t_shell *shell)
 		{
 			add_history(shell->line);
 			setup_ignore_signals(); // Ignora SIGINT/SIGQUIT mientras esperas hijos
-			parse_and_execute(shell); // Aquí haces fork/exec, etc.
+			if (shell->tokens)
+			{
+				free_token_list(shell->tokens);
+				shell->tokens = NULL;
+			}
+			shell_exec(shell);
 			setup_prompt_signals(); // Vuelve a instalar handlers tras esperar a los hijos
 		}
 		cleanup_loop(shell);

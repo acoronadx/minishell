@@ -78,3 +78,23 @@ char	*ft_strjoin_free_both(char *s1, char *s2)
 	free(s2);
 	return (joined);
 }
+
+char *ft_strjoin_three(const char *s1, const char *s2, const char *s3)
+{
+    char *new_str;
+    size_t len1 = s1 ? ft_strlen(s1) : 0;
+    size_t len2 = s2 ? ft_strlen(s2) : 0;
+    size_t len3 = s3 ? ft_strlen(s3) : 0;
+
+    new_str = (char *)malloc(sizeof(char) * (len1 + len2 + len3 + 1));
+    if (!new_str)
+        return (NULL);
+    
+    new_str[0] = '\0';
+
+    if (s1) ft_strcat(new_str, s1);
+    if (s2) ft_strcat(new_str, s2);
+    if (s3) ft_strcat(new_str, s3);
+
+    return (new_str);
+}

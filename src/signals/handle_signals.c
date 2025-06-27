@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 13:26:15 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 20:36:26 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/21 19:54:20 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,7 @@ void	setup_signals(void)
 **
 ** Nota: Todas las señales se configuran al inicio del programa y sólo se usan funciones
 ** permitidas por la Norme y el enunciado.
+
+
+man 7 signal
 ************************************************************/

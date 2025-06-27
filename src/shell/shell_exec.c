@@ -6,27 +6,167 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 14:49:39 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 09:10:26 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/27 20:55:17 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "parser.h"
-#include "exec.h"
+#include "lexer.h"
 #include "expand.h"
-#include "ast.h"
 
-void	parse_and_execute(t_shell *shell)
+int	shell_exec(t_shell *shell)
 {
-	shell->ast = parser_line(shell);
-	if (!shell->ast)
-		return ;
+	shell->tokens = lexer(shell->line);
+//	prueba_lexer(shell);
+    if (!shell->tokens)
+		return (0);
 	expand_variables(shell);
-	if (!check_syntax(shell->ast))
-	{
-		ft_dprintf(2, "minishell: syntax error\n");
-		return ;
-	}
-	execute_ast(shell->ast, shell);
+	prueba_env(shell);
+	prueba_expansion(shell);
+	return (shell->exit_status);
 }
 
+char	*token_type_str(t_token_type type)
+{
+	if (type == T_WORD)
+		return ("WORD");
+	if (type == T_PIPE)
+		return ("PIPE");
+	if (type == T_OR)
+		return ("OR");
+	if (type == T_AND)
+		return ("AND");
+	if (type == T_BG)
+		return ("BG");
+	if (type == T_SEMI)
+		return ("SEMI");
+	if (type == T_REDIR_IN)
+		return ("REDIR_IN");
+	if (type == T_REDIR_OUT)
+		return ("REDIR_OUT");
+	if (type == T_APPEND)
+		return ("APPEND");
+	if (type == T_HEREDOC)
+		return ("HEREDOC");
+	if (type == T_REDIR_ERR)
+		return ("REDIR_ERR");
+	if (type == T_APPEND_ERR)
+		return ("APPEND_ERR");
+	if (type == T_REDIR_ALL)
+		return ("REDIR_ALL");
+	if (type == T_APPEND_ALL)
+		return ("APPEND_ALL");
+	if (type == T_FORCE_OUT)
+		return ("FORCE_OUT");
+	if (type == T_HEREDOC_STR)
+		return ("HEREDOC_STR");
+	if (type == T_DUP_IN)
+		return ("DUP_IN");
+	if (type == T_DUP_OUT)
+		return ("DUP_OUT");
+	if (type == T_LPAREN)
+		return ("LPAREN");
+	if (type == T_RPAREN)
+		return ("RPAREN");
+	if (type == T_LBRACE)
+		return ("LBRACE");
+	if (type == T_RBRACE)
+		return ("RBRACE");
+	if (type == T_EQUAL)
+		return ("EQUAL");
+	if (type == T_UNKNOWN)
+		return ("UNKNOWN");
+	return ("OTHER");
+}
+
+static char	*quote_type_str(t_quote q)
+{
+	if (q == NO_QUOTE)
+		return ("NO_QUOTE");
+	if (q == SINGLE_QUOTE)
+		return ("SINGLE_QUOTE");
+	if (q == DOUBLE_QUOTE)
+		return ("DOUBLE_QUOTE");
+	return ("OTHER");
+}
+
+void	prueba_lexer(t_shell *shell)
+{
+	t_token	*tok;
+	int		i;
+
+	tok = shell->tokens;
+	i = 0;
+	if (!tok)
+	{
+		printf("No tokens found.\n");
+		return ;
+	}
+	while (tok)
+	{
+		printf("Token %d:\n", i);
+		printf("  value: \"%s\"\n", tok->value);
+		printf("  type: %s\n", token_type_str(tok->type));
+		printf("  quote: %s\n", quote_type_str(tok->quoted));
+		tok = tok->next;
+		i++;
+	}
+}
+
+void	prueba_env(t_shell *shell)
+{
+	t_env	*env;
+	int		i;
+
+	env = shell->env;
+	i = 0;
+	if (!env)
+	{
+		printf("No environment variables found.\n");
+		return ;
+	}
+	printf("Current environment variables:\n");
+	while (env)
+	{
+		printf("🧪 [%d] key = \"%s\" | value = \"%s\" | exported = %d\n",
+			i,
+			env->key ? env->key : "(null)",
+			env->value ? env->value : "(null)",
+			env->exported);
+		env = env->next;
+		i++;
+	}
+}
+
+void	prueba_expansion(t_shell *shell)
+{
+	t_token	*tok;
+	int		i;
+
+	tok = shell->tokens;
+	i = 0;
+	if (!tok)
+	{
+		printf("No tokens found for expansion.\n");
+		return ;
+	}
+	printf("Prueba de expansión:\n");
+	while (tok)
+	{
+		printf("Token %d:\n", i);
+		printf("  value: \"%s\"\n", tok->value ? tok->value : "(null)");
+		printf("  type: %s\n", token_type_str(tok->type));
+		printf("  quote: %s\n", quote_type_str(tok->quoted));
+		tok = tok->next;
+		i++;
+	}
+	printf("Prompt simulado: ");
+	tok = shell->tokens;
+	while (tok)
+	{
+		if (tok->value)
+			printf("%s ", tok->value);
+		tok = tok->next;
+	}
+	printf("\n");
+}

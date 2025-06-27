@@ -6,19 +6,19 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 08:56:24 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 20:13:56 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/26 03:20:59 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SIGNALS_H
 # define SIGNALS_H
 
-void	setup_signals(void);
-void	setup_ignore_signals(void);
-void	setup_prompt_signals(void);
-void	handle_sigint(int sig);
-void	handle_sigquit(int sig);
-void	disable_vquit(void);
-void	restore_vquit(void);
+void    setup_signals(void);
+void    setup_ignore_signals(void);
+void    setup_prompt_signals(void);
+void    handle_sigint(int sig);
+void    handle_sigquit(int sig);
+void    disable_vquit(void);
+void    restore_vquit(void);
 
 #endif

@@ -6,11 +6,12 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 16:36:48 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/11 17:03:56 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/26 14:26:08 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "lexer.h"
 
 /*
 ** Crea un nuevo token con el valor, tipo y tipo de comillas dados.
@@ -55,32 +56,6 @@ void	token_addback(t_token **lst, t_token *new)
 }
 
 /*
-** Decide el tipo del token dado un string y su longitud.
-** Llama a funciones auxiliares para cada familia de operadores.
-** Devuelve el tipo específico o T_WORD si no es operador.
-*/
-t_token_type	get_token_type(const char *str, int len)
-{
-	t_token_type	type;
-
-	type = get_pipe_and_or(str, len); // ahora detecta también paréntesis y llaves
-	if (type != T_UNKNOWN)
-		return (type);
-	type = get_semi_redir_left(str, len); // ahora detecta también =
-	if (type != T_UNKNOWN)
-		return (type);
-	type = get_redir_right(str, len);
-	if (type != T_UNKNOWN)
-		return (type);
-	type = get_redir_special(str, len);
-	if (type != T_UNKNOWN)
-		return (type);
-	return (T_WORD);
-}
-
-#include "minishell.h"
-
-/*
 ** Detecta si el string actual comienza un operador bash o símbolo especial.
 ** Si es así, devuelve 1, pone el tipo en *type y longitud en *len.
 ** Si no lo es, devuelve 0.
@@ -111,4 +86,26 @@ int	is_operator(const char *str, t_token_type *type, int *len)
 		i++;
 	}
 	return (0);
+}
+void	free_lexer_list_on_error(t_token **lst)
+{
+	if (lst && *lst)
+	{
+		free_token_list(*lst);
+		*lst = NULL;
+	}
+}
+
+int	try_add_token(t_token **lst, char *str, t_token_type type, t_quote quote)
+{
+	t_token	*tok;
+
+	tok = token_new(str, type, quote);
+	if (tok == NULL)
+	{
+		ft_strdel(&str);
+		return (0);
+	}
+	token_addback(lst, tok);
+	return (1);
 }

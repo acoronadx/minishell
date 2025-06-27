@@ -4,6 +4,8 @@
 		"random": "c",
 		"queue": "c",
 		"stack": "c",
-		"ast.h": "c"
+		"ast.h": "c",
+		"parser.h": "c",
+		"env.h": "c"
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 16:15:28 by rarodri2          #+#    #+#             */
-/*   Updated: 2025/06/17 07:58:25 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/26 06:48:16 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int					ft_isprint(int c);
 int					ft_isspace(int c);
 int					ft_isquote(int c);
 int					ft_issymbol(char c);
+int					ft_isnumeric(const char *str);
 char				*ft_itoa(int n);
 void				*ft_memchr(const void *s, int c, size_t n);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
@@ -55,24 +56,28 @@ char				**ft_split(char const *s, char c);
 char				*ft_strchr(const char *s, int c);
 char				*ft_strdup(const char *s1);
 char				*ft_strldup(const char *s, size_t size);
+char				**ft_strdup_array(char **array);
 char				*ft_strcat(char *dest, const char *src);
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strjoin_free_s1(char *s1, char *s2);
 char				*ft_strjoin_free_s2(char *s1, char *s2);
 char				*ft_strjoin_free_both(char *s1, char *s2);
+char				*ft_strjoin_three(const char *s1, const char *s2, const char *s3);
 void				ft_strdel(char **str);
 size_t				ft_strlcat(char *dst, const char *src, size_t size);
 size_t				ft_strlcpy(char *dst, const char *src, size_t size);
 int					ft_strlen(const char *str);
 int					ft_arraylen(char **array);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
-int					ft_strcmp(char *s1, char *s2);
+int					ft_strcmp(const char *s1, const char *s2);
 char				*ft_strcpy(char *str1, const char *str2);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 char				*ft_strnstr(const char *big, const char *little,
 						size_t len);
 char				*ft_strrchr(const char *s, int c);
+char				**ft_strtab(size_t size);
+void				ft_free_strtab(char **tab);
 char				*ft_strtrim(char const *s1, char const *set);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 int					ft_tolower(int c);

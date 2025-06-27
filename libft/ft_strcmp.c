@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rarodri2 <rarodri2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 11:36:54 by rarodri2          #+#    #+#             */
-/*   Updated: 2025/03/14 11:37:44 by rarodri2         ###   ########.fr       */
+/*   Updated: 2025/06/26 04:55:38 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strcmp(char *str1, char *str2)
+int	ft_strcmp(const char *s1, const char *s2)
 {
 	int	i;
 
 	i = 0;
-	while (str1[i] && str2[i] && str1[i] == str2[i])
+	while (s1[i] && s2[i] && s1[i] == s2[i])
 		i++;
-	return (str1[i] - str2[i]);
+	return (s1[i] - s2[i]);
 }

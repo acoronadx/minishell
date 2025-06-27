@@ -5,56 +5,56 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/11 16:27:52 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 08:35:57 by acoronad         ###   ########.fr       */
+/*   Created: 2025/06/27 20:17:25 by acoronad          #+#    #+#             */
+/*   Updated: 2025/06/28 00:19:38 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXPAND_H
 # define EXPAND_H
 
-# include "env.h"
-# include "lexer.h"
-# include "minishell.h"
-# include "parser.h"
-# include "ast.h"
-
-typedef struct s_ast t_ast;
-typedef struct s_shell t_shell;
+# include "minishell.h"  // t_shell, t_token_type
+# include "env.h"        // t_env
 
 /*
-** Expande las variables presentes en el string 'str' usando el entorno de shell.
-** Devuelve una nueva cadena con las variables expandidas.
+** expand_variables.c
+** Recorre todos los tokens del shell y aplica expansión.
+** Puede modificar tokens in-place o reemplazarlos.
+*/
+int		expand_variables(t_shell *shell);
+/*
+** Expande una sola cadena, devolviendo una nueva cadena con las expansiones.
 */
 char	*expand_token(const char *str, t_shell *shell);
 
 /*
-** Expande todas las variables de los argumentos de cada comando de la lista.
-** Solo expande si el argumento no está entre comillas simples.
-*/
-void	expand_variables(t_shell *shell);
-/*
-** Busca el valor de una variable en la lista enlazada de entorno.
-** Devuelve un puntero a value o "" si no existe la variable.
+** handle_dollar.c
+** Funciones para gestionar la expansión de variables tipo $VAR.
 */
 char	*find_var(t_env *env, char *name);
-
-/*
-** Expande $? insertando el exit_status en res.
-** Devuelve el nuevo índice j tras copiar el valor.
-*/
-int		handle_exit_status(char *res, int j, int *i, t_shell *shell);
-
-/*
-** Expande el nombre de variable a partir de str[*i] y la copia en res.
-** Devuelve el nuevo índice j tras copiar el valor.
-*/
-int		handle_varname(const char *str, int *i, char *res, int j, t_shell *shell);
-
-/*
-** Gestiona la expansión cuando encuentra un '$' en la cadena.
-** Llama a la función correspondiente según el tipo de variable.
-*/
 int		handle_dollar(const char *str, int *i, char *res, int j, t_shell *shell);
+
+/*
+** calculate_expand_len.c
+** Calcula la longitud total necesaria para la expansión de una cadena.
+*/
+size_t	calculate_expanded_len(const char *str, t_shell *shell);
+
+/*
+** handle_expand_cases.c
+** Funciones para calcular longitudes específicas de expansiones especiales.
+*/
+size_t	handle_pid_len(void);
+size_t	handle_exit_status_len(t_shell *shell);
+size_t	handle_dollar_len(const char *str, int *i, t_shell *shell);
+char	*get_program_name_str(t_shell *shell);
+
+/*
+** expand_tilde.c
+** Funciones para manejar la expansión del tilde (~).
+*/
+int		copy_tilde(const char *str, int *i, char *res, int *j, t_shell *shell);
+char	*expand_tilde_internal(const char *str, t_shell *shell);
+size_t	get_tilde_prefix_len(const char *str);
 
 #endif

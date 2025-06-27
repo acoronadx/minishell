@@ -5,7 +5,7 @@
 NAME        = minishell
 
 CC          = gcc
-CFLAGS      = -Wall -Wextra -Werror -g
+CFLAGS      = -Wall -Wextra -Werror -g3
 INCLUDES    = -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl
 
 LIBFT_DIR   = libft

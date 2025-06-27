@@ -5,12 +5,25 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/27 14:42:10 by acoronad          #+#    #+#             */
+/*   Updated: 2025/06/27 20:01:59 by acoronad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_env_list.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:28:27 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 08:23:06 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/26 06:18:34 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "env.h"
 
 /*
 ** Crea un nuevo nodo de variable de entorno (t_env).
@@ -45,6 +58,7 @@ t_env	*env_create(char *key, char *value, int exported)
 ** Si no, recorre la lista y lo añade al final.
 ** No hace nada si alguno de los punteros es NULL.
 */
+
 void	env_add_back(t_env **env, t_env *new)
 {
 	t_env	*tmp;
@@ -70,28 +84,43 @@ void	env_add_back(t_env **env, t_env *new)
 ** Devuelve el inicio de la lista, o NULL si falla algún malloc.
 ** Ejemplo de uso: shell->env = init_env_list(envp);
 */
+static t_env	*create_exported_env_var(char *str, t_env **env)
+{
+	char	*sep;
+	char	*key;
+	t_env	*new;
+
+	sep = ft_strchr(str, '=');
+	key = ft_substr(str, 0, sep - str);
+	if (!key)
+	{
+		free_env_list(*env);
+		return (NULL);
+	}
+	new = env_create(key, sep + 1, 1);
+	free(key);
+	if (!new)
+	{
+		free_env_list(*env);
+		return (NULL);
+	}
+	env_add_back(env, new);
+	return (*env);
+}
+
 t_env	*init_env_list(char **envp)
 {
 	t_env	*env;
-	char	*sep;
-	t_env	*new;
 	int		i;
 
 	env = NULL;
 	i = 0;
 	while (envp[i])
 	{
-		sep = ft_strchr(envp[i], '=');
-		if (sep)
+		if (ft_strchr(envp[i], '='))
 		{
-			new = env_create(
-				ft_substr(envp[i], 0, sep - envp[i]),
-				sep + 1,
-				1
-			);
-			if (!new)
+			if (!create_exported_env_var(envp[i], &env))
 				return (NULL);
-			env_add_back(&env, new);
 		}
 		i++;
 	}
