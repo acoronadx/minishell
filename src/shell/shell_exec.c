@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 14:49:39 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/27 20:55:17 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/28 01:08:17 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	shell_exec(t_shell *shell)
     if (!shell->tokens)
 		return (0);
 	expand_variables(shell);
-	prueba_env(shell);
+//	prueba_env(shell);
 	prueba_expansion(shell);
 	return (shell->exit_status);
 }

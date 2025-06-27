@@ -6,48 +6,68 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 00:16:36 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/28 00:16:46 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/28 01:26:07 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// ─── calculate_expanded_len.c ───
 
 #include "minishell.h"
 #include "expand.h"
 #include "env.h"
 
-// --- Funciones auxiliares para el cálculo de longitud ---
-
-size_t calculate_expanded_len(const char *str, t_shell *shell)
+static size_t	handle_tilde_len(const char *str, int *i, t_shell *shell)
 {
-    size_t  len = 0;
-    int     i = 0;
-    char    *tilde_expanded;
-    size_t  tilde_len;
+	char	*tilde_exp;
+	size_t	len;
 
-    while (str[i])
-    {
-        if (str[i] == '$' && str[i + 1])
-        {
-            i++; // Saltar el '$'
-            size_t dollar_len = handle_dollar_len(str, &i, shell);
-            if (dollar_len == (size_t)-1) // Indicar error de malloc si itoa falla aquí
-                return ((size_t)-1);
-            len += dollar_len;
-        }
-        else if (str[i] == '~' && (i == 0 || ft_isspace(str[i - 1]))) // Posible tilde al inicio o después de espacio
-        {
-            // Para calcular la longitud de la tilde expandida, la expandimos temporalmente
-            tilde_expanded = expand_tilde_internal(str + i, shell);
-            if (!tilde_expanded) return ((size_t)-1); // Error de malloc en ft_strdup o ft_strjoin
-            tilde_len = ft_strlen(tilde_expanded);
-            len += tilde_len;
-            i += get_tilde_prefix_len(str + i); // Avanzar 'i' la longitud de la tilde reconocida
-            free(tilde_expanded); // Liberar la expansión temporal
-        }
-        else
-        {
-            len++;
-            i++;
-        }
-    }
-    return (len);
+	tilde_exp = expand_tilde_internal(str + *i, shell);
+	if (!tilde_exp)
+		return ((size_t)-1);
+	len = ft_strlen(tilde_exp);
+	*i += get_tilde_prefix_len(str + *i);
+	free(tilde_exp);
+	return (len);
+}
+
+static size_t	handle_regular_char(const char *str, int *i)
+{
+	(void)str;
+	(*i)++;
+	return (1);
+}
+
+static size_t	handle_dollar_and_advance(const char *str, int *i, t_shell *shell)
+{
+	size_t	len;
+
+	(*i)++;
+	len = handle_dollar_len(str, i, shell);
+	if (len == (size_t)-1)
+		return ((size_t)-1);
+	(*i)++; // movernos tras la variable expandida
+	return (len);
+}
+
+size_t	calculate_expanded_len(const char *str, t_shell *shell)
+{
+	size_t	total;
+	int		i;
+	size_t	len;
+
+	total = 0;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$' && str[i + 1])
+			len = handle_dollar_and_advance(str, &i, shell);
+		else if (str[i] == '~' && (i == 0 || ft_isspace(str[i - 1])))
+			len = handle_tilde_len(str, &i, shell);
+		else
+			len = handle_regular_char(str, &i);
+		if (len == (size_t)-1)
+			return ((size_t)-1);
+		total += len;
+	}
+	return (total);
 }

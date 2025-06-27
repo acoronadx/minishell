@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 02:45:20 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/28 00:17:01 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/28 01:29:10 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 #include "expand.h"
 #include "env.h"
 
-/*
-** Expande las variables presentes en el string str usando el entorno shell.
-** Devuelve una nueva cadena con las variables expandidas.
-** Retorna NULL en caso de error de asignación de memoria.
-*/
 char    *expand_token(const char *str, t_shell *shell)
 {
     int     i;
@@ -49,7 +44,7 @@ char    *expand_token(const char *str, t_shell *shell)
                 free(res);
                 return (NULL);
             }
-            j = new_j;
+            j += new_j;  // Aquí sumamos, no asignamos
         }
         else if (str[i] == '~' && (i == 0 || ft_isspace(str[i - 1])))
         {
@@ -75,19 +70,13 @@ char    *expand_token(const char *str, t_shell *shell)
     return (res);
 }
 
-
-/*
-** Expande todas las variables de los tokens en la lista de shell.
-** Modifica la lista in-situ.
-** Retorna 0 en caso de éxito, -1 en caso de error de memoria.
-*/
 int expand_variables(t_shell *shell)
 {
     t_token *current_token;
     char    *expanded_value;
 
     if (!shell->tokens)
-        return (0); // No hay tokens, éxito.
+        return (0);
 
     current_token = shell->tokens;
     while (current_token)
@@ -98,17 +87,16 @@ int expand_variables(t_shell *shell)
             expanded_value = expand_token(current_token->value, shell);
             if (!expanded_value)
             {
-                // Error crítico: liberar todos los tokens ya procesados/originales.
                 free_token_list(shell->tokens);
-                shell->tokens = NULL; // Importante: la lista ya no es válida
-                return (-1); // Indicar que la expansión falló
+                shell->tokens = NULL;
+                return (-1);
             }
-            free(current_token->value); // Liberar el valor original
-            current_token->value = expanded_value; // Asignar el nuevo valor expandido
+            free(current_token->value);
+            current_token->value = expanded_value;
         }
         current_token = current_token->next;
     }
-    return (0); // Éxito
+    return (0);
 }
 
 
