@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:24:24 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/26 14:29:33 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/28 04:39:13 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void			token_addback(t_token **lst, t_token *new);
 void			free_token_list(t_token *tok);
 void			free_lexer_list_on_error(t_token **lst);
 int				try_add_token(t_token **lst, char *str, t_token_type type, t_quote quote);
+void			next_token(t_token **cur);
 
 // Detección y utilidades de tipos de tokens
 t_token_type	get_token_type(const char *str, int len);

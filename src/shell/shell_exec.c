@@ -6,13 +6,15 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 14:49:39 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/28 01:08:17 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/28 04:17:31 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "lexer.h"
 #include "expand.h"
+#include "parser.h"
+#include "ast.h"
 
 int	shell_exec(t_shell *shell)
 {
@@ -21,8 +23,14 @@ int	shell_exec(t_shell *shell)
     if (!shell->tokens)
 		return (0);
 	expand_variables(shell);
+    shell->ast = build_ast(shell->tokens);
+    free_token_list(shell->tokens);
+    shell->tokens = NULL;
+    if (!shell->ast) // Si build_ast devolvió NULL, es porque ya hubo un error de sintaxis reportado o malloc falló.
+        return (0);
 //	prueba_env(shell);
-	prueba_expansion(shell);
+//	prueba_expansion(shell);
+	prueba_ast(shell);
 	return (shell->exit_status);
 }
 
@@ -169,4 +177,112 @@ void	prueba_expansion(t_shell *shell)
 		tok = tok->next;
 	}
 	printf("\n");
+}
+
+#include <stdio.h>
+
+static void print_indent(int level)
+{
+    while (level--)
+        printf("  ");
+}
+
+void prueba_ast(t_shell *shell)
+{
+    if (!shell || !shell->ast)
+    {
+        printf("No hay AST que mostrar.\n");
+        return;
+    }
+    printf("======= AST DEBUG =======\n");
+    print_ast_debug(shell->ast, 0);
+    printf("=========================\n");
+}
+#include <stdio.h>
+
+void print_ast_debug(t_ast *node, int level)
+{
+    if (!node)
+        return;
+
+    print_indent(level);
+    printf("Node type: ");
+
+    if (node->type == N_COMMAND)
+    {
+        printf("N_COMMAND\n");
+        print_indent(level);
+        printf("  argv:");
+        if (node->cmd.argv)
+        {
+            for (int i = 0; node->cmd.argv[i]; i++)
+                printf(" \"%s\"", node->cmd.argv[i]);
+        }
+        printf("\n");
+
+        if (node->cmd.redirections)
+        {
+            print_indent(level);
+            printf("  redirections:\n");
+            t_ast *redir = node->cmd.redirections;
+            while (redir)
+            {
+                print_ast_debug(redir, level + 2);
+                redir = redir->bin.right; // asumimos lista ligada con bin.right
+            }
+        }
+    }
+    else if (node->type == N_REDIR)
+    {
+        printf("N_REDIR\n");
+        print_indent(level);
+        printf("  redir_type: %d\n", node->redir.redir_type);
+        print_indent(level);
+        printf("  filename: \"%s\"\n", node->redir.filename);
+        print_indent(level);
+        printf("  delimiter: \"%s\"\n", node->redir.delimiter ? node->redir.delimiter : "NULL");
+        print_indent(level);
+        printf("  redir_fd: %d\n", node->redir.redir_fd);
+    }
+    else if (node->type == N_PIPE || node->type == N_AND
+             || node->type == N_OR || node->type == N_SEQUENCE
+             || node->type == N_BACKGROUND)
+    {
+        const char *type_str = (node->type == N_PIPE) ? "N_PIPE" :
+                              (node->type == N_AND) ? "N_AND" :
+                              (node->type == N_OR) ? "N_OR" :
+                              (node->type == N_SEQUENCE) ? "N_SEQUENCE" :
+                              (node->type == N_BACKGROUND) ? "N_BACKGROUND" : "UNKNOWN";
+
+        printf("%s\n", type_str);
+        print_indent(level);
+        printf("  left:\n");
+        print_ast_debug(node->bin.left, level + 1);
+        print_indent(level);
+        printf("  right:\n");
+        print_ast_debug(node->bin.right, level + 1);
+    }
+    else if (node->type == N_SUBSHELL)
+    {
+        printf("N_SUBSHELL\n");
+        print_indent(level);
+        printf("  child:\n");
+        print_ast_debug(node->subshell.child, level + 1);
+
+        if (node->subshell.redirections)
+        {
+            print_indent(level);
+            printf("  redirections:\n");
+            t_ast *redir = node->subshell.redirections;
+            while (redir)
+            {
+                print_ast_debug(redir, level + 2);
+                redir = redir->bin.right;
+            }
+        }
+    }
+    else
+    {
+        printf("Unknown node type %d\n", node->type);
+    }
 }

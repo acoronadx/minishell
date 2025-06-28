@@ -6,11 +6,11 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 07:57:56 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/17 07:57:58 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/28 04:08:41 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft.h"
 
 void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 {

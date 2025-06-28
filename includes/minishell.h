@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 13:10:22 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/27 20:30:41 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/28 04:15:04 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,9 @@ int		handle_help_version(int argc, char **argv);
 void	prueba_lexer(t_shell *shell);
 void	prueba_env(t_shell *shell);
 void	prueba_expansion(t_shell *shell);
+void	prueba_ast(t_shell *shell);
+void print_ast_debug(t_ast *node, int level);
+
 int		shell_exec(t_shell *shell);
 //void	parse_and_execute(t_shell *shell);
 //int		check_syntax(t_ast *ast);
