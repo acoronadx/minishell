@@ -6,14 +6,14 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 01:03:45 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/28 04:41:02 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/30 01:14:19 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "lexer.h"
 #include "parser.h"
 #include "ast.h"
-#include "lexer.h"
 
 int	is_redirection(t_token *tok)
 {
@@ -33,7 +33,6 @@ int	is_redirection(t_token *tok)
 		|| tok->type == T_DUP_OUT
 	);
 }
-
 
 // Convierte t_token_type a t_redir_type
 t_redir_type	token_type_to_redir_type(t_token_type type)
@@ -70,6 +69,7 @@ int	parse_redirections(t_token **cur, t_ast **head, t_ast **tail)
 	t_token			*file_tok;
 	t_redir_type	rtype;
 	char			*filename_dup;
+	int				fd;
 
 	while (*cur && is_redirection(*cur))
 	{
@@ -91,15 +91,26 @@ int	parse_redirections(t_token **cur, t_ast **head, t_ast **tail)
 		if (!filename_dup)
 			return (0);
 
-		new_redir = ast_new_redir(filename_dup, NULL, rtype, -1);
+		if (rtype == REDIR_HEREDOC)
+		{
+			fd = heredoc_read(filename_dup);
+			if (fd == -1)
+			{
+				free(filename_dup);
+				return (0);
+			}
+			new_redir = ast_new_redir(filename_dup, NULL, rtype, fd);
+		}
+		else
+		{
+			new_redir = ast_new_redir(filename_dup, NULL, rtype, -1);
+		}
 		if (!new_redir)
 		{
 			free(filename_dup);
 			return (0);
 		}
-
 		next_token(cur);
-
 		if (!*head)
 		{
 			*head = new_redir;

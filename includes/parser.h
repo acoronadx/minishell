@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 19:07:19 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/28 03:59:43 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/30 18:36:16 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,14 @@ t_ast   *parser_line(t_shell *shell);
 t_ast   *parse_pipeline(t_token **cur);
 t_ast   *parse_background(t_token **cur);
 t_ast   *parse_command_and_redirections(t_token **cur);
-t_ast   *parse_group(t_token **cur);
+t_ast   *parse_subshell(t_token **cur);
 char    **parse_arguments(t_token **cur);
 char    **add_argument(char **argv, int *argc, int *size, const char *arg);
+int		heredoc_read(char *delimiter);
 
 // Para manejar comandos simples, subshells y argumentos
 t_ast   *parse_simple_command(t_token **cur);
-t_ast   *parse_group(t_token **cur);
+t_ast   *parse_subshell(t_token **cur);
 char    **parse_arguments(t_token **cur);
 
 // Para crear el nodo final del comando

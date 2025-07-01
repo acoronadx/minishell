@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 06:56:48 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/28 03:26:31 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/29 14:16:27 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_ast	*parse_command_and_redirections(t_token **cur)
 	if (!parse_redirections(cur, &redir_head, &redir_tail))
 		return (NULL);
 	if (*cur && (*cur)->type == T_LPAREN)
-		cmd_node = parse_group(cur);
+		cmd_node = parse_subshell(cur);
 	else if (*cur && (*cur)->type == T_WORD)
 		cmd_node = parse_simple_command(cur);
 	else

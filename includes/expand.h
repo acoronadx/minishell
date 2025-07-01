@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 20:17:25 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/28 00:19:38 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/30 18:38:14 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int		expand_variables(t_shell *shell);
 ** Expande una sola cadena, devolviendo una nueva cadena con las expansiones.
 */
 char	*expand_token(const char *str, t_shell *shell);
+
+char	*expand_value(const char *str, int *i, t_shell *shell);
 
 /*
 ** handle_dollar.c

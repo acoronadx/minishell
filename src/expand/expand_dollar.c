@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 00:15:35 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/28 01:21:48 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:25:22 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static char	*expand_named_var(const char *str, int *i, t_shell *shell)
 	return (ft_strdup(value));
 }
 
-static char	*expand_value(const char *str, int *i, t_shell *shell)
+char	*expand_value(const char *str, int *i, t_shell *shell)
 {
 	char	*res;
 
@@ -78,12 +78,12 @@ int	handle_dollar(const char *str, int *i, char *res, int j, t_shell *shell)
 	char	*expanded;
 	int		len;
 
-	(*i)++;
-	expanded = expand_value(str, i, shell);
+	(*i)++; // saltar el $
+	expanded = expand_value(str, i, shell); // debe avanzar i igual que en cálculo de len
 	if (!expanded)
 		return (-1);
 	len = ft_strlen(expanded);
-	ft_strlcpy(res + j, expanded, len + 1);
+	ft_memcpy(res + j, expanded, len);
 	free(expanded);
 	return (len);
 }

@@ -1,46 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtab.c                                        :+:      :+:    :+:   */
+/*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/26 01:37:30 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/30 00:43:33 by acoronad         ###   ########.fr       */
+/*   Created: 2025/06/29 14:31:23 by acoronad          #+#    #+#             */
+/*   Updated: 2025/06/29 15:41:02 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef BUILTINS_H
+#define BUILTINS_H
 
-char	**ft_strtab(size_t size)
-{
-	char	**tab;
-	size_t	i;
+#include "minishell.h"
+#include "ast.h"
+#include "exec.h"
 
-	tab = malloc(sizeof(char *) * (size + 1));
-	if (!tab)
-		return (NULL);
-	i = 0;
-	while (i < size)
-	{
-		tab[i] = NULL;
-		i++;
-	}
-	tab[size] = NULL;
-	return (tab);
-}
+int		is_builtin(const char *cmd);
+int		run_builtin(t_ast *node, t_shell *shell);
 
-void	ft_free_strtab(char **tab)
-{
-	size_t	i;
-
-	if (!tab)
-		return ;
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-}
+#endif

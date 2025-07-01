@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 03:25:37 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/27 19:58:09 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/30 00:46:03 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,35 @@ void    cleanup_shell(t_shell *shell)
 
     // Restaura la configuración del terminal (si aplica)
     restore_vquit(); // Asumido que restaura los manejadores de señales o modos del terminal
+}
+
+int	print_exec_error(t_shell *shell, const char *cmd, int err_code)
+{
+	int	status;
+
+	if (err_code == ENOENT)
+	{
+		ft_dprintf(2, "minishell: %s: command not found\n", cmd);
+		status = 127;
+	}
+	else if (err_code == EACCES)
+	{
+		if (ft_strchr(cmd, '/'))
+			ft_dprintf(2, "%s: Permission denied\n", cmd);
+		else
+			ft_dprintf(2, "minishell: %s: permission denied\n", cmd);
+		status = 126;
+	}
+	else if (err_code == EISDIR)
+	{
+		ft_dprintf(2, "minishell: %s: is a directory\n", cmd);
+		status = 126;
+	}
+	else
+	{
+		ft_dprintf(2, "minishell: %s: execution error\n", cmd);
+		status = 1;
+	}
+	shell->exit_status = status;
+	return (status);
 }

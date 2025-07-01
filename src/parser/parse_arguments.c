@@ -6,11 +6,10 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 03:14:32 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/28 04:07:40 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:35:57 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "parser.h"
 #include "lexer.h"
 
@@ -43,6 +42,7 @@ char	**add_argument(char **argv, int *argc, int *size, const char *value)
 	argv[*argc] = NULL;
 	return (argv);
 }
+
 char	**parse_arguments(t_token **cur)
 {
 	int		size;
@@ -55,7 +55,6 @@ char	**parse_arguments(t_token **cur)
 	if (!argv)
 		return (NULL);
 	argv[0] = NULL;
-
 	while (*cur && (*cur)->type == T_WORD)
 	{
 		argv = add_argument(argv, &argc, &size, (*cur)->value);

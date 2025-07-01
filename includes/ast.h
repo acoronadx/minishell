@@ -6,17 +6,17 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:24:41 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/28 04:40:22 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/30 06:13:15 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AST_H
 # define AST_H
 
-# include "lexer.h"      // t_token_type si usas tokens
-# include "minishell.h"  // t_shell y utilidades
-# include "env.h"        // t_env si necesario
-# include "parser.h"     // funciones parser
+# include "lexer.h"
+# include "minishell.h"
+# include "env.h"
+# include "parser.h"
 
 typedef struct s_ast t_ast;
 typedef struct s_shell t_shell; // forward declaration

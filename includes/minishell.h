@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 13:10:22 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/28 04:15:04 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/29 15:43:49 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,12 @@
 #include <errno.h>
 #include <limits.h>
 #include "libft.h"
-//#include "env.h"
+#include "env.h"
 #include "lexer.h"
+#include "parser.h"
+#include "ast.h"
+#include "exec.h"
+#include "builtins.h"
 #include "signals.h"
 
 typedef struct s_ast t_ast;
@@ -60,13 +64,14 @@ typedef struct s_shell
 }       t_shell;
 
 // Shell modes and flags
-int	run_shell_modes(int argc, char **argv, char **envp, t_shell *shell);
+int		run_shell_modes(int argc, char **argv, char **envp, t_shell *shell);
 
 // Inicialización y limpieza del shell
 int		init_shell_name(t_shell *shell, char **argv);
 int		init_env(t_shell *shell, char **envp);
 void    cleanup_shell(t_shell *shell);
 void    cleanup_loop(t_shell *shell);
+int		print_exec_error(t_shell *shell, const char *cmd, int err_code);
 
 // Funciones de ayuda/uso/version
 void	print_help(void);
@@ -79,7 +84,7 @@ void	prueba_lexer(t_shell *shell);
 void	prueba_env(t_shell *shell);
 void	prueba_expansion(t_shell *shell);
 void	prueba_ast(t_shell *shell);
-void print_ast_debug(t_ast *node, int level);
+void	print_ast_debug(t_ast *node, int level);
 
 int		shell_exec(t_shell *shell);
 //void	parse_and_execute(t_shell *shell);

@@ -6,12 +6,14 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 08:56:24 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/26 03:20:59 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/30 01:12:29 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SIGNALS_H
 # define SIGNALS_H
+
+extern volatile sig_atomic_t g_signal;
 
 void    setup_signals(void);
 void    setup_ignore_signals(void);

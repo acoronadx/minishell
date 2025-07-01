@@ -1,46 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtab.c                                        :+:      :+:    :+:   */
+/*   is_builtin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/26 01:37:30 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/30 00:43:33 by acoronad         ###   ########.fr       */
+/*   Created: 2025/06/29 14:38:44 by acoronad          #+#    #+#             */
+/*   Updated: 2025/06/29 15:51:53 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "builtins.h"
 
-char	**ft_strtab(size_t size)
+int	is_builtin(const char *cmd)
 {
-	char	**tab;
-	size_t	i;
-
-	tab = malloc(sizeof(char *) * (size + 1));
-	if (!tab)
-		return (NULL);
-	i = 0;
-	while (i < size)
-	{
-		tab[i] = NULL;
-		i++;
-	}
-	tab[size] = NULL;
-	return (tab);
-}
-
-void	ft_free_strtab(char **tab)
-{
-	size_t	i;
-
-	if (!tab)
-		return ;
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
+	if (!cmd)
+		return (0);
+	if (ft_strcmp(cmd, "echo") == 0
+		|| ft_strcmp(cmd, "cd") == 0
+		|| ft_strcmp(cmd, "pwd") == 0
+		|| ft_strcmp(cmd, "export") == 0
+		|| ft_strcmp(cmd, "unset") == 0
+		|| ft_strcmp(cmd, "env") == 0
+		|| ft_strcmp(cmd, "exit") == 0)
+		return (1);
+	return (0);
 }

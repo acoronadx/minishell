@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 14:49:39 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/28 04:17:31 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/30 17:18:56 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,17 @@ int	shell_exec(t_shell *shell)
 //	prueba_lexer(shell);
     if (!shell->tokens)
 		return (0);
+//	prueba_env(shell);
 	expand_variables(shell);
+//	prueba_expansion(shell);
+
     shell->ast = build_ast(shell->tokens);
     free_token_list(shell->tokens);
     shell->tokens = NULL;
-    if (!shell->ast) // Si build_ast devolvió NULL, es porque ya hubo un error de sintaxis reportado o malloc falló.
-        return (0);
-//	prueba_env(shell);
-//	prueba_expansion(shell);
-	prueba_ast(shell);
+    if (!shell->ast)
+		return (0);
+	execute_ast(shell->ast, shell);
+//	prueba_ast(shell);
 	return (shell->exit_status);
 }
 

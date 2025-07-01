@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 00:08:05 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/28 01:23:10 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:31:18 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "expand.h"
 #include "env.h"
 
+/*
 size_t handle_dollar_len(const char *str, int *i, t_shell *shell)
 {
     // str[*i] ya es el caracter justo después de '$'
@@ -33,7 +34,7 @@ size_t handle_dollar_len(const char *str, int *i, t_shell *shell)
     else
         return (1);
 }
-
+*/
 
 size_t handle_exit_status_len(t_shell *shell)
 {

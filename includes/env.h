@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 19:37:31 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/27 19:42:31 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:40:51 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 
 # include "minishell.h"
 
+typedef struct s_shell t_shell;
 typedef struct s_env t_env;
 
 // --- Prototipos de funciones de init_env_list.c ---
@@ -36,5 +37,10 @@ void	env_add_back(t_env **env, t_env *new);
 
 // --- Prototipos de funciones de env_free.c ---
 void    free_env_list(t_env *env);
+
+// --- Prototipos de funciones de manipulación de env ---
+char	*get_env_value(t_shell *shell, const char *key);
+char	**env_to_array(t_env *env);
+
 
 #endif

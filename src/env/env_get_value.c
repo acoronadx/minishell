@@ -1,46 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtab.c                                        :+:      :+:    :+:   */
+/*   env_get_value.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/26 01:37:30 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/30 00:43:33 by acoronad         ###   ########.fr       */
+/*   Created: 2025/06/29 14:53:52 by acoronad          #+#    #+#             */
+/*   Updated: 2025/06/29 14:58:09 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
+#include "env.h"
 
-char	**ft_strtab(size_t size)
+char	*get_env_value(t_shell *shell, const char *key)
 {
-	char	**tab;
-	size_t	i;
+	t_env	*env;
 
-	tab = malloc(sizeof(char *) * (size + 1));
-	if (!tab)
+	if (!shell || !key)
 		return (NULL);
-	i = 0;
-	while (i < size)
+	env = shell->env;
+	while (env)
 	{
-		tab[i] = NULL;
-		i++;
+		if (env->key && !ft_strcmp(env->key, key))
+			return (env->value);
+		env = env->next;
 	}
-	tab[size] = NULL;
-	return (tab);
-}
-
-void	ft_free_strtab(char **tab)
-{
-	size_t	i;
-
-	if (!tab)
-		return ;
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
+	return (NULL);
 }
