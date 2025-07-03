@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 14:49:39 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/30 17:18:56 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/07/03 09:40:28 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,21 @@
 int	shell_exec(t_shell *shell)
 {
 	shell->tokens = lexer(shell->line);
-//	prueba_lexer(shell);
-    if (!shell->tokens)
-		return (0);
-//	prueba_env(shell);
+	if (!shell->tokens)
+	{
+		shell->exit_status = 2; // Error de sintaxis como Bash
+		return (2);
+	}
 	expand_variables(shell);
-//	prueba_expansion(shell);
-
-    shell->ast = build_ast(shell->tokens);
-    free_token_list(shell->tokens);
-    shell->tokens = NULL;
-    if (!shell->ast)
-		return (0);
+	shell->ast = build_ast(shell->tokens);
+	free_token_list(shell->tokens);
+	shell->tokens = NULL;
+	if (!shell->ast)
+	{
+		shell->exit_status = 2; // Error de sintaxis como Bash
+		return (2);
+	}
 	execute_ast(shell->ast, shell);
-//	prueba_ast(shell);
 	return (shell->exit_status);
 }
 
