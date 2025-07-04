@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 02:45:20 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/30 16:23:27 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/07/04 12:03:57 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,23 @@ char	*expand_token(const char *str, t_shell *shell)
 	size_t	required_len;
 	int		added;
 
+	i = 0;
+	j = 0;
 	required_len = calculate_expanded_len(str, shell);
 	if (required_len == (size_t)-1)
 		return (NULL);
 	res = ft_calloc(required_len + 1, 1);
 	if (!res)
 		return (NULL);
-	i = 0;
-	j = 0;
 	while (str[i])
 	{
-		if (str[i] == '$')
+		if (str[i] == '\\' && str[i + 1] == '$')
+		{
+			res[j] = '$';
+			i += 2;
+			j++;
+		}
+		else if (str[i] == '$')
 		{
 			added = handle_dollar(str, &i, res, j, shell);
 			if (added == -1)

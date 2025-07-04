@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 14:44:03 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/29 15:52:40 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/07/04 12:35:45 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,6 @@
 
 int run_builtin(t_ast *node, t_shell *shell)
 {
-	(void)shell; // Por ahora no usamos shell, pero lo dejamos por si acaso
-	(void)node; // Por ahora no usamos node, pero lo dejamos por si acaso
-		ft_dprintf(2, "estamos corriendo run_builtin\n");
-	return(0);
-	/*
 	char **argv;
 
 	if (!node || !node->cmd.argv || !node->cmd.argv[0])
@@ -42,5 +37,4 @@ int run_builtin(t_ast *node, t_shell *shell)
 	if (ft_strcmp(argv[0], "exit") == 0)
 		return (run_exit(argv, shell));
 	return (1);
-	*/
 }

@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 13:09:44 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/28 01:32:36 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/07/04 11:53:43 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,27 @@
 
 static int	ft_quotes_closed(const char *line)
 {
-	int	single;
-	int	double_;
+	int	i;
+	int	state;
 
-	single = 0;
-	double_ = 0;
-	while (*line)
+	i = 0;
+	state = 0;
+	while (line[i])
 	{
-		if (*line == '\'' && double_ % 2 == 0)
-			single++;
-		else if (*line == '"' && single % 2 == 0)
-			double_++;
-		line++;
+		if (!state && (line[i] == '\'' || line[i] == '"'))
+			state = line[i];
+		else if (state == '\'' && line[i] == '\'')
+			state = 0;
+		else if (state == '"' && line[i] == '\\' &&
+			(line[i + 1] == '"' || line[i + 1] == '\\' || line[i + 1] == '`'))
+			i++;
+		else if (state == '"' && line[i] == '"')
+			state = 0;
+		else if (!state && line[i] == '\\' && line[i + 1])
+			i++;
+		i++;
 	}
-	return ((single % 2 == 0) && (double_ % 2 == 0));
+	return (state == 0);
 }
 
 char	*read_full_line(t_shell *shell)

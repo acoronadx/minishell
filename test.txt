@@ -1,0 +1,139 @@
+echo hola mundo                         # Builtin
+ls -l /bin                              # Externo simple
+/bin/pwd                                     # Builtin
+/bin/env                                     # Builtin
+/bin/echo hola > file.txt                    # Redirección de salida
+cat < file.txt                          # Redirección de entrada
+/bin/echo otra >> file.txt                   # Append
+cat noexiste 2> err.txt                 # Redirigir stderr
+ls 1> out.txt 2> err.txt                # stdout y stderr separados
+ls &> todo.txt                          # stdout y stderr juntos
+/bin/echo hola >| file.txt                   # Redirección forzada
+cat <&0                                # Duplicar entrada
+/bin/echo hola >&1                           # Duplicar salida
+/bin                                   # Ejecutar un directorio → EISDIR
+./noexistente                          # Comando no encontrado → ENOENT
+ls > /no_perm                         # Sin permisos → EACCES
+/bin/echo hola > /root/test.txt            # EACCES por falta de permisos
+/bin/echo $HOME
+/bin/echo "$PATH"
+/bin/echo $HOME $PATH
+/bin/echo uno && /bin/echo dos
+/bin/false || /bin/echo se ejecuta
+false && /bin/echo no se ejecuta
+/bin/echo uno; /bin/echo dos
+(/bin/echo subshell)
+(/bin/echo uno && /bin/echo dos)
+/bin/echo hola > out.txt && cat < out.txt
+/bin/echo err > /tmp/test 2>> /tmp/test
+(/bin/echo hola > hola.txt; cat hola.txt)
+""                         # Vacío pero válido
+/bin/echo ""                   # Vacío entre comillas
+/bin/echo exportando; /usr/bin/env | /usr/bin/grep TEST
+'/bin/echo hola'               # Comillas simples sin expansión
+/bin/echo hola\ mundo          # Escape
+echo uno\ dos\ tres				# Esperado: uno dos tres
+echo signo\? interrogacion
+minishell$ /bin/echo barra\|vertical
+echo barra\\invertida
+/bin/echo comilla\'simple
+/bin/echo comilla\"doble
+/bin/echo "comilla\"doble"
+/bin/echo 'comilla\'simple'
+/bin/echo expansion\$USER
+"/bin/echo hola"               # Comillas dobles
+ls -z                     # Opción inválida, debe mostrar error         ¡¡¡¡¡¡¡¡¡¡¡ UNIFICAR EL IDIOMA EN LAS RESPUESTAS !!!!!!!!!!
+/bin/echo uno | tr a-z A-Z > upper.txt
+cat < upper.txt | grep UNO >> grep_result.txt
+(/bin/echo uno && /bin/echo dos) | grep uno > pipe_output.txt
+(/bin/echo uno; /bin/echo dos) && /bin/echo tres || /bin/echo cuatro
+/bin/echo uno; /bin/echo dos | grep dos
+
+
+
+cat << EOF
+linea 1
+linea 2
+EOF
+
++
+
+/bin/echo heredoc >> prueba.txt << EOF     ¡¡¡¡¡¡¡¡¡ TODO TIPO DE PROBLEMAS CON EOF !!!!!!!
+esto
+es
+una
+prueba
+EOF
+
++
+
+cat << 'EOF'
+$HOME no debe expandirse
+EOF
+
++
+
+/bin/echo $?      ¡¡¡¡¡¡¡ FALTA PROBARLO CON SALIDAS DE ERROR INTERRUPCIONES DE PROGRAMA ETC !!!!!!!
+
+
+/bin/echo fondo &   ¡¡¡¡¡¡¡¡ HAY QUE GESTIONARLO EN EL BUCLE PRINCIPAL CON UNA ESTRUCTURA PROPIA PARA GUARDAR EL ESTADO !!!!!!!!
+
++
+
+ls > out.txt 2>&1 &
+
++
+
+(/bin/echo uno > uno.txt) & /bin/echo dos >> dos.txt
+
++
+
+sleep 1 &
+/bin/echo terminado
+
++
+
+(/bin/echo uno && sleep 1) &
+
++
+
+/bin/echo inicio && cat << EOF | grep hola > resultado.txt
+hola mundo
+chao
+EOF
+
++
+
+/bin/echo uno > uno.txt & /bin/echo dos >> dos.txt
+
++
+
+/bin/echo uno | /bin/echo dos > file.txt &
+
+
+
+#!/bin/bash
+./minishell << EOF
+/bin/echo hola
+cat << E
+uno
+dos
+E
+exit
+EOF
+
+
+
+/*
+acoronad@acoronad:~/Documentos/FORMACIÓN/42/MINISHELL/minishell_arai$ car << 'EOF'
+> $HOME no debe expandirse
+> EOF
+No se ha encontrado la orden «car», pero se puede instalar con:
+sudo apt install ucommon-utils
+acoronad@acoronad:~/Documentos/FORMACIÓN/42/MINISHELL/minishell_arai$ cat << 'EOF'
+> $HOME no debe expandirse
+> EOF
+$HOME no debe expandirse
+*/
+
+

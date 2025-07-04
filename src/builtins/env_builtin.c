@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   env_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/29 14:31:23 by acoronad          #+#    #+#             */
-/*   Updated: 2025/07/04 12:32:47 by acoronad         ###   ########.fr       */
+/*   Created: 2025/07/04 12:26:03 by acoronad          #+#    #+#             */
+/*   Updated: 2025/07/04 12:26:22 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-#define BUILTINS_H
-
 #include "minishell.h"
-#include "ast.h"
-#include "exec.h"
+#include "builtins.h"
+#include "env.h"
 
-int	is_builtin(const char *cmd);
-int	run_builtin(t_ast *node, t_shell *shell);
-int	run_echo(char **argv);
-int	run_cd(char **argv, t_shell *shell);
-int	run_pwd(void);
-int	run_export(char **argv, t_shell *shell);
-int	run_unset(char **argv, t_shell *shell);
-int	run_env(t_shell *shell);
-int	run_exit(char **argv, t_shell *shell);
+// ----------- ENV -----------
+int	run_env(t_shell *shell)
+{
+	t_env	*env;
 
-#endif
+	env = shell->env;
+	while (env)
+	{
+		if (env->exported && env->value)
+		{
+			ft_putstr_fd(env->key, 1);
+			ft_putchar_fd('=', 1);
+			ft_putendl_fd(env->value, 1);
+		}
+		env = env->next;
+	}
+	return (0);
+}

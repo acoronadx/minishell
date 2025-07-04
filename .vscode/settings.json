@@ -7,6 +7,7 @@
 		"ast.h": "c",
 		"parser.h": "c",
 		"env.h": "c",
-		"lexer.h": "c"
+		"lexer.h": "c",
+		"minishell.h": "c"
 	}
 }

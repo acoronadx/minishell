@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 14:08:04 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/30 06:06:39 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/07/03 11:35:36 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	execute_or(t_ast *node, t_shell *shell);
 int	execute_subshell(t_ast *node, t_shell *shell);
 int	execute_sequence(t_ast *node, t_shell *shell);
 int	execute_background(t_ast *node, t_shell *shell);
+int	handle_simple_redir(t_ast *redir);
 int	open_redirection(t_ast *redir);
 int	apply_redirections(t_ast *redir_list);
 int	heredoc_prepare(const char *delimiter);

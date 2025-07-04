@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   pwd_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/29 14:31:23 by acoronad          #+#    #+#             */
-/*   Updated: 2025/07/04 12:32:47 by acoronad         ###   ########.fr       */
+/*   Created: 2025/07/04 12:24:17 by acoronad          #+#    #+#             */
+/*   Updated: 2025/07/04 12:30:00 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-#define BUILTINS_H
-
 #include "minishell.h"
-#include "ast.h"
-#include "exec.h"
+#include "builtins.h"
 
-int	is_builtin(const char *cmd);
-int	run_builtin(t_ast *node, t_shell *shell);
-int	run_echo(char **argv);
-int	run_cd(char **argv, t_shell *shell);
-int	run_pwd(void);
-int	run_export(char **argv, t_shell *shell);
-int	run_unset(char **argv, t_shell *shell);
-int	run_env(t_shell *shell);
-int	run_exit(char **argv, t_shell *shell);
+// ----------- PWD -----------
+int	run_pwd(void)
+{
+	char	buf[PATH_MAX];
 
-#endif
+	if (getcwd(buf, PATH_MAX))
+	{
+		ft_putendl_fd(buf, 1);
+		return (0);
+	}
+	ft_putstr_fd("minishell: pwd: error retrieving current directory\n", 2);
+	return (1);
+}

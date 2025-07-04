@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 16:15:28 by rarodri2          #+#    #+#             */
-/*   Updated: 2025/06/26 06:48:16 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/07/03 18:16:46 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int					ft_isspace(int c);
 int					ft_isquote(int c);
 int					ft_issymbol(char c);
 int					ft_isnumeric(const char *str);
+int					ft_isposfdstr(const char *str);
 char				*ft_itoa(int n);
 void				*ft_memchr(const void *s, int c, size_t n);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);

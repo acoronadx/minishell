@@ -1,30 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   execute_and_or.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/29 14:31:23 by acoronad          #+#    #+#             */
-/*   Updated: 2025/07/04 12:32:47 by acoronad         ###   ########.fr       */
+/*   Created: 2025/06/29 14:12:48 by acoronad          #+#    #+#             */
+/*   Updated: 2025/06/29 14:12:56 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-#define BUILTINS_H
-
 #include "minishell.h"
-#include "ast.h"
 #include "exec.h"
+#include "ast.h"
 
-int	is_builtin(const char *cmd);
-int	run_builtin(t_ast *node, t_shell *shell);
-int	run_echo(char **argv);
-int	run_cd(char **argv, t_shell *shell);
-int	run_pwd(void);
-int	run_export(char **argv, t_shell *shell);
-int	run_unset(char **argv, t_shell *shell);
-int	run_env(t_shell *shell);
-int	run_exit(char **argv, t_shell *shell);
+int execute_and(t_ast *node, t_shell *shell)
+{
+	int ret;
 
-#endif
+	ret = execute_ast(node->bin.left, shell);
+	if (ret == 0)
+		ret = execute_ast(node->bin.right, shell);
+	else
+		shell->exit_status = ret;
+	return (ret);
+}
+
+int execute_or(t_ast *node, t_shell *shell)
+{
+	int ret;
+
+	ret = execute_ast(node->bin.left, shell);
+	if (ret != 0)
+		ret = execute_ast(node->bin.right, shell);
+	else
+		shell->exit_status = ret;
+	return (ret);
+}

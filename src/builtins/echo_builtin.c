@@ -1,30 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   echo_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/29 14:31:23 by acoronad          #+#    #+#             */
-/*   Updated: 2025/07/04 12:32:47 by acoronad         ###   ########.fr       */
+/*   Created: 2025/07/04 12:22:50 by acoronad          #+#    #+#             */
+/*   Updated: 2025/07/04 12:23:57 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-#define BUILTINS_H
-
 #include "minishell.h"
-#include "ast.h"
-#include "exec.h"
+#include "builtins.h"
 
-int	is_builtin(const char *cmd);
-int	run_builtin(t_ast *node, t_shell *shell);
-int	run_echo(char **argv);
-int	run_cd(char **argv, t_shell *shell);
-int	run_pwd(void);
-int	run_export(char **argv, t_shell *shell);
-int	run_unset(char **argv, t_shell *shell);
-int	run_env(t_shell *shell);
-int	run_exit(char **argv, t_shell *shell);
+// ----------- ECHO -----------
+int	run_echo(char **argv)
+{
+	int	i;
+	int	nl;
 
-#endif
+	i = 1;
+	nl = 1;
+	if (argv[1] && ft_strncmp(argv[1], "-n", 3) == 0)
+	{
+		nl = 0;
+		i++;
+	}
+	while (argv[i])
+	{
+		ft_putstr_fd(argv[i], 1);
+		if (argv[i + 1])
+			ft_putchar_fd(' ', 1);
+		i++;
+	}
+	if (nl)
+		ft_putchar_fd('\n', 1);
+	return (0);
+}

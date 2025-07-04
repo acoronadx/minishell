@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   execute_sequence.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/29 14:31:23 by acoronad          #+#    #+#             */
-/*   Updated: 2025/07/04 12:32:47 by acoronad         ###   ########.fr       */
+/*   Created: 2025/06/29 14:18:48 by acoronad          #+#    #+#             */
+/*   Updated: 2025/06/29 14:18:57 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-#define BUILTINS_H
-
 #include "minishell.h"
-#include "ast.h"
 #include "exec.h"
+#include "ast.h"
 
-int	is_builtin(const char *cmd);
-int	run_builtin(t_ast *node, t_shell *shell);
-int	run_echo(char **argv);
-int	run_cd(char **argv, t_shell *shell);
-int	run_pwd(void);
-int	run_export(char **argv, t_shell *shell);
-int	run_unset(char **argv, t_shell *shell);
-int	run_env(t_shell *shell);
-int	run_exit(char **argv, t_shell *shell);
-
-#endif
+int execute_sequence(t_ast *node, t_shell *shell)
+{
+	execute_ast(node->bin.left, shell);
+	return (execute_ast(node->bin.right, shell));
+}

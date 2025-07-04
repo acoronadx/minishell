@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:24:24 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/28 04:39:13 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/07/03 19:20:20 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,15 @@ t_token_type	get_redir_right(const char *str, int len);
 t_token_type	get_redir_special(const char *str, int len);
 
 // Obtención de tokens a partir de la línea
-int				get_quoted(const char *line, int i, t_token **lst);
+int				get_quoted(const char *line, int i, t_token **lst);							
 int				get_operator(const char *line, int i, t_token **lst);
 int				get_word(const char *line, int i, t_token **lst);
 
 
 // Detección de operadores
 int				is_operator(const char *str, t_token_type *type, int *len);
+
+// Otras utilidades
+char	*remove_backslashes(const char *src);
 
 #endif

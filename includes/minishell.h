@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 13:10:22 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/29 15:43:49 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/07/04 12:29:56 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #include <sys/wait.h>
 #include <termios.h>
 #include <errno.h>
+#include <linux/limits.h>
 #include <limits.h>
 #include "libft.h"
 #include "env.h"

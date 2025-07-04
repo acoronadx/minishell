@@ -26,7 +26,7 @@ AR = ar rcs
 SRCS = \
 	ft_arraylen.c ft_atoi.c ft_atol.c ft_bzero.c ft_calloc.c \
 	ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c \
-	ft_isspace.c ft_isquote.c ft_issymbol.c ft_itoa.c ft_isnumeric.c \
+	ft_isspace.c ft_isquote.c ft_issymbol.c ft_itoa.c ft_isnumeric.c ft_isposfdstr.c \
 	ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c \
 	ft_putchar_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_putstr_fd.c \
 	ft_split.c ft_strchr.c ft_strdel.c ft_strdup.c ft_strldup.c \

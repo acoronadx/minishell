@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 16:36:48 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/26 14:26:08 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/07/03 12:41:36 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,21 @@ void	token_addback(t_token **lst, t_token *new)
 */
 int	is_operator(const char *str, t_token_type *type, int *len)
 {
-	int i;
-	const char *ops[] = {"<<<", ">>", "<<", "||", "&&", "&>>", "&>", ">|", "<&",
-		">&", "2>>", "2>", "|", "&", ";", "<", ">", "(", ")", "{", "}", "="};
-	const int lens[] = {3,2,2,2,2,3,2,2,2,2,3,2,1,1,1,1,1,1,1,1,1,1};
-	const t_token_type types[] = {
+	int					i;
+	const char			*ops[] = {
+		"<<<", ">>", "<<", "||", "&&", "&>>", "&>", ">|", "<&", ">&",
+		"2>>", "2>", "|", "&", ";", "<", ">", "(", ")", "{", "}", "="
+	};
+	const int			lens[] = {
+		3, 2, 2, 2, 2, 3, 2, 2, 2, 2,
+		3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+	};
+	const t_token_type	types[] = {
 		T_HEREDOC_STR, T_APPEND, T_HEREDOC, T_OR, T_AND, T_APPEND_ALL,
 		T_REDIR_ALL, T_FORCE_OUT, T_DUP_IN, T_DUP_OUT, T_APPEND_ERR,
 		T_REDIR_ERR, T_PIPE, T_BG, T_SEMI, T_REDIR_IN, T_REDIR_OUT,
-		T_LPAREN, T_RPAREN, T_LBRACE, T_RBRACE, T_EQUAL};
+		T_LPAREN, T_RPAREN, T_LBRACE, T_RBRACE, T_EQUAL
+	};
 
 	i = 0;
 	while (i < 22)
@@ -87,6 +93,7 @@ int	is_operator(const char *str, t_token_type *type, int *len)
 	}
 	return (0);
 }
+
 void	free_lexer_list_on_error(t_token **lst)
 {
 	if (lst && *lst)
