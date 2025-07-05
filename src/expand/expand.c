@@ -6,13 +6,21 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 02:45:20 by acoronad          #+#    #+#             */
-/*   Updated: 2025/07/04 12:03:57 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/07/05 16:11:11 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "expand.h"
 #include "env.h"
+
+static int	skip_empty_quotes(const char *str, int i)
+{
+	if ((str[i] == '"' && str[i + 1] == '"')
+		|| (str[i] == '\'' && str[i + 1] == '\''))
+		return (i + 2);
+	return (i);
+}
 
 char	*expand_token(const char *str, t_shell *shell)
 {
@@ -46,6 +54,7 @@ char	*expand_token(const char *str, t_shell *shell)
 				free(res);
 				return (NULL);
 			}
+			i = skip_empty_quotes(str, i);
 			j += added;
 		}
 		else if (str[i] == '~' && (i == 0 || ft_isspace(str[i - 1])))

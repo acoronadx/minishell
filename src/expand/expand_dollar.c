@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 00:15:35 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/30 16:25:22 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/07/05 16:10:41 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,76 +14,107 @@
 #include "expand.h"
 #include "env.h"
 
-static char	*expand_special_vars(const char *str, int *i, t_shell *shell)
-{
-	char	*res;
-
-	res = NULL;
-	if (str[*i] == '?')
+	static char	*remove_empty_quotes_post_expand(const char *src)
 	{
-		res = ft_itoa(shell->exit_status);
-		(*i)++;
+		char	*clean;
+		int		len;
+
+		len = ft_strlen(src);
+		if (len < 2)
+			return (ft_strdup(src));
+		if ((src[len - 2] == '"' && src[len - 1] == '"')
+			|| (src[len - 2] == '\'' && src[len - 1] == '\''))
+		{
+			clean = ft_substr(src, 0, len - 2);
+			if (!clean)
+				return (NULL);
+			return (clean);
+		}
+		return (ft_strdup(src));
 	}
-	else if (str[*i] == '0')
+
+
+	static char	*expand_special_vars(const char *str, int *i, t_shell *shell)
 	{
-		res = get_program_name_str(shell);
-		(*i)++;
-	}
-	else if (str[*i] == '$')
-	{
-		res = ft_itoa(getpid());
-		(*i)++;
-	}
-	return (res);
-}
+		char	*res;
 
-static char	*expand_named_var(const char *str, int *i, t_shell *shell)
-{
-	char	*name;
-	char	*value;
-	int		start;
-
-	start = *i;
-	while (str[*i] == '_' || ft_isalnum(str[*i]))
-		(*i)++;
-	name = ft_substr(str, start, *i - start);
-	if (!name)
-		return (NULL);
-	value = find_var(shell->env, name);
-	free(name);
-	if (!value)
-		return (ft_strdup(""));
-	return (ft_strdup(value));
-}
-
-char	*expand_value(const char *str, int *i, t_shell *shell)
-{
-	char	*res;
-
-	res = expand_special_vars(str, i, shell);
-	if (res)
+		res = NULL;
+		if (str[*i] == '?')
+		{
+			res = ft_itoa(shell->exit_status);
+			(*i)++;
+		}
+		else if (str[*i] == '0')
+		{
+			res = get_program_name_str(shell);
+			(*i)++;
+		}
+		else if (str[*i] == '$')
+		{
+			res = ft_itoa(getpid());
+			(*i)++;
+		}
 		return (res);
-	if (ft_isdigit(str[*i]))
-	{
-		(*i)++;
-		return (ft_strdup(""));
 	}
-	if (str[*i] == '_' || ft_isalpha(str[*i]))
-		return (expand_named_var(str, i, shell));
-	return (ft_strdup("$"));
-}
 
-int	handle_dollar(const char *str, int *i, char *res, int j, t_shell *shell)
-{
-	char	*expanded;
-	int		len;
+	static char	*expand_named_var(const char *str, int *i, t_shell *shell)
+	{
+		char	*name;
+		char	*value;
+		int		start;
 
-	(*i)++; // saltar el $
-	expanded = expand_value(str, i, shell); // debe avanzar i igual que en cálculo de len
-	if (!expanded)
-		return (-1);
-	len = ft_strlen(expanded);
-	ft_memcpy(res + j, expanded, len);
-	free(expanded);
-	return (len);
-}
+		start = *i;
+		while (str[*i] == '_' || ft_isalnum(str[*i]))
+			(*i)++;
+		name = ft_substr(str, start, *i - start);
+		if (!name)
+			return (NULL);
+		value = find_var(shell->env, name);
+		free(name);
+		if (!value)
+			return (ft_strdup(""));
+		return (ft_strdup(value));
+	}
+
+	char	*expand_value(const char *str, int *i, t_shell *shell)
+	{
+		char	*res;
+		char	*cleaned;
+
+		res = expand_special_vars(str, i, shell);
+		if (res)
+		{
+			cleaned = remove_empty_quotes_post_expand(res);
+			free(res);
+			return (cleaned);
+		}
+		if (ft_isdigit(str[*i]))
+		{
+			(*i)++;
+			return (ft_strdup(""));
+		}
+		if (str[*i] == '_' || ft_isalpha(str[*i]))
+		{
+			res = expand_named_var(str, i, shell);
+			cleaned = remove_empty_quotes_post_expand(res);
+			free(res);
+			return (cleaned);
+		}
+		return (ft_strdup("$"));
+	}
+
+
+	int	handle_dollar(const char *str, int *i, char *res, int j, t_shell *shell)
+	{
+		char	*expanded;
+		int		len;
+
+		(*i)++; // saltar el $
+		expanded = expand_value(str, i, shell); // debe avanzar i igual que en cálculo de len
+		if (!expanded)
+			return (-1);
+		len = ft_strlen(expanded);
+		ft_memcpy(res + j, expanded, len);
+		free(expanded);
+		return (len);
+	}

@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 14:49:39 by acoronad          #+#    #+#             */
-/*   Updated: 2025/07/03 09:40:28 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/07/05 15:12:22 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	shell_exec(t_shell *shell)
 		shell->exit_status = 2; // Error de sintaxis como Bash
 		return (2);
 	}
+	prueba_lexer(shell);
 	expand_variables(shell);
 	shell->ast = build_ast(shell->tokens);
 	free_token_list(shell->tokens);
