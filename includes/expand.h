@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 20:17:25 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/30 18:38:14 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:12:57 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,12 @@ char	*get_program_name_str(t_shell *shell);
 int		copy_tilde(const char *str, int *i, char *res, int *j, t_shell *shell);
 char	*expand_tilde_internal(const char *str, t_shell *shell);
 size_t	get_tilde_prefix_len(const char *str);
+
+
+/*
+** quote_removal.c
+** Elimina las comillas de los tokens después de la expansión.
+*/
+void    remove_quotes(t_token *tokens);
 
 #endif

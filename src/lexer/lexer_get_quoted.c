@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:54:51 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/26 14:58:52 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/07/16 14:58:48 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static t_quote	get_quote_type(char c)
 }
 
 /* Helper para extraer la subcadena entre comillas y tipo de quote */
-static int	get_quoted_str(const char *line, int i, char **quoted_str, t_quote *qtype)
+static int	get_quoted_str(const char *line, int i, char **quoted_str,
+		t_quote *qtype)
 {
 	char	quote_char;
 	int		start;
@@ -56,9 +57,10 @@ int	get_quoted(const char *line, int i, t_token **lst)
 		free_lexer_list_on_error(lst);
 		return (-1);
 	}
-	if (try_add_token(lst, quoted_str, T_WORD, qtype) == 0)
+	if (line[i + 1] && line[i + 2] && ft_isspace(line[i + 2]) && line[i + 1]
+		!= '\'' && try_add_token(lst, quoted_str, T_WORD, qtype) == 0)
 		return (-1);
 	if (line[i] && (line[i] == '\'' || line[i] == '"'))
-		i++;
+		i++;		
 	return (i);
 }

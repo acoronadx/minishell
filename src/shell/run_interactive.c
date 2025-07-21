@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 13:09:44 by acoronad          #+#    #+#             */
-/*   Updated: 2025/07/16 13:00:31 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/07/16 13:03:53 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	ft_quotes_closed(const char *line)
 	return (state == 0);
 }
 
-static int	ft_backslach_cloded(char *line)
+static int	ft_backslach_closed(char *line)
 {
 	int	i;
 	int	count;
@@ -64,7 +64,7 @@ char	*read_full_line(t_shell *shell)
 	shell->line = readline("\001\033[1;35m\002minishell$ \001\033[0m\002");
 	if (!shell->line)
 		return (NULL);
-	while (!ft_quotes_closed(shell->line) || !ft_backslach_cloded(shell->line))
+	while (!ft_quotes_closed(shell->line) || !ft_backslach_closed(shell->line))
 	{
 		setup_prompt_signals();
 		next = readline("> ");

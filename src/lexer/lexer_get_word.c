@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:25:33 by acoronad          #+#    #+#             */
-/*   Updated: 2025/07/05 16:21:44 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/07/17 13:55:07 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,6 @@ static int	word_end(const char *line, int i)
 			i += 2;
 			continue ;
 		}
-/*		if ((line[i] == '\'' && line[i + 1] == '\'') || (line[i] == '"' && line[i + 1] == '"'))
-		{
-			if (line[i + 2] && ft_isspace(line[i + 2]))
-				return (i);
-			i += 2;
-			continue ;
-		}			
-*/
 		if (ft_isspace(line[i]) && !escaped)
 			break ;
 		if (is_operator(line + i, NULL, NULL))
@@ -142,6 +134,79 @@ char	*save_expander_operator(char *src, t_token **lst)
 }
 
 
+int	count_empty_quotes(char *src)
+{
+	int count;
+	int i;
+
+	count = 0;
+	i = 0;
+	while (src[i] && src[i + 1])
+	{
+		if ((src[i] == '"' && src[i + 1] == '"') || (src[i] == '\'' && src[i + 1] == '\''))
+		{
+			count++;
+			i += 2;
+		}
+		else
+		{
+			i++;
+		}
+	}
+	return (count);
+}
+
+char *remove_empty_quotes(char *src)
+{
+	int		i;
+	int		j;
+	char	*dst;
+
+	i = 0;
+	j = 0;
+	dst = malloc(ft_strlen(src) - count_empty_quotes(src) + 1);
+	if (!dst)
+		return (NULL);
+	while (src[i])
+	{
+		if (src [i + 1] && ((src[i] == '"' && src[i + 1] == '"') || (src[i] == '\'' && src[i + 1] == '\'')))
+		{
+			i += 2;
+			continue ;
+		}
+		dst[j++] = src[i++];
+	}
+	dst[j] = '\0';
+	return (dst);
+}
+
+int	has_dollar(const char *src)
+{
+	int i;
+
+	i = 0;
+	while (src[i])
+	{
+		if (src[i] == '$')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+
+char *remove_quotes_if_no_expand(char *src)
+{
+	char *cleaned;
+
+	if (has_dollar(src))
+		return (ft_strdup(src));
+	cleaned = remove_empty_quotes(src);
+	if (!cleaned)
+		return (NULL);
+	return (cleaned);
+}
+
 int	get_word(const char *line, int i, t_token **lst)
 {
 	int		start;
@@ -162,14 +227,11 @@ int	get_word(const char *line, int i, t_token **lst)
 	free(word_str);
 	if (!unescaped)
 		return (free_lexer_list_on_error(lst), -1);
-	if (unescaped[0] == '$')
-		cleaned = save_expander_operator(unescaped, lst);
-	else
-		cleaned = remove_quotes_inside_double_quotes(unescaped);
+	cleaned = remove_quotes_if_no_expand(unescaped);
 	free(unescaped);
 	if (!cleaned)
 		return (free_lexer_list_on_error(lst), -1);
-	if (try_add_token(lst, cleaned, T_WORD, NO_QUOTE) == 0)
+	if (try_add_token(lst, cleaned, T_WORD, NO_CLASIFY) == 0)
 		return (-1);
 	return (i);
 }

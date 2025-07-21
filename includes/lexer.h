@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:24:24 by acoronad          #+#    #+#             */
-/*   Updated: 2025/07/03 19:20:20 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/07/17 13:54:44 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ typedef enum e_quote
 {
 	NO_QUOTE,
 	SINGLE_QUOTE,
-	DOUBLE_QUOTE
+	DOUBLE_QUOTE,
+	NO_CLASIFY
 }	t_quote;
 
 typedef struct s_token
