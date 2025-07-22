@@ -1,0 +1,10 @@
+err.txt
+includes
+libft
+Makefile
+minishell
+minishell.c
+out.txt
+src
+Tester_Japo
+test.txt

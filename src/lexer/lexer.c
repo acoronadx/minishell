@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 16:07:05 by acoronad          #+#    #+#             */
-/*   Updated: 2025/07/17 13:45:34 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/07/22 12:34:04 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,35 +67,42 @@ static int	is_default_fd_suffix(const char *line)
 	return (0);
 }
 
-	t_token	*lexer(const char *line)
-	{
-		int		i;
-		int		next_i;
-		t_token	*lst;
-		int		skip_fd;
+t_token    *lexer(const char *line)
+{
+   int     i;
+   int     next_i;
+   t_token *lst;
+   int     skip_fd;
 
-		i = 0;
-		lst = NULL;
-		while (line[i])
-		{
-			while (line[i] && ft_isspace(line[i]))
-				i++;
-			if (!line[i])
-				break ;
-			next_i = i;
-			skip_fd = is_default_fd_redir(line + i);
-			if (skip_fd)
-				i += skip_fd;
-			if (is_operator(line + i, NULL, NULL))
-			{
-				next_i = get_operator(line, i, &lst);
-				if (is_default_fd_suffix(line + next_i))
-					next_i += 1;
-			}
-			next_i = get_word(line, i, &lst);
-			if (next_i == -1)
-				return (free_null_token_list(&lst));
-			i = next_i;
-		}
-		return (lst);
-	}
+   i = 0;
+   lst = NULL;
+   while (line[i])
+   {
+       // Saltar espacios iniciales
+       while (line[i] && ft_isspace(line[i]))
+           i++;
+       if (!line[i]) // Si solo quedan espacios, salimos
+           break ;
+       
+       next_i = i;
+       skip_fd = is_default_fd_redir(line + i); // Manejar "2>" etc.
+       if (skip_fd)
+           i += skip_fd; // Avanzar 'i' más allá del número (ej. '2')
+
+       if (is_operator(line + i, NULL, NULL)) // Comprobar si es un operador ('>', '<<', '&&', etc.)
+       {
+           next_i = get_operator(line, i, &lst);
+           if (is_default_fd_suffix(line + next_i)) // Manejar ">&1" o "<&-"
+               next_i += 1;
+       }
+       else if (line[i] == '\'' || line[i] == '"') // Si es una cadena entrecomillada
+           next_i = get_quoted(line, i, &lst); // Llamar a get_quoted
+       else // Si no es operador ni comilla, es una palabra normal
+           next_i = get_word(line, i, &lst); // Llamar a get_word
+       
+       if (next_i == -1) // Si hubo un error en la tokenización
+           return (free_null_token_list(&lst));
+       i = next_i; // Mover al inicio del siguiente token
+   }
+   return (lst);
+}

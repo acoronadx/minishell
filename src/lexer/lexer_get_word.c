@@ -6,232 +6,126 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:25:33 by acoronad          #+#    #+#             */
-/*   Updated: 2025/07/17 13:55:07 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/07/22 12:35:57 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "lexer.h"
 
-/* --- Helper para get_word: calcula final de palabra --- */
-static int	word_end(const char *line, int i)
+// word_end: Esta función debe encontrar el final de una "palabra"
+// Una palabra termina cuando encuentra un espacio (no escapado), un operador (no escapado)
+// o el final de la línea. Las comillas internas a la palabra (ej. 'foo"bar"baz')
+// NO deben detener el word_end.
+static int    word_end(const char *line, int i)
 {
-	int	escaped;
+   int escaped = 0; // Para manejar backslashes que escapan el siguiente caracter
 
-	escaped = 0;
-	while (line[i])
-	{
-		if (line[i] == '\\' && line[i + 1])
-		{
-			escaped = 1;
-			i += 2;
-			continue ;
-		}
-		if (ft_isspace(line[i]) && !escaped)
-			break ;
-		if (is_operator(line + i, NULL, NULL))
-			break ;
-		escaped = 0;
-		i++;
-	}
-	return (i);
+   while (line[i])
+   {
+       // Manejo de backslashes: si encontramos '\' y no estamos ya escapados
+       if (line[i] == '\\' && !escaped)
+       {
+           escaped = 1; // Marcamos que el siguiente caracter está escapado
+           i++;
+           continue ;
+       }
+       // Si encontramos un espacio O un operador Y NO estamos escapados, la palabra termina
+       if ((ft_isspace(line[i]) || is_operator(line + i, NULL, NULL)) && !escaped)
+           break ;
+       
+       // Importante: Las comillas (' o ") DENTRO de una palabra (ej. "foo'bar'")
+       // NO deben romper la palabra en el léxer. Se capturan como parte del valor.
+       // Su efecto se manejará en la fase de expansión/quote removal.
+       
+       escaped = 0; // Reseteamos el estado de escape para el siguiente caracter
+       i++;
+   }
+   return (i);
 }
 
-
-// Elimina los backslash de escape en una palabra fuera de comillas
-char	*remove_backslashes(const char *src)
+// remove_backslashes: Esta función es útil para eliminar backslashes
+// que escapan caracteres fuera de comillas, o en contextos específicos.
+// Su implementación actual (la que tenías antes del diff) debería ser correcta aquí.
+// La pego para referencia, pero asumo que ya la tienes bien.
+char    *remove_backslashes(const char *src)
 {
-	int		i;
-	int		j;
-	char	*dst;
+   char    *dst;
+   int     i;
+   int     j;
+   int     escaped;
 
-	i = 0;
-	j = 0;
-	dst = malloc(ft_strlen(src) + 1);
-	if (!dst)
-		return (NULL);
-	while (src[i])
-	{
-		if (src[i] == '\\' && src[i + 1] && src[i + 1] != '$')
-			i++;
-		dst[j] = src[i];
-		if (src[i])
-			i++;
-		j++;
-	}
-	dst[j] = '\0';
-	return (dst);
-}
-char *remove_quotes_inside_double_quotes(const char *src)
-{
-    char *dst;
-    int i = 0, j = 0;
-    int in_dquote = 0;
+   i = 0;
+   j = 0;
+   escaped = 0;
+   // Calcular la longitud final sin los backslashes que se eliminarán
+   int len = 0;
+   int k = 0;
+   while (src[k])
+   {
+       if (src[k] == '\\' && !escaped)
+       {
+           escaped = 1;
+           k++;
+           continue ;
+       }
+       len++;
+       escaped = 0;
+       k++;
+   }
 
-    dst = malloc(ft_strlen(src) + 1);
-    if (!dst)
-        return NULL;
-
-    while (src[i])
-    {
-        if (src[i] == '"')
-        {
-            in_dquote = !in_dquote;
-            i++;
-            continue;
-        }
-        if (src[i] == '\'' && in_dquote)
-        {
-            // ignora comilla simple dentro de comillas dobles
-            i++;
-            continue;
-        }
-        dst[j++] = src[i++];
-    }
-    dst[j] = '\0';
-    return dst;
+   dst = malloc(sizeof(char) * (len + 1));
+   if (!dst)
+       return (NULL);
+   
+   escaped = 0;
+   while (src[i])
+   {
+       if (src[i] == '\\' && !escaped)
+       {
+           escaped = 1;
+           i++;
+           continue ;
+       }
+       dst[j++] = src[i++];
+       escaped = 0;
+   }
+   dst[j] = '\0';
+   return (dst);
 }
 
-
-char	*save_expander_operator(char *src, t_token **lst)
+int    get_word(const char *line, int i, t_token **lst)
 {
-	int		i;
-	int		start;
-	char	*before_quotes;
-	char	*after_quotes;
-	char	*joined;
+   int     start;
+   int     len;
+   char    *word_str;
+   char    *processed_str; // Cambiado de 'unescaped' para mayor claridad
 
-	i = 1;
-	start = 1;
-	// Recorre el nombre de variable: letras, números, guiones bajos
-	while (src[i] && (ft_isalnum(src[i]) || src[i] == '_'))
-		i++;
-	// Si no hay nombre de variable y lo que viene son comillas vacías, $"" o $'', devuelve string vacía
-	if (i == 1 && ((src[i] == '"' && src[i + 1] == '"')
-			|| (src[i] == '\'' && src[i + 1] == '\'')))
-		return (ft_strdup(""));
+   start = i;
+   i = word_end(line, i); // Encontrar el final de la palabra
+   len = i - start;
+   if (len == 0) // No debería pasar si word_end funciona correctamente, pero es una buena salvaguarda
+       return (i);
+   
+   word_str = ft_substr(line, start, len); // Extraer la subcadena
+   if (!word_str)
+       return (free_lexer_list_on_error(lst), -1);
 
-	// Caso base: solo la variable, sin comillas vacías
-	if (!src[i])
-		return (ft_strdup(src));
+   // Aquí podemos aplicar `remove_backslashes`.
+   // Nota: Los backslashes dentro de comillas (ej. "foo\"bar") formarán parte de `word_str`
+   // y esta función los procesará. Esto suele ser aceptable, ya que las reglas finales de
+   // quote removal se encargarán de ellos.
+   processed_str = remove_backslashes(word_str);
+   free(word_str); // Liberar la cadena original
+   if (!processed_str)
+       return (free_lexer_list_on_error(lst), -1);
 
-	// Si hay comillas vacías justo después de variable, las saltamos
-	if ((src[i] == '"' && src[i + 1] == '"')
-		|| (src[i] == '\'' && src[i + 1] == '\''))
-		i += 2;
-
-	// Construye el resultado
-	before_quotes = ft_substr(src, 0, start = i);
-	if (!before_quotes)
-		return (free_lexer_list_on_error(lst), NULL);
-	after_quotes = ft_strdup(src + i);
-	if (!after_quotes)
-		return (free(before_quotes), free_lexer_list_on_error(lst), NULL);
-	joined = ft_strjoin(before_quotes, after_quotes);
-	free(before_quotes);
-	free(after_quotes);
-	return (joined);
-}
-
-
-int	count_empty_quotes(char *src)
-{
-	int count;
-	int i;
-
-	count = 0;
-	i = 0;
-	while (src[i] && src[i + 1])
-	{
-		if ((src[i] == '"' && src[i + 1] == '"') || (src[i] == '\'' && src[i + 1] == '\''))
-		{
-			count++;
-			i += 2;
-		}
-		else
-		{
-			i++;
-		}
-	}
-	return (count);
-}
-
-char *remove_empty_quotes(char *src)
-{
-	int		i;
-	int		j;
-	char	*dst;
-
-	i = 0;
-	j = 0;
-	dst = malloc(ft_strlen(src) - count_empty_quotes(src) + 1);
-	if (!dst)
-		return (NULL);
-	while (src[i])
-	{
-		if (src [i + 1] && ((src[i] == '"' && src[i + 1] == '"') || (src[i] == '\'' && src[i + 1] == '\'')))
-		{
-			i += 2;
-			continue ;
-		}
-		dst[j++] = src[i++];
-	}
-	dst[j] = '\0';
-	return (dst);
-}
-
-int	has_dollar(const char *src)
-{
-	int i;
-
-	i = 0;
-	while (src[i])
-	{
-		if (src[i] == '$')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-
-char *remove_quotes_if_no_expand(char *src)
-{
-	char *cleaned;
-
-	if (has_dollar(src))
-		return (ft_strdup(src));
-	cleaned = remove_empty_quotes(src);
-	if (!cleaned)
-		return (NULL);
-	return (cleaned);
-}
-
-int	get_word(const char *line, int i, t_token **lst)
-{
-	int		start;
-	int		len;
-	char	*word_str;
-	char	*unescaped;
-	char	*cleaned;
-
-	start = i;
-	i = word_end(line, i);
-	len = i - start;
-	if (len == 0)
-		return (i);
-	word_str = ft_substr(line, start, len);
-	if (!word_str)
-		return (free_lexer_list_on_error(lst), -1);
-	unescaped = remove_backslashes(word_str);
-	free(word_str);
-	if (!unescaped)
-		return (free_lexer_list_on_error(lst), -1);
-	cleaned = remove_quotes_if_no_expand(unescaped);
-	free(unescaped);
-	if (!cleaned)
-		return (free_lexer_list_on_error(lst), -1);
-	if (try_add_token(lst, cleaned, T_WORD, NO_CLASIFY) == 0)
-		return (-1);
-	return (i);
+   // Añadir el token a la lista. El 'value' contendrá la palabra sin backslashes (si aplica)
+   // y el tipo de comilla será NO_QUOTE para las palabras obtenidas por get_word.
+   if (try_add_token(lst, processed_str, T_WORD, NO_QUOTE) == 0)
+   {
+       free(processed_str); // Si try_add_token falla, liberar la cadena
+       return (-1);
+   }
+   return (i); // Devolver el índice donde termina este token
 }

@@ -6,61 +6,65 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:54:51 by acoronad          #+#    #+#             */
-/*   Updated: 2025/07/16 14:58:48 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/07/22 12:35:14 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "lexer.h"
 
-/* --- Helper para get_quoted: calcula final de comillas --- */
-static int	quoted_end(const char *line, int i, char quote_char)
+static t_quote    get_quote_type(char c)
 {
-	while (line[i] && line[i] != quote_char)
-		i++;
-	return (i);
-}
-
-static t_quote	get_quote_type(char c)
-{
-	if (c == '\'')
-		return (SINGLE_QUOTE);
-	return (DOUBLE_QUOTE);
+   if (c == '\'')
+       return (SINGLE_QUOTE);
+   else if (c == '"')
+       return (DOUBLE_QUOTE);
+   return (NO_QUOTE); // Esto no debería ocurrir si se llama correctamente
 }
 
 /* Helper para extraer la subcadena entre comillas y tipo de quote */
-static int	get_quoted_str(const char *line, int i, char **quoted_str,
-		t_quote *qtype)
+static int get_quoted_str(const char *line, int i, char **quoted_str, t_quote *qtype)
 {
-	char	quote_char;
-	int		start;
-	int		len;
+   char    quote_char;
+   int     start;
+   int     end;
 
-	quote_char = line[i];
-	*qtype = get_quote_type(quote_char);
-	i++;
-	start = i;
-	i = quoted_end(line, i, quote_char);
-	len = i - start;
-	*quoted_str = ft_substr(line, start, len);
-	return (i);
+   quote_char = line[i]; // El carácter de la comilla inicial
+   *qtype = get_quote_type(quote_char);
+   start = i; // El inicio de la subcadena incluye la comilla de apertura
+   end = i + 1; // Empezamos a buscar la comilla de cierre después de la de apertura
+
+   while (line[end] && line[end] != quote_char)
+       end++;
+   
+   if (!line[end]) // Si llegamos al final de la línea y no encontramos la comilla de cierre
+       return (-1); // Indica una comilla no cerrada
+
+   end++; // El final de la subcadena incluye la comilla de cierre
+
+   *quoted_str = ft_substr(line, start, end - start);
+   if (!*quoted_str)
+       return (-1);
+   return (end); // Devolvemos el índice después de la comilla de cierre
 }
 
-int	get_quoted(const char *line, int i, t_token **lst)
+int  get_quoted(const char *line, int i, t_token **lst)
 {
-	char	*quoted_str;
-	t_quote	qtype;
+   char    *quoted_str;
+   t_quote qtype;
+   int     next_i;
 
-	i = get_quoted_str(line, i, &quoted_str, &qtype);
-	if (quoted_str == NULL)
-	{
-		free_lexer_list_on_error(lst);
-		return (-1);
-	}
-	if (line[i + 1] && line[i + 2] && ft_isspace(line[i + 2]) && line[i + 1]
-		!= '\'' && try_add_token(lst, quoted_str, T_WORD, qtype) == 0)
-		return (-1);
-	if (line[i] && (line[i] == '\'' || line[i] == '"'))
-		i++;		
-	return (i);
+   next_i = get_quoted_str(line, i, &quoted_str, &qtype);
+   if (next_i == -1) // Error al obtener la cadena entrecomillada
+   {
+       free_lexer_list_on_error(lst);
+       return (-1);
+   }
+   // Añadir el token. El 'value' contendrá las comillas (ej. "'hola'"), y 'qtype' indicará si era SINGLE o DOUBLE.
+   if (try_add_token(lst, quoted_str, T_WORD, qtype) == 0)
+   {
+       free(quoted_str); // Si try_add_token falla, liberamos la cadena
+       return (-1); // Indicar error
+   }
+   return (next_i); // Devolver el índice donde termina este token
 }
