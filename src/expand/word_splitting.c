@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 15:11:12 by acoronad          #+#    #+#             */
-/*   Updated: 2025/07/21 15:17:19 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/07/22 14:52:04 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_token *split_word_into_tokens(char *word) // <-- Eliminado t_token_type type
         // 4. Mover 'start' al final del campo actual para la siguiente iteración
         start = end;
     }
-    return new_head;
+    return (new_head);
 }
 
 // Función principal de word splitting

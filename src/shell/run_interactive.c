@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 13:09:44 by acoronad          #+#    #+#             */
-/*   Updated: 2025/07/16 13:03:53 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/10/22 20:49:42 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,75 +56,80 @@ static int	ft_backslach_closed(char *line)
 	return (0);
 }
 
-char	*read_full_line(t_shell *shell)
+char *read_line_interactive(t_shell *shell)
 {
-	char	*next;
+    char *next;
 
-	setup_prompt_signals();
-	shell->line = readline("\001\033[1;35m\002minishell$ \001\033[0m\002");
-	if (!shell->line)
-		return (NULL);
-	while (!ft_quotes_closed(shell->line) || !ft_backslach_closed(shell->line))
-	{
-		setup_prompt_signals();
-		next = readline("> ");
-		if (!next)
-		{
-			free(shell->line);
-			shell->line = NULL;
-			return (NULL);
-		}
-		shell->line = ft_strjoin_free_s1(shell->line, "\n");
-		if (!shell->line)
-		{
-			free(next);
-			return (NULL);
-		}
-		shell->line = ft_strjoin_free_s1(shell->line, next);
-		free(next);
-	}
-	return (shell->line);
+    setup_prompt_signals();
+    shell->line = readline("\001\033[1;35m\002minishell$ \001\033[0m\002");
+    if (!shell->line)
+        return NULL;
+
+    while (!ft_quotes_closed(shell->line) || !ft_backslach_closed(shell->line))
+    {
+        setup_prompt_signals();
+        next = readline("> ");
+        if (!next) {
+            free(shell->line);
+            shell->line = NULL;
+            return NULL;
+        }
+        shell->line = ft_strjoin_free_s1(shell->line, "\n");
+        if (!shell->line) { free(next); return NULL; }
+        shell->line = ft_strjoin_free_s1(shell->line, next);
+        free(next);
+    }
+    return shell->line;
 }
+
+
 
 /*
 ** Bucle principal interactivo del minishell.
 ** Lee, ejecuta y libera cada línea.
 ** Imprime "exit" si recibe EOF (Ctrl-D), igual que bash.
 */
-
-void	run_interactive(t_shell *shell)
+void run_interactive(t_shell *shell)
 {
-	shell->is_interactive = 1;
-	while (1)
-	{
-		setup_prompt_signals(); // <-- Instala handlers antes de cada readline
-		if (shell->line)
+    shell->is_interactive = 1;
+    while (1)
+    {
+        setup_prompt_signals();
+        if (shell->line)
 		{
 			free(shell->line);
 			shell->line = NULL;
 		}
-		shell->line = read_full_line(shell);
-		if (!shell->line)
+        shell->line = read_line_interactive(shell);
+        if (g_signal == 1)
+        {
+            g_signal = 0;
+            shell->exit_status = 130; // SIGINT
+            continue;
+        }
+        if (!shell->line)
 			break;
-		if (*(shell->line))
-		{
-			add_history(shell->line);
-			setup_ignore_signals(); // Ignora SIGINT/SIGQUIT mientras esperas hijos
-			if (shell->tokens)
-			{
-				free_token_list(shell->tokens);
-				shell->tokens = NULL;
-			}
-			shell_exec(shell);
-			setup_prompt_signals(); // Vuelve a instalar handlers tras esperar a los hijos
-		}
-		cleanup_loop(shell);
-		if (shell->should_exit)
+        if (*(shell->line))
+        {
+            add_history(shell->line);
+            setup_ignore_signals();
+            if (shell->tokens)
+            {
+                free_token_list(shell->tokens);
+                shell->tokens = NULL;
+            }
+            shell_exec(shell);
+            setup_prompt_signals();
+        }
+        cleanup_loop(shell);
+        if (shell->should_exit)
 			break;
-	}
-	write(1, "exit\n", 5);
-	rl_clear_history();
+    }
+	if (shell->is_interactive)
+		write(1, "exit\n", 5);
+    rl_clear_history();
 }
+
 
 
 /************************************************************

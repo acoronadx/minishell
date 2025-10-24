@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 13:26:15 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/30 01:19:20 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/10/22 20:43:53 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,22 @@ void	setup_signals(void)
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 }
+
+void setup_default_signals(void)
+{
+    struct sigaction sa;
+
+    ft_memset(&sa, 0, sizeof(sa));
+    sigemptyset(&sa.sa_mask);
+    sa.sa_handler = SIG_DFL;
+
+    sigaction(SIGINT, &sa, NULL);
+    sigaction(SIGQUIT, &sa, NULL);
+
+    // Si tocaste el terminal (VQUIT/ECHOCTL), restaura también:
+    restore_vquit();
+}
+
 
 /************************************************************
 ** Minishell - Signal Handling / Gestión de señales

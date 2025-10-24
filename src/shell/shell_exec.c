@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 14:49:39 by acoronad          #+#    #+#             */
-/*   Updated: 2025/07/22 13:32:19 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/07/26 16:07:53 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	shell_exec(t_shell *shell)
 	}
 //	prueba_lexer(shell);
 	expand_variables(shell);
+//	prueba_expansion(shell);
 	shell->ast = build_ast(shell->tokens);
 	free_token_list(shell->tokens);
 	shell->tokens = NULL;

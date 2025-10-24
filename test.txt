@@ -1,7 +1,7 @@
 echo hola mundo                         # Builtin
 ls -l /bin                              # Externo simple
 /bin/pwd                                     # Builtin
-/bin/env                                     # Builtin
+/bin/env                                     # Builtin          ¡¡¡CUIDADO BASH IMPRIME EN ULTIMO LUGAR LA RUTA AL ÚLTIMO COMAND0!!!
 /bin/echo hola > file.txt                    # Redirección de salida
 cat < file.txt                          # Redirección de entrada
 /bin/echo otra >> file.txt                   # Append
@@ -12,7 +12,7 @@ ls &> todo.txt                          # stdout y stderr juntos
 cat <&0                                # Duplicar entrada
 /bin/echo hola >&1                           # Duplicar salida
 /bin                                   # Ejecutar un directorio → EISDIR
-./noexistente                          # Comando no encontrado → ENOENT
+./noexistente                          # Comando no encontrado → ENOENT    ¡¡¡¡¡ESTO DEBERÍA DEVOLVER NO SUCH FILE OR DIRECTORY!!!
 ls > /no_perm                         # Sin permisos → EACCES
 /bin/echo hola > /root/test.txt            # EACCES por falta de permisos
 /bin/echo $HOME
@@ -34,7 +34,7 @@ false && /bin/echo no se ejecuta
 /bin/echo hola\ mundo          # Escape
 echo uno\ dos\ tres				# Esperado: uno dos tres
 echo signo\? interrogacion
-minishell$ /bin/echo barra\|vertical
+echo barra\|vertical
 echo barra\\invertida
 /bin/echo comilla\'simple
 /bin/echo comilla\"doble

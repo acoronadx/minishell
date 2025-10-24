@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:46:24 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/27 14:39:40 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/10/22 19:27:14 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	main(int argc, char **argv, char **envp)
 	t_shell	shell;
 	int		ret;
 
+//	setup_prompt_signals();
+	setup_signals();
 	if (init_shell_name(&shell, argv) != 0)
 		return (1);
 	ret = run_shell_modes(argc, argv, envp, &shell);
@@ -28,7 +30,8 @@ int	main(int argc, char **argv, char **envp)
 
 /************************************************************
 ** Minishell - Main function / Función principal
-**
+**Esperado: en interactivo (TTY) usar readline, add_history; Ctrl-D con línea vacía sale; prompt se repinta tras Ctrl-C; Ctrl-\ ignorado. En no interactivo (stdin no TTY), leer de stdin sin prompt. (Comportamiento de Bash con readline/señales.)
+Ask Ubuntu
 ** ENGLISH:
 ** - Sets up signal handling at the start.
 ** - If called with 3 arguments and the first is "-c", executes a single 

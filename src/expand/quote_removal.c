@@ -6,107 +6,91 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 13:49:35 by acoronad          #+#    #+#             */
-/*   Updated: 2025/07/21 14:18:58 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/07/22 15:51:46 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "expand.h"
-#include "minishell.h"
 
-static char *strip_quotes_from_value(const char *value)
+// strip_quotes_from_value: Elimina las comillas delimitadoras EXTERNAS y procesa backslashes.
+// Asume que la expansión de variables ya se realizó.
+char *strip_quotes_from_value(const char *value, t_quote original_token_quote_type)
 {
     char    *new_value;
-    int     i; // Index for original value
-    int     j; // Index for new_value
-    t_quote current_quote_state; // Estado de las comillas que estamos procesando (NO_QUOTE, SINGLE_QUOTE, DOUBLE_QUOTE)
+    int     i; // Índice para recorrer 'value' (input)
+    int     j; // Índice para construir 'new_value' (output)
+    t_quote current_internal_quote_state; // Estado interno para rastrear comillas dentro del 'value'
 
     if (!value)
         return (NULL);
 
-    new_value = ft_calloc(ft_strlen(value) + 1, sizeof(char));
+    new_value = ft_calloc(ft_strlen(value) + 1, sizeof(char)); // Memoria generosa
     if (!new_value)
         return (NULL);
 
     i = 0;
     j = 0;
-    current_quote_state = NO_QUOTE;
+    current_internal_quote_state = NO_QUOTE; // Inicializamos el estado interno de comillas
+
+    // Flag para saber si hemos pasado las comillas delimitadoras iniciales.
+    // Esto es CRUCIAL para distinguir las comillas delimitadoras de las internas.
+    bool    found_initial_quote = false; 
 
     while (value[i])
     {
-        if (value[i] == '\'')
+        // 1. Manejo de Comillas Delimitadoras Externas
+        // Estas comillas (la primera y la última si el token original estaba entrecomillado)
+        // se eliminan y establecen el 'internal_quote_state'.
+        if ((value[i] == '\'' && original_token_quote_type == SINGLE_QUOTE) ||
+            (value[i] == '"' && original_token_quote_type == DOUBLE_QUOTE))
         {
-            if (current_quote_state == NO_QUOTE) // Entra en comillas simples (delimitadoras)
+            // Solo procesamos la primera comilla delimitadora o la de cierre si estamos en ese estado
+            if (!found_initial_quote) // Si es la primera comilla
             {
-                current_quote_state = SINGLE_QUOTE;
-                // No copiamos la comilla, se elimina (es delimitadora)
+                current_internal_quote_state = original_token_quote_type;
+                found_initial_quote = true;
+                i++; // Saltar la comilla (eliminarla)
+                continue;
             }
-            else if (current_quote_state == SINGLE_QUOTE) // Sale de comillas simples (delimitadoras)
+            else if (i == (int)ft_strlen(value) - 1) // Si es la última comilla de la cadena
             {
-                current_quote_state = NO_QUOTE;
-                // No copiamos la comilla, se elimina
+                current_internal_quote_state = NO_QUOTE; // Cerrar el estado
+                i++; // Saltar la comilla (eliminarla)
+                continue;
             }
-            else if (current_quote_state == DOUBLE_QUOTE) // Dentro de comillas dobles, ' es literal
-            {
-                new_value[j++] = value[i]; // Copia la comilla simple literal
-            }
-            i++;
+            // Si no es la primera ni la última, se trata como una comilla literal y se copia.
+            // Esto es para la " de "comilla\"doble" después de expand_token.
         }
-        else if (value[i] == '"')
+
+        // 2. Manejo de Backslashes
+        // Esta lógica de backslashes es la que debe aplicar después de las comillas externas.
+        // Solo las comillas internas (como '\"' ya procesadas a '"') o otros caracteres escapados.
+        if (value[i] == '\\')
         {
-            if (current_quote_state == NO_QUOTE) // Entra en comillas dobles (delimitadoras)
+            if (current_internal_quote_state == SINGLE_QUOTE)
             {
-                current_quote_state = DOUBLE_QUOTE;
-                // No copiamos la comilla, se elimina
+                // Dentro de comillas simples, '\' es literal.
+                new_value[j++] = value[i++]; // Copiar '\' tal cual
+                continue;
             }
-            else if (current_quote_state == DOUBLE_QUOTE) // Sale de comillas dobles (delimitadoras)
+            else // NO_QUOTE o DOUBLE_QUOTE
             {
-                current_quote_state = NO_QUOTE;
-                // No copiamos la comilla, se elimina
-            }
-            else if (current_quote_state == SINGLE_QUOTE) // Dentro de comillas simples, " es literal
-            {
-                new_value[j++] = value[i]; // Copia la comilla doble literal
-            }
-            i++;
-        }
-        else if (value[i] == '\\' && value[i+1]) // Manejar backslashes
-        {
-            // La lógica de backslash debe ser la misma que en expand_token
-            // para asegurar que las reglas de Bash se aplican consistentemente.
-            // Si expand_token ya eliminó el backslash al copiar, aquí no debería haber uno.
-            // Si expand_token lo dejó (ej. `\` en `'hola\'mundo'`), aquí debemos manejarlo.
-            
-            // Revisa qué backslashes `expand_token` conserva.
-            // Generalmente, Bash elimina el backslash si escapa un carácter.
-            // Los casos son:
-            // 1. Fuera de comillas: `\` + cualquier_caracter. `\` se quita.
-            // 2. Dentro de `"`: `\` + `$` `\` + `"` `\` + `\`. `\` se quita.
-            // 3. Dentro de `'`: `\` es literal.
-            
-            // Si el backslash estaba para escapar algo y ya lo manejó expand_token,
-            // no lo encontraremos aquí. Si lo encontramos, es literal.
-            
-            // Por simplicidad en quote_removal: si lo vemos aquí y no estamos en SINGLE_QUOTE,
-            // y el siguiente char es algo que Bash escaparía y quitaría el backslash, lo quitamos.
-            if (current_quote_state != SINGLE_QUOTE && 
-                ((current_quote_state == DOUBLE_QUOTE && (value[i+1] == '$' || value[i+1] == '"' || value[i+1] == '\\')) ||
-                 current_quote_state == NO_QUOTE)) // Si NO_QUOTE, \ escapa cualquier cosa
-            {
-                new_value[j++] = value[i+1]; // Copia el caracter escapado
-                i += 2;
-            }
-            else // Es un backslash literal (ej. dentro de comillas simples o no escapa)
-            {
-                new_value[j++] = value[i++];
+                i++; // Saltar la barra invertida (la eliminamos)
+                if (!value[i]) // Si la '\' es el último carácter de la cadena (ej. "foo\")
+                {
+                    new_value[j++] = '\\'; // Comportamiento de Bash para '\' al final
+                    break; 
+                }
+                new_value[j++] = value[i++]; // Copiar el carácter escapado
+                continue;
             }
         }
-        else // Caracter normal
-        {
-            new_value[j++] = value[i++];
-        }
+        
+        // 3. Copiar cualquier otro carácter normal (incluyendo comillas no delimitadoras, como en 'foo"bar' o "comilla\"doble")
+        new_value[j++] = value[i++];
     }
-    new_value[j] = '\0';
+    new_value[j] = '\0'; // Null-terminate la cadena resultante
     return (new_value);
 }
 
@@ -118,20 +102,16 @@ void    remove_quotes(t_token *tokens)
     current_token = tokens;
     while (current_token)
     {
-        // En este enfoque, strip_quotes_from_value debe procesar todas las comillas
-        // y el campo current_token->quoted ya no se usa para decidir la eliminación.
-        // Se llama strip_quotes_from_value sin pasar el tipo de quote,
-        // ya que la propia función interna debe rastrear el estado de las quotes.
-        stripped_value = strip_quotes_from_value(current_token->value);
+        // Pasa el tipo de quote original del token a la función de stripping
+        stripped_value = strip_quotes_from_value(current_token->value, current_token->quoted);
         if (!stripped_value)
         {
-            // Manejo de error
+            // Manejo de error, quizás liberar todo y retornar un código de error
             return ;
         }
         free(current_token->value);
         current_token->value = stripped_value;
-        // El token ya no tiene comillas de contención relevantes para la ejecución.
-        current_token->quoted = NO_QUOTE; 
+        current_token->quoted = NO_QUOTE; // Después del stripping, el token ya no tiene delimitadores relevantes.
         current_token = current_token->next;
     }
 }

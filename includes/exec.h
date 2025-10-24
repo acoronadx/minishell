@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 14:08:04 by acoronad          #+#    #+#             */
-/*   Updated: 2025/07/22 13:28:55 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/10/24 03:20:16 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ int	apply_redirections(t_ast *redir_list);
 int	heredoc_prepare(const char *delimiter);
 
 // Funciones auxiliares para la ejecución
+void	restore_std_fds(int original_stdin, int original_stdout, int original_stderr);
 char	*join_path(const char *dir, const char *file);
 int		is_executable(char *path);
 char	*find_executable(char *cmd, t_shell *shell);
-void restore_std_fds(int original_stdin, int original_stdout, int original_stderr);
 
 // Función para imprimir errores de ejecución
 int	print_exec_error(t_shell *shell, const char *cmd, int err_code);

@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 13:10:22 by acoronad          #+#    #+#             */
-/*   Updated: 2025/07/04 12:29:56 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/10/24 03:11:47 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 #include <stdio.h>
-
+#include <stdbool.h>
 #include <fcntl.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -56,6 +56,7 @@ typedef struct s_shell
         t_token         *tokens;
         t_ast           *ast;
         int             exit_status;
+		int				in_child;  // 0 por defecto; en hijos se pone a 1 antes de ejecutar AST
         int             is_interactive;
         int             is_script;
         int             is_one_command;
@@ -64,6 +65,7 @@ typedef struct s_shell
         int             pid; // PID del shell actual (¡Correcto! Usado para $$, $BASHPID)
 }       t_shell;
 
+extern volatile sig_atomic_t   g_signal;
 // Shell modes and flags
 int		run_shell_modes(int argc, char **argv, char **envp, t_shell *shell);
 
@@ -91,8 +93,13 @@ int		shell_exec(t_shell *shell);
 //void	parse_and_execute(t_shell *shell);
 //int		check_syntax(t_ast *ast);
 
-// Modo interactivo
-void	run_interactive(t_shell *shell);
-char	*read_full_line(t_shell *shell);
+// --- Modos ---
+int   run_shell_modes(int argc, char **argv, char **envp, t_shell *shell);
+void  run_interactive(t_shell *shell);
+void  run_non_interactive(t_shell *shell);   // NUEVO
+
+// --- Lectura de línea ---
+char *read_line_interactive(t_shell *shell); // RENOMBRE de read_full_line
+// en no-interactivo leeremos con get_next_line o similar (o readline sin prompt)
 
 #endif

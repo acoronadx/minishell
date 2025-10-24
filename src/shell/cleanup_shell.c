@@ -6,13 +6,52 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 03:25:37 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/30 00:46:03 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/10/24 03:24:36 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "lexer.h"
 #include "env.h"
+
+// --- NUEVO: helper para imprimir errores con mapeo 126/127 ---
+static int has_slash_local(const char *s)
+{
+        for (; s && *s; s++) if (*s == '/') return 1;
+        return 0;
+}
+
+int print_exec_error(t_shell *shell, const char *cmd, int err_code)
+{
+        int ret;
+
+        if (!cmd || !*cmd)
+        {
+                ft_dprintf(2, "minishell: : command not found\n");
+                shell->exit_status = 127;
+                return 127;
+        }
+
+        if (!has_slash_local(cmd) && err_code == ENOENT)
+        {
+                // No hay '/', no encontrado en PATH → 127
+                ft_dprintf(2, "minishell: %s: command not found\n", cmd);
+                ret = 127;
+        }
+        else
+        {
+                // Ruta con '/', o encontrado pero no ejecutable u otros errores
+                ft_dprintf(2, "minishell: %s: %s\n", cmd, strerror(err_code));
+                if (err_code == EACCES || err_code == ENOEXEC || err_code == EISDIR || err_code == EPERM)
+                        ret = 126;   // encontrado pero no se puede ejecutar → 126
+                else if (err_code == ENOENT || err_code == ENOTDIR || err_code == ENAMETOOLONG || err_code == ELOOP)
+                        ret = 127;   // no encontrado → 127
+                else
+                        ret = 126;   // por defecto, fallo de ejecución ≈ 126
+        }
+        shell->exit_status = ret;
+        return ret;
+}
 
 void	free_token_list(t_token *tokens)
 {
@@ -80,6 +119,7 @@ void    cleanup_shell(t_shell *shell)
     restore_vquit(); // Asumido que restaura los manejadores de señales o modos del terminal
 }
 
+/*
 int	print_exec_error(t_shell *shell, const char *cmd, int err_code)
 {
 	int	status;
@@ -110,3 +150,4 @@ int	print_exec_error(t_shell *shell, const char *cmd, int err_code)
 	shell->exit_status = status;
 	return (status);
 }
+*/

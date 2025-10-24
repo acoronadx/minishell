@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:52:57 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/27 14:39:57 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/10/22 20:48:01 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,7 @@ static int	run_script_mode(char **argv, t_shell *shell)
 	execute_script(argv[1], shell);
 	return (shell->exit_status);
 }
-*/
-static int	run_interactive_mode(t_shell *shell)
-{
-	run_interactive(shell);
-	return (shell->exit_status);
-}
-/*
+
 static int	handle_invalid_args(char *program_name)
 {
 	print_usage(program_name);
@@ -44,29 +38,26 @@ static int	handle_invalid_args(char *program_name)
 }
 */
 
-int	run_shell_modes(int argc, char **argv, char **envp, t_shell *shell)
+int run_shell_modes(int argc, char **argv, char **envp, t_shell *shell)
 {
-	int	ret;
+    int ret;
 
-	ret = handle_help_version(argc, argv);
-	if (ret != -1)
-		return (ret);
-	if (init_env(shell, envp) != 0)
-		return (1);
-	shell->is_interactive = isatty(STDIN_FILENO);
-	//if (argc == 3 && ft_strcmp(argv[1], "-c") == 0)
-	//	return (run_one_command_mode(argv, shell));
-	//else if (argc == 2 && argv[1][0] != '-')
-	//	return (run_script_mode(argv, shell));
-	//else if (argc == 1)
-	//{
-		setup_signals();
-		return (run_interactive_mode(shell));
-	//}
-	//else if (argc > 1)
-	//	return (handle_invalid_args(argv[0]));
+    ret = handle_help_version(argc, argv);
+    if (ret != -1)
+        return (ret);
 
-	// Si llegamos aquí, es un error de uso
-	print_usage(shell->program_name);
-	return (2);
+    if (init_env(shell, envp) != 0)
+        return (1);
+
+    shell->is_interactive = isatty(STDIN_FILENO) && isatty(STDOUT_FILENO);
+
+    if (shell->is_interactive) {
+        setup_signals();         // señales base
+        run_interactive(shell);  // con prompt
+    } else {
+        setup_default_signals(); // señales por defecto (no prompt)
+        run_non_interactive(shell);
+    }
+    return shell->exit_status;
 }
+
