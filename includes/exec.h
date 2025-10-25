@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 14:08:04 by acoronad          #+#    #+#             */
-/*   Updated: 2025/10/24 03:20:16 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/10/25 15:34:09 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	handle_simple_redir(t_ast *redir);
 int	open_redirection(t_ast *redir);
 int	apply_redirections(t_ast *redir_list);
 int	heredoc_prepare(const char *delimiter);
+int	heredoc_read(char *delimiter);
 
 // Funciones auxiliares para la ejecución
 void	restore_std_fds(int original_stdin, int original_stdout, int original_stderr);

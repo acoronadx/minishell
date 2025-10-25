@@ -10,6 +10,7 @@ ls 1> out.txt 2> err.txt                # stdout y stderr separados
 ls &> todo.txt                          # stdout y stderr juntos
 /bin/echo hola >| file.txt                   # Redirección forzada
 cat <&0                                # Duplicar entrada
+echo $?									# Comprueba que el código de salida sea el mismo!!
 /bin/echo hola >&1                           # Duplicar salida
 /bin                                   # Ejecutar un directorio → EISDIR
 ./noexistente                          # Comando no encontrado → ENOENT    ¡¡¡¡¡ESTO DEBERÍA DEVOLVER NO SUCH FILE OR DIRECTORY!!!
@@ -25,11 +26,11 @@ false && /bin/echo no se ejecuta
 (/bin/echo subshell)
 (/bin/echo uno && /bin/echo dos)
 /bin/echo hola > out.txt && cat < out.txt
-/bin/echo err > /tmp/test 2>> /tmp/test
+/bin/echo err > /tmp/test 2>> /tmp/test						#Como es evidente, hay que comprobar el documento test en la carpeta tmp
 (/bin/echo hola > hola.txt; cat hola.txt)
-""                         # Vacío pero válido
 /bin/echo ""                   # Vacío entre comillas
 /bin/echo exportando; /usr/bin/env | /usr/bin/grep TEST
+/bin/echo exportando; /usr/bin/env | /usr/bin/grep HOME
 '/bin/echo hola'               # Comillas simples sin expansión
 /bin/echo hola\ mundo          # Escape
 echo uno\ dos\ tres				# Esperado: uno dos tres
@@ -40,16 +41,16 @@ echo barra\\invertida
 /bin/echo comilla\"doble
 /bin/echo "comilla\"doble"
 /bin/echo 'comilla\'simple'
+/bin/echo 'comilla\'simple''
 /bin/echo expansion\$USER
 "/bin/echo hola"               # Comillas dobles
-ls -z                     # Opción inválida, debe mostrar error         ¡¡¡¡¡¡¡¡¡¡¡ UNIFICAR EL IDIOMA EN LAS RESPUESTAS !!!!!!!!!!
 /bin/echo uno | tr a-z A-Z > upper.txt
 cat < upper.txt | grep UNO >> grep_result.txt
 (/bin/echo uno && /bin/echo dos) | grep uno > pipe_output.txt
 (/bin/echo uno; /bin/echo dos) && /bin/echo tres || /bin/echo cuatro
 /bin/echo uno; /bin/echo dos | grep dos
 
-
+#  /bin/echo $HOME "$PATH" hola\ mundo  uno\ dos\ tres signo\? interrogacion barra\|vertical barra\\invertida  comilla\'simple comilla\"doble "comilla\"doble" 'comilla\'simple'' expansion\$USER 
 
 cat << EOF
 linea 1
@@ -156,3 +157,9 @@ echo 1 $2 $3"" $4 $5"" 6
 echo a'bc'd
 echo 'foo'bar'
 
+
+
+# Mejorar mensajes de error:
+
+""                         # Vacío pero válido
+ls -z                     # Opción inválida, debe mostrar error         ¡¡¡¡¡¡¡¡¡¡¡ UNIFICAR EL IDIOMA EN LAS RESPUESTAS !!!!!!!!!!

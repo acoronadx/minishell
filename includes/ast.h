@@ -6,20 +6,21 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:24:41 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/30 06:13:15 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/10/25 15:26:54 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AST_H
 # define AST_H
 
-# include "lexer.h"
+/* Evitamos ciclos: no necesitamos lexer.h aquí, con una forward declaration basta. */
+typedef struct s_token t_token;   /* <- forward declaration clave */
+typedef struct s_ast   t_ast;
+typedef struct s_shell t_shell;
+
 # include "minishell.h"
 # include "env.h"
 # include "parser.h"
-
-typedef struct s_ast t_ast;
-typedef struct s_shell t_shell; // forward declaration
 
 typedef enum e_node_type
 {
@@ -35,22 +36,21 @@ typedef enum e_node_type
 
 typedef enum e_redir_type
 {
-	REDIR_IN,
-	REDIR_OUT,
-	REDIR_APPEND,
-	REDIR_HEREDOC,
-	REDIR_ERR,       // nuevo: para 2>
-	REDIR_APPEND_ERR,// nuevo: para 2>>
-	REDIR_ALL,       // nuevo: para &>
-	REDIR_APPEND_ALL,// nuevo: para &>>
-	REDIR_FORCE,     // nuevo: para >|
-	REDIR_DUP_IN,    // nuevo: para <&
-	REDIR_DUP_OUT,   // nuevo: para >&
-	REDIR_INVALID
-}	t_redir_type;
+        REDIR_IN,
+        REDIR_OUT,
+        REDIR_APPEND,
+        REDIR_HEREDOC,
+        REDIR_ERR,
+        REDIR_APPEND_ERR,
+        REDIR_ALL,
+        REDIR_APPEND_ALL,
+        REDIR_FORCE,
+        REDIR_DUP_IN,
+        REDIR_DUP_OUT,
+        REDIR_INVALID
+}       t_redir_type;
 
-
-typedef struct s_ast
+struct s_ast
 {
     t_node_type type;
 
@@ -82,24 +82,22 @@ typedef struct s_ast
             struct s_ast *redirections;
         } subshell;
     };
-}   t_ast;
+};
 
-// Funciones constructoras claras y norm-compliant (máx 4 parámetros)
-
+/* Constructores */
 t_ast   *ast_new_command(char **argv, t_ast *redirections);
 t_ast   *ast_new_redir(char *filename, char *delimiter,
                        t_redir_type redir_type, int redir_fd);
 t_ast   *ast_new_binary(t_node_type type, t_ast *left, t_ast *right);
 t_ast   *ast_new_subshell(t_ast *child, t_ast *redirections);
-t_ast	*create_command_node(char **argv, t_ast *redir_list_head);
+t_ast   *create_command_node(char **argv, t_ast *redir_list_head);
 
-// Otros prototipos útiles
+/* Otros */
 t_ast   *ast_copy(t_ast *node);
 void    free_ast(t_ast *node);
 void    free_ast_recursive(t_ast *node);
 int     check_syntax(t_ast *node);
-int		is_lparen(t_token *tok);
-
+int     is_lparen(t_token *tok);
 t_ast   *build_ast(t_token *tokens);
 
 #endif

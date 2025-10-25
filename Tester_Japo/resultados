@@ -31,62 +31,62 @@ acoronad
 [0;32m✔️[0m         
 [0;31m❌[0m  /bin/ls -la
      Diferencias:
-drwxr-xr-x 3 acoronad acoronad   4096 oct 24 03:26 .
-drwxrwxr-x 9 acoronad acoronad   4096 oct 24 03:26 ..
+drwxr-xr-x 3 acoronad acoronad   4096 oct 24 04:30 .
+drwxrwxr-x 9 acoronad acoronad   4096 oct 24 04:30 ..
 -rwxrwxr-x 1 acoronad acoronad  17310 jul  5 13:20 JapoTester.sh
--rwxrwxr-x 1 acoronad acoronad 202056 oct 24 03:25 minishell
+-rwxrwxr-x 1 acoronad acoronad 201432 oct 24 04:30 minishell
 -rw-rw-r-- 1 acoronad acoronad    883 jul  4 14:15 readme.txt
-drwxrwxr-x 2 acoronad acoronad   4096 oct 24 03:25 redirs
+drwxrwxr-x 2 acoronad acoronad   4096 oct 24 04:23 redirs
 total 240
-drwxr-xr-x 3 acoronad acoronad   4096 oct 24 03:26 .
-drwxrwxr-x 9 acoronad acoronad   4096 oct 24 03:26 ..
+drwxr-xr-x 3 acoronad acoronad   4096 oct 24 04:30 .
+drwxrwxr-x 9 acoronad acoronad   4096 oct 24 04:30 ..
 -rwxrwxr-x 1 acoronad acoronad  17310 jul  5 13:20 JapoTester.sh
--rwxrwxr-x 1 acoronad acoronad 202056 oct 24 03:25 minishell
+-rwxrwxr-x 1 acoronad acoronad 201432 oct 24 04:30 minishell
 -rw-rw-r-- 1 acoronad acoronad    883 jul  4 14:15 readme.txt
-drwxrwxr-x 2 acoronad acoronad   4096 oct 24 03:25 redirs
--rw-rw-r-- 1 acoronad acoronad    686 oct 24 03:26 resultados
+drwxrwxr-x 2 acoronad acoronad   4096 oct 24 04:23 redirs
+-rw-rw-r-- 1 acoronad acoronad    686 oct 24 04:30 resultados
 [0;31m❌[0m  /bin/ls -l
      Diferencias:
 -rwxrwxr-x 1 acoronad acoronad  17310 jul  5 13:20 JapoTester.sh
--rwxrwxr-x 1 acoronad acoronad 202056 oct 24 03:25 minishell
+-rwxrwxr-x 1 acoronad acoronad 201432 oct 24 04:30 minishell
 -rw-rw-r-- 1 acoronad acoronad    883 jul  4 14:15 readme.txt
-drwxrwxr-x 2 acoronad acoronad   4096 oct 24 03:25 redirs
+drwxrwxr-x 2 acoronad acoronad   4096 oct 24 04:23 redirs
 total 232
 -rwxrwxr-x 1 acoronad acoronad  17310 jul  5 13:20 JapoTester.sh
--rwxrwxr-x 1 acoronad acoronad 202056 oct 24 03:25 minishell
+-rwxrwxr-x 1 acoronad acoronad 201432 oct 24 04:30 minishell
 -rw-rw-r-- 1 acoronad acoronad    883 jul  4 14:15 readme.txt
-drwxrwxr-x 2 acoronad acoronad   4096 oct 24 03:25 redirs
--rw-rw-r-- 1 acoronad acoronad   1510 oct 24 03:26 resultados
+drwxrwxr-x 2 acoronad acoronad   4096 oct 24 04:23 redirs
+-rw-rw-r-- 1 acoronad acoronad   1510 oct 24 04:30 resultados
 [0;31m❌[0m  echo uno dos tres cuatro
      Diferencias:
 uno dos tres cuatro
 [0;31m❌[0m  /bin/ls -l -a -h
      Diferencias:
-drwxr-xr-x 3 acoronad acoronad 4,0K oct 24 03:26 .
-drwxrwxr-x 9 acoronad acoronad 4,0K oct 24 03:26 ..
+drwxr-xr-x 3 acoronad acoronad 4,0K oct 24 04:30 .
+drwxrwxr-x 9 acoronad acoronad 4,0K oct 24 04:30 ..
 -rwxrwxr-x 1 acoronad acoronad  17K jul  5 13:20 JapoTester.sh
--rwxrwxr-x 1 acoronad acoronad 198K oct 24 03:25 minishell
+-rwxrwxr-x 1 acoronad acoronad 197K oct 24 04:30 minishell
 -rw-rw-r-- 1 acoronad acoronad  883 jul  4 14:15 readme.txt
-drwxrwxr-x 2 acoronad acoronad 4,0K oct 24 03:25 redirs
+drwxrwxr-x 2 acoronad acoronad 4,0K oct 24 04:23 redirs
 total 240K
-drwxr-xr-x 3 acoronad acoronad 4,0K oct 24 03:26 .
-drwxrwxr-x 9 acoronad acoronad 4,0K oct 24 03:26 ..
+drwxr-xr-x 3 acoronad acoronad 4,0K oct 24 04:30 .
+drwxrwxr-x 9 acoronad acoronad 4,0K oct 24 04:30 ..
 -rwxrwxr-x 1 acoronad acoronad  17K jul  5 13:20 JapoTester.sh
--rwxrwxr-x 1 acoronad acoronad 198K oct 24 03:25 minishell
+-rwxrwxr-x 1 acoronad acoronad 197K oct 24 04:30 minishell
 -rw-rw-r-- 1 acoronad acoronad  883 jul  4 14:15 readme.txt
-drwxrwxr-x 2 acoronad acoronad 4,0K oct 24 03:25 redirs
--rw-rw-r-- 1 acoronad acoronad 2,2K oct 24 03:26 resultados
+drwxrwxr-x 2 acoronad acoronad 4,0K oct 24 04:23 redirs
+-rw-rw-r-- 1 acoronad acoronad 2,2K oct 24 04:30 resultados
 [0;31m❌[0m  /bin/ls -lhS
      Diferencias:
--rwxrwxr-x 1 acoronad acoronad 198K oct 24 03:25 minishell
+-rwxrwxr-x 1 acoronad acoronad 197K oct 24 04:30 minishell
 -rwxrwxr-x 1 acoronad acoronad  17K jul  5 13:20 JapoTester.sh
-drwxrwxr-x 2 acoronad acoronad 4,0K oct 24 03:25 redirs
--rw-rw-r-- 1 acoronad acoronad 3,0K oct 24 03:26 resultados
+drwxrwxr-x 2 acoronad acoronad 4,0K oct 24 04:23 redirs
+-rw-rw-r-- 1 acoronad acoronad 3,0K oct 24 04:30 resultados
 total 232K
--rwxrwxr-x 1 acoronad acoronad 198K oct 24 03:25 minishell
+-rwxrwxr-x 1 acoronad acoronad 197K oct 24 04:30 minishell
 -rwxrwxr-x 1 acoronad acoronad  17K jul  5 13:20 JapoTester.sh
-drwxrwxr-x 2 acoronad acoronad 4,0K oct 24 03:25 redirs
--rw-rw-r-- 1 acoronad acoronad 3,0K oct 24 03:26 resultados
+drwxrwxr-x 2 acoronad acoronad 4,0K oct 24 04:23 redirs
+-rw-rw-r-- 1 acoronad acoronad 3,0K oct 24 04:30 resultados
 -rw-rw-r-- 1 acoronad acoronad  883 jul  4 14:15 readme.txt
 [0;31m❌[0m  /bin/cat redirs/a redirs/b
      Diferencias:
@@ -502,62 +502,62 @@ minishell: : command not found
 bash: línea 1: : orden no encontrada
 [0;31m❌[0m  "/bin/ls" -la
      Diferencias:
-drwxr-xr-x 3 acoronad acoronad   4096 oct 24 03:26 .
-drwxrwxr-x 9 acoronad acoronad   4096 oct 24 03:26 ..
+drwxr-xr-x 3 acoronad acoronad   4096 oct 24 04:30 .
+drwxrwxr-x 9 acoronad acoronad   4096 oct 24 04:30 ..
 -rwxrwxr-x 1 acoronad acoronad  17310 jul  5 13:20 JapoTester.sh
--rwxrwxr-x 1 acoronad acoronad 202056 oct 24 03:25 minishell
+-rwxrwxr-x 1 acoronad acoronad 201432 oct 24 04:30 minishell
 -rw-rw-r-- 1 acoronad acoronad    883 jul  4 14:15 readme.txt
-drwxrwxr-x 2 acoronad acoronad   4096 oct 24 03:26 redirs
+drwxrwxr-x 2 acoronad acoronad   4096 oct 24 04:30 redirs
 total 264
-drwxr-xr-x 3 acoronad acoronad   4096 oct 24 03:26 .
-drwxrwxr-x 9 acoronad acoronad   4096 oct 24 03:26 ..
+drwxr-xr-x 3 acoronad acoronad   4096 oct 24 04:30 .
+drwxrwxr-x 9 acoronad acoronad   4096 oct 24 04:30 ..
 -rwxrwxr-x 1 acoronad acoronad  17310 jul  5 13:20 JapoTester.sh
--rwxrwxr-x 1 acoronad acoronad 202056 oct 24 03:25 minishell
+-rwxrwxr-x 1 acoronad acoronad 201432 oct 24 04:30 minishell
 -rw-rw-r-- 1 acoronad acoronad    883 jul  4 14:15 readme.txt
-drwxrwxr-x 2 acoronad acoronad   4096 oct 24 03:26 redirs
--rw-rw-r-- 1 acoronad acoronad  25400 oct 24 03:26 resultados
+drwxrwxr-x 2 acoronad acoronad   4096 oct 24 04:30 redirs
+-rw-rw-r-- 1 acoronad acoronad  25400 oct 24 04:30 resultados
 [0;31m❌[0m  "/bin/ls" -l
      Diferencias:
 -rwxrwxr-x 1 acoronad acoronad  17310 jul  5 13:20 JapoTester.sh
--rwxrwxr-x 1 acoronad acoronad 202056 oct 24 03:25 minishell
+-rwxrwxr-x 1 acoronad acoronad 201432 oct 24 04:30 minishell
 -rw-rw-r-- 1 acoronad acoronad    883 jul  4 14:15 readme.txt
-drwxrwxr-x 2 acoronad acoronad   4096 oct 24 03:26 redirs
+drwxrwxr-x 2 acoronad acoronad   4096 oct 24 04:30 redirs
 total 256
 -rwxrwxr-x 1 acoronad acoronad  17310 jul  5 13:20 JapoTester.sh
--rwxrwxr-x 1 acoronad acoronad 202056 oct 24 03:25 minishell
+-rwxrwxr-x 1 acoronad acoronad 201432 oct 24 04:30 minishell
 -rw-rw-r-- 1 acoronad acoronad    883 jul  4 14:15 readme.txt
-drwxrwxr-x 2 acoronad acoronad   4096 oct 24 03:26 redirs
--rw-rw-r-- 1 acoronad acoronad  26226 oct 24 03:26 resultados
+drwxrwxr-x 2 acoronad acoronad   4096 oct 24 04:30 redirs
+-rw-rw-r-- 1 acoronad acoronad  26226 oct 24 04:30 resultados
 [0;31m❌[0m  "echo" uno dos tres cuatro
      Diferencias:
 uno dos tres cuatro
 [0;31m❌[0m  "/bin/ls" -l -a -h
      Diferencias:
-drwxr-xr-x 3 acoronad acoronad 4,0K oct 24 03:26 .
-drwxrwxr-x 9 acoronad acoronad 4,0K oct 24 03:26 ..
+drwxr-xr-x 3 acoronad acoronad 4,0K oct 24 04:30 .
+drwxrwxr-x 9 acoronad acoronad 4,0K oct 24 04:30 ..
 -rwxrwxr-x 1 acoronad acoronad  17K jul  5 13:20 JapoTester.sh
--rwxrwxr-x 1 acoronad acoronad 198K oct 24 03:25 minishell
+-rwxrwxr-x 1 acoronad acoronad 197K oct 24 04:30 minishell
 -rw-rw-r-- 1 acoronad acoronad  883 jul  4 14:15 readme.txt
-drwxrwxr-x 2 acoronad acoronad 4,0K oct 24 03:26 redirs
+drwxrwxr-x 2 acoronad acoronad 4,0K oct 24 04:30 redirs
 total 264K
-drwxr-xr-x 3 acoronad acoronad 4,0K oct 24 03:26 .
-drwxrwxr-x 9 acoronad acoronad 4,0K oct 24 03:26 ..
+drwxr-xr-x 3 acoronad acoronad 4,0K oct 24 04:30 .
+drwxrwxr-x 9 acoronad acoronad 4,0K oct 24 04:30 ..
 -rwxrwxr-x 1 acoronad acoronad  17K jul  5 13:20 JapoTester.sh
--rwxrwxr-x 1 acoronad acoronad 198K oct 24 03:25 minishell
+-rwxrwxr-x 1 acoronad acoronad 197K oct 24 04:30 minishell
 -rw-rw-r-- 1 acoronad acoronad  883 jul  4 14:15 readme.txt
-drwxrwxr-x 2 acoronad acoronad 4,0K oct 24 03:26 redirs
--rw-rw-r-- 1 acoronad acoronad  27K oct 24 03:26 resultados
+drwxrwxr-x 2 acoronad acoronad 4,0K oct 24 04:30 redirs
+-rw-rw-r-- 1 acoronad acoronad  27K oct 24 04:30 resultados
 [0;31m❌[0m  "/bin/ls" -lhS
      Diferencias:
--rwxrwxr-x 1 acoronad acoronad 198K oct 24 03:25 minishell
--rw-rw-r-- 1 acoronad acoronad  28K oct 24 03:26 resultados
+-rwxrwxr-x 1 acoronad acoronad 197K oct 24 04:30 minishell
+-rw-rw-r-- 1 acoronad acoronad  28K oct 24 04:30 resultados
 -rwxrwxr-x 1 acoronad acoronad  17K jul  5 13:20 JapoTester.sh
-drwxrwxr-x 2 acoronad acoronad 4,0K oct 24 03:26 redirs
+drwxrwxr-x 2 acoronad acoronad 4,0K oct 24 04:30 redirs
 total 256K
--rwxrwxr-x 1 acoronad acoronad 198K oct 24 03:25 minishell
--rw-rw-r-- 1 acoronad acoronad  28K oct 24 03:26 resultados
+-rwxrwxr-x 1 acoronad acoronad 197K oct 24 04:30 minishell
+-rw-rw-r-- 1 acoronad acoronad  28K oct 24 04:30 resultados
 -rwxrwxr-x 1 acoronad acoronad  17K jul  5 13:20 JapoTester.sh
-drwxrwxr-x 2 acoronad acoronad 4,0K oct 24 03:26 redirs
+drwxrwxr-x 2 acoronad acoronad 4,0K oct 24 04:30 redirs
 -rw-rw-r-- 1 acoronad acoronad  883 jul  4 14:15 readme.txt
 [0;31m❌[0m  "/bin/cat" redirs/a redirs/b
      Diferencias:
@@ -636,62 +636,62 @@ minishell: : command not found
 bash: línea 1: : orden no encontrada
 [0;31m❌[0m  '/bin/ls' -la
      Diferencias:
-drwxr-xr-x 3 acoronad acoronad   4096 oct 24 03:26 .
-drwxrwxr-x 9 acoronad acoronad   4096 oct 24 03:26 ..
+drwxr-xr-x 3 acoronad acoronad   4096 oct 24 04:30 .
+drwxrwxr-x 9 acoronad acoronad   4096 oct 24 04:30 ..
 -rwxrwxr-x 1 acoronad acoronad  17310 jul  5 13:20 JapoTester.sh
--rwxrwxr-x 1 acoronad acoronad 202056 oct 24 03:25 minishell
+-rwxrwxr-x 1 acoronad acoronad 201432 oct 24 04:30 minishell
 -rw-rw-r-- 1 acoronad acoronad    883 jul  4 14:15 readme.txt
-drwxrwxr-x 2 acoronad acoronad   4096 oct 24 03:26 redirs
+drwxrwxr-x 2 acoronad acoronad   4096 oct 24 04:30 redirs
 total 268
-drwxr-xr-x 3 acoronad acoronad   4096 oct 24 03:26 .
-drwxrwxr-x 9 acoronad acoronad   4096 oct 24 03:26 ..
+drwxr-xr-x 3 acoronad acoronad   4096 oct 24 04:30 .
+drwxrwxr-x 9 acoronad acoronad   4096 oct 24 04:30 ..
 -rwxrwxr-x 1 acoronad acoronad  17310 jul  5 13:20 JapoTester.sh
--rwxrwxr-x 1 acoronad acoronad 202056 oct 24 03:25 minishell
+-rwxrwxr-x 1 acoronad acoronad 201432 oct 24 04:30 minishell
 -rw-rw-r-- 1 acoronad acoronad    883 jul  4 14:15 readme.txt
-drwxrwxr-x 2 acoronad acoronad   4096 oct 24 03:26 redirs
--rw-rw-r-- 1 acoronad acoronad  30431 oct 24 03:26 resultados
+drwxrwxr-x 2 acoronad acoronad   4096 oct 24 04:30 redirs
+-rw-rw-r-- 1 acoronad acoronad  30431 oct 24 04:30 resultados
 [0;31m❌[0m  '/bin/ls' -l
      Diferencias:
 -rwxrwxr-x 1 acoronad acoronad  17310 jul  5 13:20 JapoTester.sh
--rwxrwxr-x 1 acoronad acoronad 202056 oct 24 03:25 minishell
+-rwxrwxr-x 1 acoronad acoronad 201432 oct 24 04:30 minishell
 -rw-rw-r-- 1 acoronad acoronad    883 jul  4 14:15 readme.txt
-drwxrwxr-x 2 acoronad acoronad   4096 oct 24 03:26 redirs
+drwxrwxr-x 2 acoronad acoronad   4096 oct 24 04:30 redirs
 total 260
 -rwxrwxr-x 1 acoronad acoronad  17310 jul  5 13:20 JapoTester.sh
--rwxrwxr-x 1 acoronad acoronad 202056 oct 24 03:25 minishell
+-rwxrwxr-x 1 acoronad acoronad 201432 oct 24 04:30 minishell
 -rw-rw-r-- 1 acoronad acoronad    883 jul  4 14:15 readme.txt
-drwxrwxr-x 2 acoronad acoronad   4096 oct 24 03:26 redirs
--rw-rw-r-- 1 acoronad acoronad  31257 oct 24 03:26 resultados
+drwxrwxr-x 2 acoronad acoronad   4096 oct 24 04:30 redirs
+-rw-rw-r-- 1 acoronad acoronad  31257 oct 24 04:30 resultados
 [0;31m❌[0m  'echo' uno dos tres cuatro
      Diferencias:
 uno dos tres cuatro
 [0;31m❌[0m  '/bin/ls' -l -a -h
      Diferencias:
-drwxr-xr-x 3 acoronad acoronad 4,0K oct 24 03:26 .
-drwxrwxr-x 9 acoronad acoronad 4,0K oct 24 03:26 ..
+drwxr-xr-x 3 acoronad acoronad 4,0K oct 24 04:30 .
+drwxrwxr-x 9 acoronad acoronad 4,0K oct 24 04:30 ..
 -rwxrwxr-x 1 acoronad acoronad  17K jul  5 13:20 JapoTester.sh
--rwxrwxr-x 1 acoronad acoronad 198K oct 24 03:25 minishell
+-rwxrwxr-x 1 acoronad acoronad 197K oct 24 04:30 minishell
 -rw-rw-r-- 1 acoronad acoronad  883 jul  4 14:15 readme.txt
-drwxrwxr-x 2 acoronad acoronad 4,0K oct 24 03:26 redirs
+drwxrwxr-x 2 acoronad acoronad 4,0K oct 24 04:30 redirs
 total 268K
-drwxr-xr-x 3 acoronad acoronad 4,0K oct 24 03:26 .
-drwxrwxr-x 9 acoronad acoronad 4,0K oct 24 03:26 ..
+drwxr-xr-x 3 acoronad acoronad 4,0K oct 24 04:30 .
+drwxrwxr-x 9 acoronad acoronad 4,0K oct 24 04:30 ..
 -rwxrwxr-x 1 acoronad acoronad  17K jul  5 13:20 JapoTester.sh
--rwxrwxr-x 1 acoronad acoronad 198K oct 24 03:25 minishell
+-rwxrwxr-x 1 acoronad acoronad 197K oct 24 04:30 minishell
 -rw-rw-r-- 1 acoronad acoronad  883 jul  4 14:15 readme.txt
-drwxrwxr-x 2 acoronad acoronad 4,0K oct 24 03:26 redirs
--rw-rw-r-- 1 acoronad acoronad  32K oct 24 03:26 resultados
+drwxrwxr-x 2 acoronad acoronad 4,0K oct 24 04:30 redirs
+-rw-rw-r-- 1 acoronad acoronad  32K oct 24 04:30 resultados
 [0;31m❌[0m  '/bin/ls' -lhS
      Diferencias:
--rwxrwxr-x 1 acoronad acoronad 198K oct 24 03:25 minishell
--rw-rw-r-- 1 acoronad acoronad  32K oct 24 03:26 resultados
+-rwxrwxr-x 1 acoronad acoronad 197K oct 24 04:30 minishell
+-rw-rw-r-- 1 acoronad acoronad  32K oct 24 04:30 resultados
 -rwxrwxr-x 1 acoronad acoronad  17K jul  5 13:20 JapoTester.sh
-drwxrwxr-x 2 acoronad acoronad 4,0K oct 24 03:26 redirs
+drwxrwxr-x 2 acoronad acoronad 4,0K oct 24 04:30 redirs
 total 260K
--rwxrwxr-x 1 acoronad acoronad 198K oct 24 03:25 minishell
--rw-rw-r-- 1 acoronad acoronad  32K oct 24 03:26 resultados
+-rwxrwxr-x 1 acoronad acoronad 197K oct 24 04:30 minishell
+-rw-rw-r-- 1 acoronad acoronad  32K oct 24 04:30 resultados
 -rwxrwxr-x 1 acoronad acoronad  17K jul  5 13:20 JapoTester.sh
-drwxrwxr-x 2 acoronad acoronad 4,0K oct 24 03:26 redirs
+drwxrwxr-x 2 acoronad acoronad 4,0K oct 24 04:30 redirs
 -rw-rw-r-- 1 acoronad acoronad  883 jul  4 14:15 readme.txt
 [0;31m❌[0m  '/bin/cat' redirs/a redirs/b
      Diferencias:

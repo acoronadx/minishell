@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 02:45:20 by acoronad          #+#    #+#             */
-/*   Updated: 2025/07/22 15:18:33 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/10/25 16:57:11 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,35 +167,23 @@ char *expand_token(const char *str, t_shell *shell)
     return (res);
 }
 
-// expand_variables queda igual, pero ahora remove_quotes se llama al final de expand_variables
+// src/expand/expand.c
 int expand_variables(t_shell *shell)
 {
-    t_token *current_token;
-    char    *expanded_value;
+    t_token *t = shell->tokens;
 
-    if (!shell->tokens)
-        return (0);
-    current_token = shell->tokens;
-    while (current_token)
+    while (t)
     {
-        // expand_token es responsable de la expansión de variables ($VAR)
-        // Y también de manejar backticks (`` ` ``) si los implementas
-        // ¡Importante!: expand_token NO debe hacer quote removal.
-        // Debe devolver el valor con las comillas y backslashes "intermedios" intactos.
-        expanded_value = expand_token(current_token->value, shell);
-        if (!expanded_value)
-        {
-            free_token_list(shell->tokens);
-            shell->tokens = NULL;
-            return (-1);
-        }
-        free(current_token->value);
-        current_token->value = expanded_value;
-        current_token = current_token->next;
+        char *expanded = expand_token(t->value, shell);
+        if (!expanded)
+            return -1;
+        free(t->value);
+        t->value = expanded;
+        t = t->next;
     }
-    // La llamada a remove_quotes sigue aquí, al final de la fase de expansión
-    // Esto asegura que después de la expansión, se eliminan las comillas y se procesan los backslashes.
-    remove_quotes(shell->tokens);
-    return (0);
-}
 
+    /* Bash: expansiones -> word splitting -> quote removal */
+    perform_word_splitting(shell);   // <-- AHORA SÍ
+    remove_quotes(shell->tokens);
+    return 0;
+}

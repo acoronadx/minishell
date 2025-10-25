@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 03:25:37 by acoronad          #+#    #+#             */
-/*   Updated: 2025/10/24 03:24:36 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/10/24 14:52:36 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,19 +51,6 @@ int print_exec_error(t_shell *shell, const char *cmd, int err_code)
         }
         shell->exit_status = ret;
         return ret;
-}
-
-void	free_token_list(t_token *tokens)
-{
-	t_token *tmp;
-
-	while (tokens)
-	{
-		tmp = tokens;
-		tokens = tokens->next;
-		free(tmp->value);
-		free(tmp);
-	}
 }
 
 // Limpia los recursos utilizados en cada iteración del bucle interactivo

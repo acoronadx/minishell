@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 14:20:54 by acoronad          #+#    #+#             */
-/*   Updated: 2025/10/24 03:21:42 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/10/24 04:30:08 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,12 @@
 #include "ast.h"
 #include "builtins.h"
 
-/*
-// --- helper local ---
-static int is_all_n(const char *s)
+/* Restaurar STDIN/OUT/ERR */
+void restore_std_fds(int saved_in, int saved_out, int saved_err)
 {
-	(void)s;
-	
-	return (0);
-}
-*/
-
-static void set_child_signals_default(void)
-{
-    signal(SIGINT, SIG_DFL);
-    signal(SIGQUIT, SIG_DFL);
-}
-
-void restore_std_fds(int original_stdin, int original_stdout, int original_stderr)
-{
-    if (original_stdin != -1)  { dup2(original_stdin, STDIN_FILENO);  close(original_stdin);  }
-    if (original_stdout != -1) { dup2(original_stdout, STDOUT_FILENO); close(original_stdout); }
-    if (original_stderr != -1) { dup2(original_stderr, STDERR_FILENO); close(original_stderr); }
+    if (saved_in != -1)  { dup2(saved_in, STDIN_FILENO);  close(saved_in);  }
+    if (saved_out != -1) { dup2(saved_out, STDOUT_FILENO); close(saved_out); }
+    if (saved_err != -1) { dup2(saved_err, STDERR_FILENO); close(saved_err); }
 }
 
 int execute_command(t_ast *node, t_shell *shell)
@@ -43,123 +28,100 @@ int execute_command(t_ast *node, t_shell *shell)
     pid_t   pid;
     char    **env;
     char    *exec_path;
-    int     original_stdin = -1, original_stdout = -1, original_stderr = -1;
+    int     status;
 
     if (!node || !node->cmd.argv || !node->cmd.argv[0])
-        return (shell->exit_status = 0);
+        return (0);
 
+    /* argv[0] vacío => “command not found” */
     if (node->cmd.argv[0][0] == '\0')
     {
         ft_dprintf(2, "minishell: : command not found\n");
-        return (shell->exit_status = 127);
+        shell->exit_status = 127; /* bash: not found -> 127. */ /* Bash manpage. */
+        return (127);
     }
 
-    // *** CASO: ejecutamos dentro de un HIJO ya forkeado (pipes, subshell, background)
-    if (shell->in_child)
-    {
-        // El hijo debe tener señales por defecto
-        set_child_signals_default();
-
-        // Redirecciones se aplican AQUÍ (en el propio hijo)
-        if (apply_redirections(node->cmd.redirections) != 0)
-            _exit(1);
-
-        // Builtin en hijo: ejecutar y salir
-        if (is_builtin(node->cmd.argv[0]))
-        {
-            int st = run_builtin(node, shell);
-            _exit(st);
-        }
-
-        // Externo en hijo: resolver y execve
-        exec_path = find_executable(node->cmd.argv[0], shell);
-        if (!exec_path)
-            _exit(print_exec_error(shell, node->cmd.argv[0], ENOENT));
-
-        env = env_to_array(shell->env);
-        if (!env)
-        {
-            free(exec_path);
-            _exit(1);
-        }
-
-        execve(exec_path, node->cmd.argv, env);
-        // Si llegamos aquí, execve falló
-        int err = errno;
-        free(exec_path);
-        // env no se libera estrictamente necesario (salimos ya)
-        _exit(print_exec_error(shell, node->cmd.argv[0], err));
-    }
-
-    // *** CASO: proceso PADRE (no forkeado todavía) ***
-    // Builtins en el padre: aplicar redirecciones temporalmente
+    /* -------- BUILTINS: redirecciones SOLO en el PADRE -------- */
     if (is_builtin(node->cmd.argv[0]))
     {
-        original_stdin  = dup(STDIN_FILENO);
-        original_stdout = dup(STDOUT_FILENO);
-        original_stderr = dup(STDERR_FILENO);
-        if (original_stdin == -1 || original_stdout == -1 || original_stderr == -1)
+        int saved_in  = dup(STDIN_FILENO);
+        int saved_out = dup(STDOUT_FILENO);
+        int saved_err = dup(STDERR_FILENO);
+
+        if (saved_in == -1 || saved_out == -1 || saved_err == -1)
         {
             perror("minishell: dup");
-            if (original_stdin  != -1) close(original_stdin);
-            if (original_stdout != -1) close(original_stdout);
-            if (original_stderr != -1) close(original_stderr);
-            return (shell->exit_status = 1);
+            shell->exit_status = 1;
+            if (saved_in  != -1) close(saved_in);
+            if (saved_out != -1) close(saved_out);
+            if (saved_err != -1) close(saved_err);
+            return (1);
         }
+
         if (apply_redirections(node->cmd.redirections) != 0)
         {
-            restore_std_fds(original_stdin, original_stdout, original_stderr);
-            return (shell->exit_status = 1);
+            /* Si fallan redirecciones, restauramos y devolvemos error */
+            restore_std_fds(saved_in, saved_out, saved_err);
+            shell->exit_status = 1;
+            return (1);
         }
+
         shell->exit_status = run_builtin(node, shell);
-        restore_std_fds(original_stdin, original_stdout, original_stderr);
-        return shell->exit_status;
+        restore_std_fds(saved_in, saved_out, saved_err);
+        return (shell->exit_status);
     }
 
-    // Externo: fork y exec en el HIJO
+    /* -------- EXTERNOS: redirecciones SOLO en el HIJO -------- */
     exec_path = find_executable(node->cmd.argv[0], shell);
     if (!exec_path)
-        return print_exec_error(shell, node->cmd.argv[0], ENOENT);
+    {
+        /* bash: 127 si no se encuentra el comando, 126 si no es ejecutable, etc. */
+        return (print_exec_error(shell, node->cmd.argv[0], errno)); /* Bash EXIT STATUS doc. */
+    }
 
     env = env_to_array(shell->env);
     if (!env)
     {
         free(exec_path);
-        return (shell->exit_status = 1);
+        shell->exit_status = 1;
+        return (1);
     }
 
     pid = fork();
     if (pid < 0)
     {
+        int ret = print_exec_error(shell, node->cmd.argv[0], errno);
         free(exec_path);
         ft_free_strtab(env);
-        return print_exec_error(shell, node->cmd.argv[0], errno);
+        return (ret);
     }
-    if (pid == 0) // hijo real
+    if (pid == 0)
     {
-        set_child_signals_default();
+        /* ----- HIJO ----- */
+        /* Señales por defecto, como en un binario normal */
+        signal(SIGINT, SIG_DFL);
+        signal(SIGQUIT, SIG_DFL);
 
-        // Redirecciones SOLO en el hijo para externos
+        /* Redirecciones AQUÍ (solo afectan al hijo) */
         if (apply_redirections(node->cmd.redirections) != 0)
             _exit(1);
 
         execve(exec_path, node->cmd.argv, env);
-        // fallo
-        int err = errno;
-        _exit(print_exec_error(shell, node->cmd.argv[0], err));
+        /* Si llegamos aquí, execve falló: imprimir error y salir.
+           bash: “not found” -> 127, “no ejecutable/permiso” -> 126, etc. */
+        print_exec_error(shell, node->cmd.argv[0], errno);
+        _exit(127);
     }
 
-    // padre espera al HIJO y traduce status
-    int st = 0;
-    waitpid(pid, &st, 0);
-    if (WIFEXITED(st))
-        shell->exit_status = WEXITSTATUS(st);
-    else if (WIFSIGNALED(st))
-        shell->exit_status = 128 + WTERMSIG(st);
-    else
+    /* ----- PADRE ----- */
+    if (waitpid(pid, &status, 0) == -1)
         shell->exit_status = 1;
+    else if (WIFEXITED(status))
+        shell->exit_status = WEXITSTATUS(status);   /* wait(2) macros. */
+    else if (WIFSIGNALED(status))
+        shell->exit_status = 128 + WTERMSIG(status);/* Bash: 128+signal. */
 
     free(exec_path);
     ft_free_strtab(env);
-    return shell->exit_status;
+    return (shell->exit_status);
 }

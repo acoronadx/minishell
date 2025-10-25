@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 20:17:25 by acoronad          #+#    #+#             */
-/*   Updated: 2025/07/21 14:12:57 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/10/25 16:58:11 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,11 @@ size_t	get_tilde_prefix_len(const char *str);
 ** Elimina las comillas de los tokens después de la expansión.
 */
 void    remove_quotes(t_token *tokens);
+
+/*
+** word_splitting.c
+** Realiza el word splitting en los tokens después de la expansión.
+*/
+void    perform_word_splitting(t_shell *shell);
 
 #endif
