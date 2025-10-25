@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 00:15:35 by acoronad          #+#    #+#             */
-/*   Updated: 2025/10/25 18:13:47 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/10/25 20:18:37 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,35 +80,23 @@ static char	*expand_named_var(const char *str, int *i, t_shell *shell)
 
 char *expand_value(const char *s, int *i, t_shell *shell)
 {
-    /* s[*i] apunta al carácter JUSTO DESPUÉS de '$' */
-    if (s[*i] == '?') {                 /* $? -> exit status */
-        (*i)++;
-        return ft_itoa(shell->exit_status);
-    }
-    if (s[*i] == '$') {                 /* $$ -> pid del shell */
-        (*i)++;
-        return ft_itoa(getpid());
-    }
-    if (s[*i] == '0') {                 /* $0 -> nombre del programa */
-        (*i)++;
-        return get_program_name_str(shell);
-    }
+    /* s[*i] apunta al primer char DESPUÉS del '$' */
+    if (s[*i] == '?') { (*i)++; return ft_itoa(shell->exit_status); }   /* $? */
+    if (s[*i] == '$') { (*i)++; return ft_itoa(getpid()); }             /* $$ */
+    if (s[*i] == '0') { (*i)++; return get_program_name_str(shell); }   /* $0 */
 
-    /* Parámetros posicionales $1..$9 (si no los implementas): vacío */
-    if (ft_isdigit((unsigned char)s[*i])) {
-        (*i)++;
-        return ft_strdup("");
-    }
+    /* $1..$9 -> (no implementamos args posicionales) => "" como bash mínimo */
+    if (ft_isdigit((unsigned char)s[*i])) { (*i)++; return ft_strdup(""); }
 
-    /* $ seguido de comillas o fin de palabra -> vacío (p.ej. $"") */
-    if (!s[*i] || s[*i] == '"' || s[*i] == '\'')
+    /* $ seguido de " o ' o fin => "" */
+    if (s[*i] == '"' || s[*i] == '\'' || s[*i] == '\0')
         return ft_strdup("");
 
-    /* $VAR o $_... */
-    if (ft_isalpha((unsigned char)s[*i]) || s[*i] == '_') {
+    /* $VAR / $_VAR123 */
+    if (ft_isalpha((unsigned char)s[*i]) || s[*i] == '_')
+    {
         int start = *i;
-        while (ft_isalnum((unsigned char)s[*i]) || s[*i] == '_')
-            (*i)++;
+        while (ft_isalnum((unsigned char)s[*i]) || s[*i] == '_') (*i)++;
         char *name = ft_substr(s, start, *i - start);
         if (!name) return NULL;
         char *val = find_var(shell->env, name);
@@ -116,11 +104,11 @@ char *expand_value(const char *s, int *i, t_shell *shell)
         return ft_strdup(val ? val : "");
     }
 
-    /* Caso por defecto: tratar '$' como literal.
-       MUY IMPORTANTE: aquí NO avanzamos *i, para no “comernos” el carácter que sigue
-       (p.ej. "$-"). El caller ya consumió el '$'. */
+    /* Cualquier otro caso: deja '$' literal y avanza un carácter si hay. */
+    if (s[*i] != '\0') (*i)++;
     return ft_strdup("$");
 }
+
 
 
 int handle_dollar(const char *str, int *i, char *res, int j, t_shell *shell)

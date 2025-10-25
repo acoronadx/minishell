@@ -157,6 +157,7 @@ echo 1 $2 $3"" $4 $5"" 6
 echo a'bc'd
 echo 'foo'bar'
 
+# echo $a""a $a"" a $"" $2"" $variablequenoexiste"" $USER"" '$USER'"" 1 $2 $3"" $4"" 5 $seis $siete"" 8 1 $USER"" $USER"" $USER"" 4 1 $2"" $3"" $4"" $5"" 6 "$USER''z" "$USER""z" "$USER''" 1 $2 $3 $4 $5 6 1 $2 $3"" $4 $5"" 6 a'bc'd
 
 
 # Mejorar mensajes de error:

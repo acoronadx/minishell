@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 00:16:36 by acoronad          #+#    #+#             */
-/*   Updated: 2025/10/25 16:42:16 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/10/26 00:58:45 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static size_t	handle_regular_char(const char *str, int *i)
 	return (1);
 }
 */
+static int dq_escapable(char c) { return (c=='$' || c=='`' || c=='"' || c=='\\' || c=='\n'); }
+
 size_t	handle_dollar_len(const char *str, int *i, t_shell *shell)
 {
 	char	*expanded;
@@ -49,98 +51,72 @@ size_t	handle_dollar_len(const char *str, int *i, t_shell *shell)
 	free(expanded);
 	return (len);
 }
-
-size_t  calculate_expanded_len(const char *str, t_shell *shell)
+size_t calculate_expanded_len(const char *str, t_shell *shell)
 {
-    size_t  total_len;
-    int     i;
-    int     temp_i; // Usamos un temporal para no afectar el 'i' principal de la iteración
-    t_quote current_quote_state;
-    size_t  len_to_add;
-
-    total_len = 0;
-    i = 0;
-    current_quote_state = NO_QUOTE;
+    size_t total = 0;
+    int i = 0;
+    t_quote q = NO_QUOTE;
 
     while (str[i])
     {
-        temp_i = i; // Guardamos el índice actual para no modificar 'i' directamente
-        len_to_add = 0;
+        if (str[i] == '\'')
+        {
+            if (q == NO_QUOTE) q = SINGLE_QUOTE;
+            else if (q == SINGLE_QUOTE) q = NO_QUOTE;
+            total += 1; i++;                  /* la comilla se copia; se quitará en quote_removal */
+            continue;
+        }
+        if (str[i] == '"')
+        {
+            if (q == NO_QUOTE) q = DOUBLE_QUOTE;
+            else if (q == DOUBLE_QUOTE) q = NO_QUOTE;
+            total += 1; i++;
+            continue;
+        }
 
-        // 1. Manejo de Comillas (contamos la comilla como 1 caracter)
-        if (str[temp_i] == '\'')
+        if (str[i] == '\\')
         {
-            if (current_quote_state == NO_QUOTE)
-                current_quote_state = SINGLE_QUOTE;
-            else if (current_quote_state == SINGLE_QUOTE)
-                current_quote_state = NO_QUOTE;
-            len_to_add = 1;
-            temp_i++;
-        }
-        else if (str[temp_i] == '"')
-        {
-            if (current_quote_state == NO_QUOTE)
-                current_quote_state = DOUBLE_QUOTE;
-            else if (current_quote_state == DOUBLE_QUOTE)
-                current_quote_state = NO_QUOTE;
-            len_to_add = 1;
-            temp_i++;
-        }
-        // 2. Expansión (solo si no estamos dentro de comillas simples)
-        else if (current_quote_state != SINGLE_QUOTE)
-        {
-            // Manejo de Backslash antes de $ dentro de comillas dobles
-            if (str[temp_i] == '\\' && str[temp_i + 1] && current_quote_state == DOUBLE_QUOTE)
+            if (q == SINGLE_QUOTE) { total += 1; i++; continue; }   /* literal en '...' */
+
+            if (q == DOUBLE_QUOTE)
             {
-                if (str[temp_i + 1] == '$' || str[temp_i + 1] == '"' || str[temp_i + 1] == '\\')
+                if (str[i+1] && dq_escapable(str[i+1]))
                 {
-                    len_to_add = 1; // El backslash se elimina, solo cuenta el caracter escapado
-                    temp_i += 2;
+                    if (str[i+1] == '\n') { i += 2; continue; }     /* elimina \+nl */
+                    total += 1; i += 2;                             /* copia 1 char, quita '\' */
+                    continue;
                 }
-                else
-                { // No es un caracter especial escapado, solo copia el backslash y el caracter
-                    len_to_add = 2;
-                    temp_i += 2;
-                }
+                total += 1; i++;                                    /* '\' literal */
+                continue;
             }
-            // Manejo de $
-            else if (str[temp_i] == '$')
-            {
-                // handle_dollar_len ya avanza temp_i
-                len_to_add = handle_dollar_len(str, &temp_i, shell);
-                if (len_to_add == (size_t)-1) return ((size_t)-1);
-            }
-            // Manejo de Tilde
-            else if (str[temp_i] == '~' && (temp_i == 0 || ft_isspace(str[temp_i - 1]) || str[temp_i - 1] == '='))
-            {
-                char *tilde_exp = expand_tilde_internal(str + temp_i, shell);
-                if (!tilde_exp) return ((size_t)-1);
-                len_to_add = ft_strlen(tilde_exp);
-                temp_i += get_tilde_prefix_len(str + temp_i);
-                free(tilde_exp);
-            }
-            // Backslash fuera de comillas dobles
-            else if (str[temp_i] == '\\' && str[temp_i + 1] && current_quote_state == NO_QUOTE)
-            {
-                len_to_add = 1; // El backslash se elimina
-                temp_i += 2;
-            }
-            // Caracter normal
-            else
-            {
-                len_to_add = 1;
-                temp_i++;
-            }
+
+            /* NO_QUOTE */
+            if (str[i+1] == '\n') { i += 2; continue; }             /* continuación de línea */
+            if (str[i+1]) { total += 1; i += 2; }                   /* quita '\' y copia 1 char */
+            else { total += 1; i++; }                               /* '\' final: cópiala */
+            continue;
         }
-        // Si estamos en comillas simples, o es un caracter normal no expandible
-        else
+
+        if (q != SINGLE_QUOTE && str[i] == '$')
         {
-            len_to_add = 1;
-            temp_i++;
+            size_t add = handle_dollar_len(str, &i, shell);         /* avanza i internamente */
+            if (add == (size_t)-1) return (size_t)-1;
+            total += add;
+            continue;
         }
-        
-        total_len += len_to_add;
-        i = temp_i; // Actualiza el índice principal
+
+        /* Tilde (~) al inicio de palabra o tras '=' */
+        if (str[i] == '~' && (i == 0 || ft_isspace((unsigned char)str[i-1]) || str[i-1] == '='))
+        {
+            char *t = expand_tilde_internal(str + i, shell);
+            if (!t) return (size_t)-1;
+            total += ft_strlen(t);
+            i += get_tilde_prefix_len(str + i);
+            free(t);
+            continue;
+        }
+
+        total += 1; i++;
     }
-    return (total_len);
+    return total;
 }
