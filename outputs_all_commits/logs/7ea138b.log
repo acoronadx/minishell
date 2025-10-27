@@ -1,0 +1,47 @@
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/builtins/is_builtin.c -o obj/src/builtins/is_builtin.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/builtins/run_builtin.c -o obj/src/builtins/run_builtin.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/parser/heredoc_read.c -o obj/src/parser/heredoc_read.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/parser/parse_simple_utils.c -o obj/src/parser/parse_simple_utils.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/parser/parse_redirections.c -o obj/src/parser/parse_redirections.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/parser/parse_simple_command.c -o obj/src/parser/parse_simple_command.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/parser/parse_background.c -o obj/src/parser/parse_background.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/parser/parse_sequence.c -o obj/src/parser/parse_sequence.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/parser/parse_and_or.c -o obj/src/parser/parse_and_or.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/parser/parse_subshell.c -o obj/src/parser/parse_subshell.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/parser/parse_pipeline.c -o obj/src/parser/parse_pipeline.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/parser/parse_command_and_redirection.c -o obj/src/parser/parse_command_and_redirection.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/parser/parse_arguments.c -o obj/src/parser/parse_arguments.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/parser/parse_group.c -o obj/src/parser/parse_group.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/shell/shell_modes.c -o obj/src/shell/shell_modes.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/shell/handle_help_version.c -o obj/src/shell/handle_help_version.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/shell/shell_exec.c -o obj/src/shell/shell_exec.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/shell/cleanup_shell.c -o obj/src/shell/cleanup_shell.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/shell/run_interactive.c -o obj/src/shell/run_interactive.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/shell/init_shell.c -o obj/src/shell/init_shell.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/env/init_env_list.c -o obj/src/env/init_env_list.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/env/env_get_value.c -o obj/src/env/env_get_value.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/env/free_env_list.c -o obj/src/env/free_env_list.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/env/get_env_array.c -o obj/src/env/get_env_array.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/lexer/lexer_get_opertator.c -o obj/src/lexer/lexer_get_opertator.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/lexer/lexer_get_word.c -o obj/src/lexer/lexer_get_word.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/lexer/lexer.c -o obj/src/lexer/lexer.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/lexer/lexer_utils.c -o obj/src/lexer/lexer_utils.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/lexer/lexer_types.c -o obj/src/lexer/lexer_types.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/lexer/lexer_get_quoted.c -o obj/src/lexer/lexer_get_quoted.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/signals/handle_signals.c -o obj/src/signals/handle_signals.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/signals/disable_restore_vquit.c -o obj/src/signals/disable_restore_vquit.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/AST/free_ast.c -o obj/src/AST/free_ast.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/AST/build_ast.c -o obj/src/AST/build_ast.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/AST/ast_utils.c -o obj/src/AST/ast_utils.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/expand/expand_dollar.c -o obj/src/expand/expand_dollar.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/expand/handle_expand_cases.c -o obj/src/expand/handle_expand_cases.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/expand/expand.c -o obj/src/expand/expand.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/expand/calculate_expand_len.c -o obj/src/expand/calculate_expand_len.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/expand/expand_utils.c -o obj/src/expand/expand_utils.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/expand/expand_tilde.c -o obj/src/expand/expand_tilde.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c minishell.c -o obj/minishell.o
+gcc -Wall -Wextra -Werror -g3 obj/src/builtins/is_builtin.o obj/src/builtins/run_builtin.o obj/src/parser/heredoc_read.o obj/src/parser/parse_simple_utils.o obj/src/parser/parse_redirections.o obj/src/parser/parse_simple_command.o obj/src/parser/parse_background.o obj/src/parser/parse_sequence.o obj/src/parser/parse_and_or.o obj/src/parser/parse_subshell.o obj/src/parser/parse_pipeline.o obj/src/parser/parse_command_and_redirection.o obj/src/parser/parse_arguments.o obj/src/parser/parse_group.o obj/src/shell/shell_modes.o obj/src/shell/handle_help_version.o obj/src/shell/shell_exec.o obj/src/shell/cleanup_shell.o obj/src/shell/run_interactive.o obj/src/shell/init_shell.o obj/src/env/init_env_list.o obj/src/env/env_get_value.o obj/src/env/free_env_list.o obj/src/env/get_env_array.o obj/src/lexer/lexer_get_opertator.o obj/src/lexer/lexer_get_word.o obj/src/lexer/lexer.o obj/src/lexer/lexer_utils.o obj/src/lexer/lexer_types.o obj/src/lexer/lexer_get_quoted.o obj/src/signals/handle_signals.o obj/src/signals/disable_restore_vquit.o obj/src/AST/free_ast.o obj/src/AST/build_ast.o obj/src/AST/ast_utils.o obj/src/expand/expand_dollar.o obj/src/expand/handle_expand_cases.o obj/src/expand/expand.o obj/src/expand/calculate_expand_len.o obj/src/expand/expand_utils.o obj/src/expand/expand_tilde.o obj/minishell.o libft/ft_dprintf/libftdprintf.a libft/libft.a -o minishell -lreadline
+/usr/bin/ld: obj/src/shell/shell_exec.o: en la función `shell_exec':
+/tmp/tmp.0Zf7QJtTxy/src/shell/shell_exec.c:36:(.text+0xb9): undefined reference to `execute_ast'
+collect2: error: ld returned 1 exit status
+make: *** [Makefile:33: minishell] Error 1

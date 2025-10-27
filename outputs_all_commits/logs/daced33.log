@@ -1,0 +1,20 @@
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/expand/handle_expand_cases.c -o obj/src/expand/handle_expand_cases.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/expand/handle_dollar.c -o obj/src/expand/handle_dollar.o
+gcc -Wall -Wextra -Werror -g3 -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/expand/calculate_expand_len.c -o obj/src/expand/calculate_expand_len.o
+gcc -Wall -Wextra -Werror -g3 obj/src/shell/shell_modes.o obj/src/shell/handle_help_version.o obj/src/shell/shell_exec.o obj/src/shell/cleanup_shell.o obj/src/shell/run_interactive.o obj/src/shell/init_shell.o obj/src/env/init_env_list.o obj/src/env/free_env_list.o obj/src/lexer/lexer_get_opertator.o obj/src/lexer/lexer_get_word.o obj/src/lexer/lexer.o obj/src/lexer/lexer_utils.o obj/src/lexer/lexer_types.o obj/src/lexer/lexer_get_quoted.o obj/src/signals/handle_signals.o obj/src/signals/disable_restore_vquit.o obj/src/expand/handle_expand_cases.o obj/src/expand/handle_dollar.o obj/src/expand/expand.o obj/src/expand/calculate_expand_len.o obj/src/expand/expand_tilde.o obj/minishell.o libft/ft_dprintf/libftdprintf.a libft/libft.a -o minishell -lreadline
+/usr/bin/ld: obj/src/expand/expand.o: en la función `handle_dollar':
+/home/acoronad/Documentos/FORMACIÓN/42/MINISHELL/minishell_paso_a_paso/src/expand/expand.c:201: definiciones múltiples de `handle_dollar'; obj/src/expand/handle_dollar.o:/tmp/tmp.vSZXDoegIa/src/expand/handle_dollar.c:22: primero se definió aquí
+/usr/bin/ld: obj/src/expand/expand.o: en la función `handle_dollar_len':
+/home/acoronad/Documentos/FORMACIÓN/42/MINISHELL/minishell_paso_a_paso/src/expand/expand.c:156: definiciones múltiples de `handle_dollar_len'; obj/src/expand/handle_expand_cases.o:/tmp/tmp.vSZXDoegIa/src/expand/handle_expand_cases.c:35: primero se definió aquí
+/usr/bin/ld: obj/src/expand/expand.o: en la función `handle_exit_status_len':
+/home/acoronad/Documentos/FORMACIÓN/42/MINISHELL/minishell_paso_a_paso/src/expand/expand.c:172: definiciones múltiples de `handle_exit_status_len'; obj/src/expand/handle_expand_cases.o:/tmp/tmp.vSZXDoegIa/src/expand/handle_expand_cases.c:51: primero se definió aquí
+/usr/bin/ld: obj/src/expand/expand.o: en la función `handle_pid_len':
+/home/acoronad/Documentos/FORMACIÓN/42/MINISHELL/minishell_paso_a_paso/src/expand/expand.c:184: definiciones múltiples de `handle_pid_len'; obj/src/expand/handle_expand_cases.o:/tmp/tmp.vSZXDoegIa/src/expand/handle_expand_cases.c:63: primero se definió aquí
+/usr/bin/ld: obj/src/expand/expand.o: en la función `get_program_name_str':
+/home/acoronad/Documentos/FORMACIÓN/42/MINISHELL/minishell_paso_a_paso/src/expand/expand.c:296: definiciones múltiples de `get_program_name_str'; obj/src/expand/handle_expand_cases.o:/tmp/tmp.vSZXDoegIa/src/expand/handle_expand_cases.c:75: primero se definió aquí
+/usr/bin/ld: obj/src/expand/expand.o: en la función `find_var':
+/home/acoronad/Documentos/FORMACIÓN/42/MINISHELL/minishell_paso_a_paso/src/expand/expand.c:278: definiciones múltiples de `find_var'; obj/src/expand/handle_expand_cases.o:/tmp/tmp.vSZXDoegIa/src/expand/handle_expand_cases.c:22: primero se definió aquí
+/usr/bin/ld: obj/src/expand/calculate_expand_len.o: en la función `calculate_expanded_len':
+/tmp/tmp.vSZXDoegIa/src/expand/calculate_expand_len.c:20: definiciones múltiples de `calculate_expanded_len'; obj/src/expand/expand.o:/home/acoronad/Documentos/FORMACIÓN/42/MINISHELL/minishell_paso_a_paso/src/expand/expand.c:119: primero se definió aquí
+collect2: error: ld returned 1 exit status
+make: *** [Makefile:33: minishell] Error 1

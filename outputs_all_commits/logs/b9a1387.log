@@ -1,0 +1,130 @@
+make -C libft/ft_dprintf
+make -C libft
+make[1]: se entra en el directorio '/tmp/tmp.CmmmjFhhaG/libft/ft_dprintf'
+gcc -Wall -Wextra -Werror -c ft_dprintf.c -o ft_dprintf.o
+gcc -Wall -Wextra -Werror -c ft_dprintftype.c -o ft_dprintftype.o
+make[1]: se entra en el directorio '/tmp/tmp.CmmmjFhhaG/libft'
+make -C ft_dprintf
+gcc -Wall -Wextra -Werror -c ft_joinandfree.c -o ft_joinandfree.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_arraylen.c -o ft_arraylen.o
+gcc -Wall -Wextra -Werror -c ft_putint_base_bf.c -o ft_putint_base_bf.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_atoi.c -o ft_atoi.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/exec/execute_command.c -o obj/src/exec/execute_command.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_atol.c -o ft_atol.o
+gcc -Wall -Wextra -Werror -c ft_putunsignedint_bf.c -o ft_putunsignedint_bf.o
+gcc -Wall -Wextra -Werror -c ft_putnbr_df.c -o ft_putnbr_df.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_bzero.c -o ft_bzero.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/exec/execute_and_or.c -o obj/src/exec/execute_and_or.o
+make[2]: se entra en el directorio '/tmp/tmp.CmmmjFhhaG/libft/ft_dprintf'
+gcc -Wall -Wextra -Werror -c ft_dprintf.c -o ft_dprintf.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/exec/execute_fork_execve.c -o obj/src/exec/execute_fork_execve.o
+gcc -Wall -Wextra -Werror -c ft_putptr_bf.c -o ft_putptr_bf.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_calloc.c -o ft_calloc.o
+gcc -Wall -Wextra -Werror -c ft_dprintftype.c -o ft_dprintftype.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/exec/execute_builtins.c -o obj/src/exec/execute_builtins.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/exec/execute_ast.c -o obj/src/exec/execute_ast.o
+gcc -Wall -Wextra -Werror -c ft_dputchar_bf.c -o ft_dputchar_bf.o
+gcc -Wall -Wextra -Werror -c ft_joinandfree.c -o ft_joinandfree.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_isalnum.c -o ft_isalnum.o
+gcc -Wall -Wextra -Werror -c ft_dputstr_bf.c -o ft_dputstr_bf.o
+gcc -Wall -Wextra -Werror -c ft_putint_base_bf.c -o ft_putint_base_bf.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_isalpha.c -o ft_isalpha.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/exec/execute_subshell.c -o obj/src/exec/execute_subshell.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/exec/execute_sequence.c -o obj/src/exec/execute_sequence.o
+gcc -Wall -Wextra -Werror -c ft_putunsignedint_bf.c -o ft_putunsignedint_bf.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_isascii.c -o ft_isascii.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_isdigit.c -o ft_isdigit.o
+gcc -Wall -Wextra -Werror -c ft_putnbr_df.c -o ft_putnbr_df.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_isprint.c -o ft_isprint.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/exec/execute_background.c -o obj/src/exec/execute_background.o
+gcc -Wall -Wextra -Werror -c ft_putptr_bf.c -o ft_putptr_bf.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_isspace.c -o ft_isspace.o
+gcc -Wall -Wextra -Werror -c ft_dputchar_bf.c -o ft_dputchar_bf.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_isquote.c -o ft_isquote.o
+gcc -Wall -Wextra -Werror -c ft_dputstr_bf.c -o ft_dputstr_bf.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/exec/execute_pipe.c -o obj/src/exec/execute_pipe.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/exec/execute_heredocs.c -o obj/src/exec/execute_heredocs.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_issymbol.c -o ft_issymbol.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_itoa.c -o ft_itoa.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/exec/execute_script.c -o obj/src/exec/execute_script.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/exec/execute_one_command.c -o obj/src/exec/execute_one_command.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_memchr.c -o ft_memchr.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_memcmp.c -o ft_memcmp.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_memcpy.c -o ft_memcpy.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_memmove.c -o ft_memmove.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/builtins/builtins.c -o obj/src/builtins/builtins.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/parser/parser_background.c -o obj/src/parser/parser_background.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_memset.c -o ft_memset.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/parser/parser_simple_command.c -o obj/src/parser/parser_simple_command.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_putchar_fd.c -o ft_putchar_fd.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/parser/parser_pipeline.c -o obj/src/parser/parser_pipeline.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_putendl_fd.c -o ft_putendl_fd.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/parser/parser_simple_utils.c -o obj/src/parser/parser_simple_utils.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_putnbr_fd.c -o ft_putnbr_fd.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/parser/parser_line.c -o obj/src/parser/parser_line.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/parser/parser_and_or.c -o obj/src/parser/parser_and_or.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/shell/handle_help_version.c -o obj/src/shell/handle_help_version.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_putstr_fd.c -o ft_putstr_fd.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_split.c -o ft_split.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_strchr.c -o ft_strchr.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/shell/shell_exec.c -o obj/src/shell/shell_exec.o
+ar rcs libftdprintf.a ft_dprintf.o ft_dprintftype.o ft_joinandfree.o ft_putint_base_bf.o ft_putunsignedint_bf.o ft_putnbr_df.o ft_putptr_bf.o ft_dputchar_bf.o ft_dputstr_bf.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_strdel.c -o ft_strdel.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/shell/cleanup_shell.c -o obj/src/shell/cleanup_shell.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_strdup.c -o ft_strdup.o
+ar rcs libftdprintf.a ft_dprintf.o ft_dprintftype.o ft_joinandfree.o ft_putint_base_bf.o ft_putunsignedint_bf.o ft_putnbr_df.o ft_putptr_bf.o ft_dputchar_bf.o ft_dputstr_bf.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_strldup.c -o ft_strldup.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_striteri.c -o ft_striteri.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_strjoin.c -o ft_strjoin.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/shell/run_interactive.c -o obj/src/shell/run_interactive.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/shell/init_shell.c -o obj/src/shell/init_shell.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_strjoin_free.c -o ft_strjoin_free.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_strlcat.c -o ft_strlcat.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/env/init_env_list.c -o obj/src/env/init_env_list.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/env/env_array.c -o obj/src/env/env_array.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_strlcpy.c -o ft_strlcpy.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_strlen.c -o ft_strlen.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_strmapi.c -o ft_strmapi.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/env/env_modify.c -o obj/src/env/env_modify.o
+make[2]: se sale del directorio '/tmp/tmp.CmmmjFhhaG/libft/ft_dprintf'
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/env/find_in_path.c -o obj/src/env/find_in_path.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/env/env_get.c -o obj/src/env/env_get.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_strcmp.c -o ft_strcmp.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/env/env_free.c -o obj/src/env/env_free.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_strcpy.c -o ft_strcpy.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_strncmp.c -o ft_strncmp.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/lexer/lexer.c -o obj/src/lexer/lexer.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/lexer/lexer_utils.c -o obj/src/lexer/lexer_utils.o
+make[1]: se sale del directorio '/tmp/tmp.CmmmjFhhaG/libft/ft_dprintf'
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_strnstr.c -o ft_strnstr.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_strrchr.c -o ft_strrchr.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/lexer/lexer_types.c -o obj/src/lexer/lexer_types.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_strtrim.c -o ft_strtrim.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/signals/handle_signals.c -o obj/src/signals/handle_signals.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/signals/disable_restore_vquit.c -o obj/src/signals/disable_restore_vquit.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_substr.c -o ft_substr.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_tolower.c -o ft_tolower.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_toupper.c -o ft_toupper.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_printf.c -o ft_printf.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_putchar.c -o ft_putchar.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/AST/build_ast.c -o obj/src/AST/build_ast.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_puthex.c -o ft_puthex.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/AST/ast_utils.c -o obj/src/AST/ast_utils.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_putnbr.c -o ft_putnbr.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/AST/check_syntax.c -o obj/src/AST/check_syntax.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_putptr.c -o ft_putptr.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_putstr.c -o ft_putstr.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_putunsigned.c -o ft_putunsigned.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/expand/expand.c -o obj/src/expand/expand.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c src/expand/expand_utils.c -o obj/src/expand/expand_utils.o
+gcc -Wall -Wextra -Werror -g -Iincludes -Ilibft -Ilibft/ft_dprintf -Ilibft/gnl -c minishell.c -o obj/minishell.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_strcat.c -o ft_strcat.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c get_next_line.c -o get_next_line.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c ft_realloc.c -o ft_realloc.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c gnl/get_next_line.c -o gnl/get_next_line.o
+cc -Wall -Wextra -Werror -I. -Ignl -Ift_dprintf -c gnl/get_next_line_utils.c -o gnl/get_next_line_utils.o
+ar rcs libft.a ft_arraylen.o ft_atoi.o ft_atol.o ft_bzero.o ft_calloc.o ft_isalnum.o ft_isalpha.o ft_isascii.o ft_isdigit.o ft_isprint.o ft_isspace.o ft_isquote.o ft_issymbol.o ft_itoa.o ft_memchr.o ft_memcmp.o ft_memcpy.o ft_memmove.o ft_memset.o ft_putchar_fd.o ft_putendl_fd.o ft_putnbr_fd.o ft_putstr_fd.o ft_split.o ft_strchr.o ft_strdel.o ft_strdup.o ft_strldup.o ft_striteri.o ft_strjoin.o ft_strjoin_free.o ft_strlcat.o ft_strlcpy.o ft_strlen.o ft_strmapi.o ft_strcmp.o ft_strcpy.o ft_strncmp.o ft_strnstr.o ft_strrchr.o ft_strtrim.o ft_substr.o ft_tolower.o ft_toupper.o ft_printf.o ft_putchar.o ft_puthex.o ft_putnbr.o ft_putptr.o ft_putstr.o ft_putunsigned.o ft_strcat.o get_next_line.o ft_realloc.o gnl/get_next_line.o gnl/get_next_line_utils.o
+[32m✔ libft.a successfully built / compilada con éxito[0m
+make[1]: se sale del directorio '/tmp/tmp.CmmmjFhhaG/libft'
+gcc -Wall -Wextra -Werror -g obj/src/exec/execute_command.o obj/src/exec/execute_and_or.o obj/src/exec/execute_fork_execve.o obj/src/exec/execute_builtins.o obj/src/exec/execute_ast.o obj/src/exec/execute_subshell.o obj/src/exec/execute_sequence.o obj/src/exec/execute_background.o obj/src/exec/execute_pipe.o obj/src/exec/execute_heredocs.o obj/src/exec/execute_script.o obj/src/exec/execute_one_command.o obj/src/builtins/builtins.o obj/src/parser/parser_background.o obj/src/parser/parser_simple_command.o obj/src/parser/parser_line.o obj/src/parser/parser_pipeline.o obj/src/parser/parser_simple_utils.o obj/src/parser/parser_and_or.o obj/src/shell/handle_help_version.o obj/src/shell/shell_exec.o obj/src/shell/cleanup_shell.o obj/src/shell/run_interactive.o obj/src/shell/init_shell.o obj/src/env/init_env_list.o obj/src/env/env_array.o obj/src/env/env_modify.o obj/src/env/find_in_path.o obj/src/env/env_get.o obj/src/env/env_free.o obj/src/lexer/lexer.o obj/src/lexer/lexer_utils.o obj/src/lexer/lexer_types.o obj/src/signals/handle_signals.o obj/src/signals/disable_restore_vquit.o obj/src/AST/build_ast.o obj/src/AST/ast_utils.o obj/src/AST/check_syntax.o obj/src/expand/expand.o obj/src/expand/expand_utils.o obj/minishell.o libft/ft_dprintf/libftdprintf.a libft/libft.a -o minishell -lreadline
+[0;32m¡Minishell compilada y lista![0m
