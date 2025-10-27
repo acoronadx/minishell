@@ -6,11 +6,13 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 15:11:12 by acoronad          #+#    #+#             */
-/*   Updated: 2025/10/27 16:11:04 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/10/27 18:00:49 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "lexer.h"   // try_add_token, t_token, types
+#include "expand.h"  // t_quote
 
 /* IFS por defecto: espacio, tab y newline */
 static int is_ifs_space(unsigned char c)

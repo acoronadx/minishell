@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 14:08:04 by acoronad          #+#    #+#             */
-/*   Updated: 2025/10/27 16:10:31 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/10/27 18:00:07 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define EXEC_H
 
 # include "minishell.h"
+# include "ast.h"
+# include <sys/types.h>
 
 /* Ejecución del AST */
 int	execute_ast(t_ast *node, t_shell *shell);
