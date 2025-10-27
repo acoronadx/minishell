@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 20:32:53 by acoronad          #+#    #+#             */
-/*   Updated: 2025/10/22 20:47:18 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/10/26 16:46:27 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void run_non_interactive(t_shell *shell)
         {
             // El padre no debe imprimir nada ni reaccionar a SIGINT/SIGQUIT.
             // Los hijos restaurarán señales por defecto antes de execve().
-            setup_ignore_signals();
+            setup_exec_parent_signals();
             if (shell->tokens)
             {
                 free_token_list(shell->tokens);

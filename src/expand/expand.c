@@ -6,25 +6,24 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 02:45:20 by acoronad          #+#    #+#             */
-/*   Updated: 2025/10/26 00:59:44 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/10/26 14:34:38 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "expand.h" // Asegúrate de que esta cabecera tenga las declaraciones necesarias (t_quote, etc.)
-#include "env.h"    // Para t_shell y manejo de entorno
-
-
-static int dq_escapable(char c) { return (c=='$' || c=='`' || c=='"' || c=='\\' || c=='\n'); }
+#include "expand.h"
+#include "env.h"
 
 char *expand_token(const char *str, t_shell *shell)
 {
     if (!str) return NULL;
 
-    size_t need = calculate_expanded_len(str, shell); /* evita overflows con $PATH */
-    if (need == (size_t)-1) return NULL;
+    /* Pre-calcular tamaño para evitar overflows (p.ej. $PATH muy largo) */
+    size_t need = calculate_expanded_len(str, shell);
+    if (need == (size_t)-1)
+        return NULL;
 
-    char *res = malloc(need + 1);
+    char *res = (char *)malloc(need + 1);
     if (!res) return NULL;
 
     int i = 0, j = 0;
@@ -36,7 +35,7 @@ char *expand_token(const char *str, t_shell *shell)
         {
             if (q == NO_QUOTE) q = SINGLE_QUOTE;
             else if (q == SINGLE_QUOTE) q = NO_QUOTE;
-            res[j++] = str[i++];                   /* quote se eliminará en remove_quotes */
+            res[j++] = str[i++];                 /* se quitará en remove_quotes */
             continue;
         }
         if (str[i] == '"')
@@ -49,30 +48,33 @@ char *expand_token(const char *str, t_shell *shell)
 
         if (str[i] == '\\')
         {
-            if (q == SINGLE_QUOTE) { res[j++] = str[i++]; continue; }
-
+            if (q == SINGLE_QUOTE)
+            {
+                /* en '...' la barra es literal */
+                res[j++] = '\\'; i++; continue;
+            }
             if (q == DOUBLE_QUOTE)
             {
-                if (str[i+1] && dq_escapable(str[i+1]))
+                if (str[i+1] == '\n') { i += 2; continue; } /* "\<nl>" desaparece */
+                if (str[i+1])
                 {
-                    if (str[i+1] == '\n') { i += 2; continue; }     /* quita \+nl */
-                    i++; res[j++] = str[i++];                       /* copia char escapado */
+                    /* conservamos '\' + char; quote_removal decidirá si quitar '\' */
+                    res[j++] = '\\';
+                    res[j++] = str[i+1];
+                    i += 2;
                     continue;
                 }
-                res[j++] = str[i++];                                /* '\' literal */
-                continue;
+                res[j++] = '\\'; i++; continue;            /* '\' final */
             }
-
             /* NO_QUOTE */
-            if (str[i+1] == '\n') { i += 2; continue; }
-            if (str[i+1]) { i++; res[j++] = str[i++]; }             /* quita '\' y copia 1 */
-            else { res[j++] = str[i++]; }                           /* '\' final literal */
-            continue;
+            if (str[i+1] == '\n') { i += 2; continue; }    /* continuación de línea */
+            if (str[i+1] == '$') { i++; res[j++] = '$'; i++; continue; } /* \$ -> '$' literal */
+            res[j++] = '\\'; i++; continue;                /* preservamos '\' */
         }
 
         if (q != SINGLE_QUOTE && str[i] == '$')
         {
-            int added = handle_dollar(str, &i, res, j, shell);      /* avanza i internamente */
+            int added = handle_dollar(str, &i, res, j, shell); /* avanza i internamente */
             if (added < 0) { free(res); return NULL; }
             j += added;
             continue;
@@ -95,7 +97,6 @@ char *expand_token(const char *str, t_shell *shell)
     return res;
 }
 
-// src/expand/expand.c
 int expand_variables(t_shell *shell)
 {
     t_token *t = shell->tokens;
@@ -109,9 +110,8 @@ int expand_variables(t_shell *shell)
         t->value = expanded;
         t = t->next;
     }
-
-    /* Bash: expansiones -> word splitting -> quote removal */
-    perform_word_splitting(shell);   // <-- AHORA SÍ
+    /* Orden Bash: expansiones -> word splitting -> quote removal */
+    perform_word_splitting(shell);
     remove_quotes(shell->tokens);
     return 0;
 }

@@ -6,91 +6,138 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 15:11:12 by acoronad          #+#    #+#             */
-/*   Updated: 2025/10/25 18:04:02 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/10/26 14:46:09 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "lexer.h" // Para t_token y token_new, token_addback
+#include "lexer.h"   // try_add_token, t_token, free_token_list
+#include "expand.h"  // t_quote
 
-// Helper para crear una nueva lista de tokens a partir de una cadena con word splitting
-t_token *split_word_into_tokens(char *word) // <-- Eliminado t_token_type type
+/* Mini IFS: espacio, tab y newline (igual que bash por defecto) */
+static int is_ifs_space(unsigned char c)
 {
-    t_token *new_head = NULL;
-    char    *start;
-    char    *end;
-    char    *sub_word;
-
-    if (!word)
-        return NULL;
-
-    start = word;
-
-    while (*start)
-    {
-        // 1. Saltar los delimitadores de campo (espacios)
-        while (*start && ft_isspace(*start))
-        {
-            start++;
-        }
-        if (!*start) // Si hemos llegado al final de la cadena (solo había espacios)
-            break;
-
-        // 2. Encontrar el final del "campo" (la siguiente secuencia de caracteres no-espacio)
-        end = start;
-        while (*end && !ft_isspace(*end))
-        {
-            end++;
-        }
-        
-        // 3. Crear el sub-token para este campo
-        if (end > start)
-        {
-            sub_word = ft_substr(start, 0, end - start);
-            if (!sub_word)
-            {
-                free_token_list(new_head);
-                return NULL;
-            }
-            // Añadir el nuevo token a la lista. El tipo es siempre T_WORD aquí.
-            if (!try_add_token(&new_head, sub_word, T_WORD, NO_QUOTE)) 
-            {
-                free(sub_word);
-                free_token_list(new_head);
-                return NULL;
-            }
-        }
-        // 4. Mover 'start' al final del campo actual para la siguiente iteración
-        start = end;
-    }
-    return (new_head);
+    return (c == ' ' || c == '\t' || c == '\n');
 }
 
-// Función principal de word splitting
+/*
+ * Divide un "word" en campos respetando:
+ *  - comillas simples y dobles (los espacios entrecomillados NO dividen),
+ *  - barras invertidas: fuera de comillas, '\' protege el siguiente char
+ *    (incluido el espacio), por lo que NO debe dividir ahí.
+ *  - dentro de "..." dejamos '\' + char tal cual (quote_removal se encarga).
+ *  - dentro de '...' la '\' es literal.
+ *
+ * NO elimina comillas ni backslashes: eso lo hará remove_quotes() después,
+ * como dicta el orden de expansiones de Bash (expansiones -> word splitting -> quote removal). 
+ */
+static t_token *split_word_respecting_quotes(const char *s)
+{
+    t_token *head = NULL;
+    size_t   n = ft_strlen(s);
+    char    *buf = malloc(n + 1);   /* suficiente: nunca generamos algo más largo */
+    size_t   i = 0, j;
+    t_quote  q;
+
+    if (!buf)
+        return NULL;
+
+    /* Saltar IFS inicial sin escapado (si lo hubiera, ya vendría como '\ ' en s) */
+    while (s[i] && is_ifs_space((unsigned char)s[i]))
+        i++;
+
+    while (s[i])
+    {
+        j = 0;
+        q = NO_QUOTE;
+
+        while (s[i])
+        {
+            char c = s[i];
+
+            if (q == NO_QUOTE)
+            {
+                if (c == '\\')
+                {
+                    /* \ + newline => continuación de línea: elimina ambos */
+                    if (s[i+1] == '\n') { i += 2; continue; }
+                    /* protegemos el siguiente char (incluido un espacio) */
+                    if (s[i+1]) { buf[j++] = '\\'; buf[j++] = s[i+1]; i += 2; continue; }
+                    /* '\' final */
+                    buf[j++] = '\\'; i++; continue;
+                }
+                if (c == '\'') { q = SINGLE_QUOTE; buf[j++] = c; i++; continue; }
+                if (c == '"')  { q = DOUBLE_QUOTE; buf[j++] = c; i++; continue; }
+
+                /* delimitador real: espacio NO escapado y NO entrecomillado */
+                if (is_ifs_space((unsigned char)c))
+                    break;
+
+                buf[j++] = c; i++; continue;
+            }
+            else if (q == SINGLE_QUOTE)
+            {
+                buf[j++] = c; i++;
+                if (c == '\'') q = NO_QUOTE;
+                continue;
+            }
+            else /* q == DOUBLE_QUOTE */
+            {
+                if (c == '"') { buf[j++] = c; i++; q = NO_QUOTE; continue; }
+                if (c == '\\')
+                {
+                    /* dentro de "..." dejamos '\' + char; quote_removal decidirá */
+                    if (s[i+1] == '\n') { i += 2; continue; }
+                    if (s[i+1]) { buf[j++] = '\\'; buf[j++] = s[i+1]; i += 2; continue; }
+                    buf[j++] = '\\'; i++; continue;
+                }
+                buf[j++] = c; i++; continue;
+            }
+        }
+
+        /* cerramos campo si hemos acumulado algo */
+        if (j > 0)
+        {
+            char *field = malloc(j + 1);
+            if (!field) { free_token_list(head); free(buf); return NULL; }
+            ft_memcpy(field, buf, j);
+            field[j] = '\0';
+
+            if (!try_add_token(&head, field, T_WORD, NO_QUOTE))
+            {
+                free(field);
+                free_token_list(head);
+                free(buf);
+                return NULL;
+            }
+        }
+
+        /* saltar separadores consecutivos */
+        while (s[i] && is_ifs_space((unsigned char)s[i]))
+            i++;
+    }
+
+    free(buf);
+    return head; /* puede ser NULL si no se generó ningún campo */
+}
+
+/* Función principal de word splitting */
 void    perform_word_splitting(t_shell *shell)
 {
-    t_token *current;
+    t_token *current = shell->tokens;
     t_token *prev = NULL;
-    t_token *next_original;
-    t_token *split_tokens_head;
 
-    current = shell->tokens;
     while (current)
     {
-        next_original = current->next; // Guardar el siguiente token original
+        t_token *next_original = current->next;
 
-        // Solo realizamos word splitting si el token NO ESTABA entre comillas.
-        // Los valores entrecomillados preservan sus espacios y no se dividen.
-        // Si tu lexer no está marcando `quoted`, aquí tendrás que ser más astuto.
-        // Asumo que current->quoted indica el estado de la palabra original.
-        if (current->quoted == NO_QUOTE) // O un tipo que indica que no fue entrecomillado
+        /* Si el token original venía entrecomillado completo, NO dividir */
+        if (current->quoted == NO_QUOTE)
         {
-            split_tokens_head = split_word_into_tokens(current->value);
-            if (split_tokens_head == NULL)
+            t_token *split = split_word_respecting_quotes(current->value);
+            if (split == NULL)
             {
-                // Si la expansión resultó en una cadena vacía (como `$a`),
-                // split_word_into_tokens podría devolver NULL.
-                // En ese caso, simplemente "eliminamos" este token de la lista.
+                /* Eliminar el token (p.ej., expansión vacía) */
                 if (prev)
                     prev->next = next_original;
                 else
@@ -98,28 +145,30 @@ void    perform_word_splitting(t_shell *shell)
                 free(current->value);
                 free(current);
                 current = next_original;
-                continue; // Pasa al siguiente token
+                continue;
             }
-            
-            // Reemplazar el token original con la lista de tokens divididos
-            if (prev)
-                prev->next = split_tokens_head;
-            else
-                shell->tokens = split_tokens_head;
-            
-            // Conectar el final de la nueva lista dividida al resto de la lista original
-            t_token *last_split = split_tokens_head;
-            while (last_split->next)
-                last_split = last_split->next;
-            last_split->next = next_original;
 
-            // Actualizar 'prev' y 'current' para la siguiente iteración
-            prev = last_split;
-            free(current->value); // Liberar el valor original
-            free(current);        // Liberar el nodo original
-            current = next_original; // Continuar desde el siguiente token original
+            /* Conectar nueva lista en lugar del token actual */
+            if (prev)
+                prev->next = split;
+            else
+                shell->tokens = split;
+
+            /* Ir al final de la lista recién creada */
+            t_token *last = split;
+            while (last->next)
+                last = last->next;
+
+            last->next = next_original;
+
+            /* liberar el nodo antiguo */
+            free(current->value);
+            free(current);
+
+            prev = last;
+            current = next_original;
         }
-        else // Si el token estaba entre comillas, no se aplica word splitting
+        else
         {
             prev = current;
             current = current->next;
