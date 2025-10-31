@@ -1,0 +1,10 @@
+bash_output_results.txt
+err.txt
+exit_status_bash.txt
+file.txt
+fs_list_bash.txt
+hola.txt
+out_logic.txt
+out.txt
+test_commands.in
+todo.txt

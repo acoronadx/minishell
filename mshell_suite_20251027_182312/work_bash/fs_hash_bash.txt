@@ -1,0 +1,11 @@
+a8607840fafc4ca3cda24db99ea49332  ./bash_output_results.txt
+d41d8cd98f00b204e9800998ecf8427e  ./err.txt
+897316929176464ebc9ad085f31e7284  ./exit_status_bash.txt
+916f4c31aaa35d6b867dae9a7f54270d  ./file.txt
+b4ab0f322158c84aff867c05c0dc727c  ./fs_hash_bash.txt
+9be6a64e44054a9d16afeced44f53663  ./fs_list_bash.txt
+916f4c31aaa35d6b867dae9a7f54270d  ./hola.txt
+916f4c31aaa35d6b867dae9a7f54270d  ./out_logic.txt
+e0723c77c8cc411059f28663f595b8fe  ./out.txt
+a78464385204063ab4a1f22d27aafdcc  ./test_commands.in
+d605ad447085ee6a400657302a43eb54  ./todo.txt

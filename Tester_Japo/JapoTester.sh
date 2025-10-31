@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MINISHELL="./minishell"
+MINISHELL="../minishell"
 
 run_echo2() {
     INPUT="$1"

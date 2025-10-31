@@ -1,0 +1,15 @@
+d41d8cd98f00b204e9800998ecf8427e  ./err.txt
+897316929176464ebc9ad085f31e7284  ./exit_status_minishell.txt
+916f4c31aaa35d6b867dae9a7f54270d  ./file.txt
+22cd2b8a8fea1c8fc155d43fd1aca973  ./fs_hash_minishell.txt
+a8953dc97942c14ed0d3ef121b29a8e0  ./fs_list_minishell.txt
+d647c48e9ee1a680dfdc93a673fbf75d  ./grep_result.txt
+916f4c31aaa35d6b867dae9a7f54270d  ./hola.txt
+f172fea23a230a302a5bb370b18414b8  ./minishell_output_results.txt
+916f4c31aaa35d6b867dae9a7f54270d  ./out_logic.txt
+8a08ecc855593e474532500afa720cdf  ./out.txt
+8766920f002438a7aeb7d2e1008544a5  ./pipe_output.txt
+00e2446f4afc7c402a3dbc646a470a40  ./prueba.txt
+a78464385204063ab4a1f22d27aafdcc  ./test_commands.in
+15070b33d3d1a65b9a99113747f7b5b4  ./todo.txt
+d647c48e9ee1a680dfdc93a673fbf75d  ./upper.txt
