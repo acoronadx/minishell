@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 20:17:25 by acoronad          #+#    #+#             */
-/*   Updated: 2025/10/26 14:31:54 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/10/31 21:34:05 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ char    *expand_token(const char *str, t_shell *shell);
 
 /* expand_dollar.c */
 char    *expand_value(const char *str, int *i, t_shell *shell);
-int     handle_dollar(const char *str, int *i, char *dst, int j, t_shell *shell);
 
 /* calculate_expand_len.c */
 size_t  calculate_expanded_len(const char *str, t_shell *shell);

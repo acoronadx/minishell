@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 02:45:20 by acoronad          #+#    #+#             */
-/*   Updated: 2025/10/26 14:34:38 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/10/31 21:34:45 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,51 @@
 #include "expand.h"
 #include "env.h"
 
-char *expand_token(const char *str, t_shell *shell)
+static int  copy_expanded_dollar(const char *str, int *i,
+                                 t_shell *shell, char *dst, int *j)
 {
-    if (!str) return NULL;
+    char    *expanded;
+    int     ii;
+    size_t  n;
 
-    /* Pre-calcular tamaño para evitar overflows (p.ej. $PATH muy largo) */
-    size_t need = calculate_expanded_len(str, shell);
+    ii = *i + 1;
+    expanded = expand_value(str, &ii, shell);
+    if (!expanded)
+        return (-1);
+    n = ft_strlen(expanded);
+    ft_memcpy(dst + *j, expanded, n);
+    *j += (int)n;
+    free(expanded);
+    *i = ii;
+    return (0);
+}
+
+char    *expand_token(const char *str, t_shell *shell)
+{
+    char    *res;
+    size_t  need;
+    int     i;
+    int     j;
+    t_quote q;
+
+    if (!str)
+        return (NULL);
+    need = calculate_expanded_len(str, shell);
     if (need == (size_t)-1)
-        return NULL;
-
-    char *res = (char *)malloc(need + 1);
-    if (!res) return NULL;
-
-    int i = 0, j = 0;
-    t_quote q = NO_QUOTE;
-
+        return (NULL);
+    res = (char *)malloc(need + 1);
+    if (!res)
+        return (NULL);
+    i = 0;
+    j = 0;
+    q = NO_QUOTE;
     while (str[i])
     {
         if (str[i] == '\'')
         {
             if (q == NO_QUOTE) q = SINGLE_QUOTE;
             else if (q == SINGLE_QUOTE) q = NO_QUOTE;
-            res[j++] = str[i++];                 /* se quitará en remove_quotes */
+            res[j++] = str[i++];
             continue;
         }
         if (str[i] == '"')
@@ -45,73 +68,76 @@ char *expand_token(const char *str, t_shell *shell)
             res[j++] = str[i++];
             continue;
         }
-
         if (str[i] == '\\')
         {
             if (q == SINGLE_QUOTE)
             {
-                /* en '...' la barra es literal */
-                res[j++] = '\\'; i++; continue;
+                res[j++] = '\\';
+                i++;
+                continue;
             }
             if (q == DOUBLE_QUOTE)
             {
-                if (str[i+1] == '\n') { i += 2; continue; } /* "\<nl>" desaparece */
-                if (str[i+1])
+                if (str[i + 1] == '\n') { i += 2; continue; }
+                if (str[i + 1])
                 {
-                    /* conservamos '\' + char; quote_removal decidirá si quitar '\' */
                     res[j++] = '\\';
-                    res[j++] = str[i+1];
+                    res[j++] = str[i + 1];
                     i += 2;
                     continue;
                 }
-                res[j++] = '\\'; i++; continue;            /* '\' final */
+                res[j++] = '\\';
+                i++;
+                continue;
             }
-            /* NO_QUOTE */
-            if (str[i+1] == '\n') { i += 2; continue; }    /* continuación de línea */
-            if (str[i+1] == '$') { i++; res[j++] = '$'; i++; continue; } /* \$ -> '$' literal */
-            res[j++] = '\\'; i++; continue;                /* preservamos '\' */
-        }
-
-        if (q != SINGLE_QUOTE && str[i] == '$')
-        {
-            int added = handle_dollar(str, &i, res, j, shell); /* avanza i internamente */
-            if (added < 0) { free(res); return NULL; }
-            j += added;
+            if (str[i + 1] == '\n') { i += 2; continue; }
+            if (str[i + 1] == '$') { i++; res[j++] = '$'; i++; continue; }
+            res[j++] = '\\';
+            i++;
             continue;
         }
-
-        if (str[i] == '~' && (i == 0 || ft_isspace((unsigned char)str[i-1]) || str[i-1] == '='))
+        if (q != SINGLE_QUOTE && str[i] == '$')
+        {
+            if (copy_expanded_dollar(str, &i, shell, res, &j) < 0)
+            {
+                free(res);
+                return (NULL);
+            }
+            continue;
+        }
+        if (str[i] == '~'
+            && (i == 0 || ft_isspace((unsigned char)str[i - 1]) || str[i - 1] == '='))
         {
             char *t = expand_tilde_internal(str + i, shell);
-            if (!t) { free(res); return NULL; }
+            if (!t) { free(res); return (NULL); }
             ft_strcpy(res + j, t);
-            j += ft_strlen(t);
-            i += get_tilde_prefix_len(str + i);
+            j += (int)ft_strlen(t);
+            i += (int)get_tilde_prefix_len(str + i);
             free(t);
             continue;
         }
-
         res[j++] = str[i++];
     }
     res[j] = '\0';
-    return res;
+    return (res);
 }
 
-int expand_variables(t_shell *shell)
+int     expand_variables(t_shell *shell)
 {
-    t_token *t = shell->tokens;
+    t_token *t;
+    char    *expanded;
 
+    t = shell->tokens;
     while (t)
     {
-        char *expanded = expand_token(t->value, shell);
+        expanded = expand_token(t->value, shell);
         if (!expanded)
-            return -1;
+            return (-1);
         free(t->value);
         t->value = expanded;
         t = t->next;
     }
-    /* Orden Bash: expansiones -> word splitting -> quote removal */
     perform_word_splitting(shell);
     remove_quotes(shell->tokens);
-    return 0;
+    return (0);
 }
