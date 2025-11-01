@@ -1,0 +1,804 @@
+[H[2J[3J##########################
+# COMANDS con ruta       #
+##########################
+
+
+[0;31m❌[0m  /bin/ls
+     Diferencias:
+minishell
+readme.txt
+redirs
+JapoTester.sh
+minishell
+readme.txt
+redirs
+resultadosJapo
+[0;31m❌[0m  /bin/pwd
+     Diferencias:
+/home/acoronad/Documentos/FORMACIÓN/42/MINISHELL/minishell_arai/Tester_Japo
+[0;31m❌[0m  /bin/echo run_echo
+     Diferencias:
+run_echo
+[0;32m✔️[0m  /bin/echo -n run_echo
+[0;32m✔️[0m  /bin/printf run_echo
+[0;31m❌[0m  /bin/cat redirs/a
+     Diferencias:
+ejemplo
+rollon
+[0;31m❌[0m  whoami
+     Diferencias:
+acoronad
+[0;32m✔️[0m  
+[0;32m✔️[0m         
+[0;31m❌[0m  /bin/ls -la
+     Diferencias:
+drwxr-xr-x  3 acoronad acoronad   4096 nov  1 00:23 .
+drwxrwxr-x 13 acoronad acoronad   4096 nov  1 00:23 ..
+-rwxrwxr-x  1 acoronad acoronad  17310 oct 31 14:00 JapoTester.sh
+-rwxrwxr-x  1 acoronad acoronad 215624 nov  1 00:22 minishell
+-rw-rw-r--  1 acoronad acoronad    883 jul  4 14:15 readme.txt
+drwxrwxr-x  2 acoronad acoronad   4096 nov  1 00:22 redirs
+total 252
+drwxr-xr-x  3 acoronad acoronad   4096 nov  1 00:23 .
+drwxrwxr-x 13 acoronad acoronad   4096 nov  1 00:23 ..
+-rwxrwxr-x  1 acoronad acoronad  17310 oct 31 14:00 JapoTester.sh
+-rwxrwxr-x  1 acoronad acoronad 215624 nov  1 00:22 minishell
+-rw-rw-r--  1 acoronad acoronad    883 jul  4 14:15 readme.txt
+drwxrwxr-x  2 acoronad acoronad   4096 nov  1 00:22 redirs
+-rw-rw-r--  1 acoronad acoronad    648 nov  1 00:23 resultadosJapo
+[0;31m❌[0m  /bin/ls -l
+     Diferencias:
+-rwxrwxr-x 1 acoronad acoronad  17310 oct 31 14:00 JapoTester.sh
+-rwxrwxr-x 1 acoronad acoronad 215624 nov  1 00:22 minishell
+-rw-rw-r-- 1 acoronad acoronad    883 jul  4 14:15 readme.txt
+drwxrwxr-x 2 acoronad acoronad   4096 nov  1 00:22 redirs
+total 244
+-rwxrwxr-x 1 acoronad acoronad  17310 oct 31 14:00 JapoTester.sh
+-rwxrwxr-x 1 acoronad acoronad 215624 nov  1 00:22 minishell
+-rw-rw-r-- 1 acoronad acoronad    883 jul  4 14:15 readme.txt
+drwxrwxr-x 2 acoronad acoronad   4096 nov  1 00:22 redirs
+-rw-rw-r-- 1 acoronad acoronad   1489 nov  1 00:23 resultadosJapo
+[0;31m❌[0m  echo uno dos tres cuatro
+     Diferencias:
+uno dos tres cuatro
+[0;31m❌[0m  /bin/ls -l -a -h
+     Diferencias:
+drwxr-xr-x  3 acoronad acoronad 4,0K nov  1 00:23 .
+drwxrwxr-x 13 acoronad acoronad 4,0K nov  1 00:23 ..
+-rwxrwxr-x  1 acoronad acoronad  17K oct 31 14:00 JapoTester.sh
+-rwxrwxr-x  1 acoronad acoronad 211K nov  1 00:22 minishell
+-rw-rw-r--  1 acoronad acoronad  883 jul  4 14:15 readme.txt
+drwxrwxr-x  2 acoronad acoronad 4,0K nov  1 00:22 redirs
+total 252K
+drwxr-xr-x  3 acoronad acoronad 4,0K nov  1 00:23 .
+drwxrwxr-x 13 acoronad acoronad 4,0K nov  1 00:23 ..
+-rwxrwxr-x  1 acoronad acoronad  17K oct 31 14:00 JapoTester.sh
+-rwxrwxr-x  1 acoronad acoronad 211K nov  1 00:22 minishell
+-rw-rw-r--  1 acoronad acoronad  883 jul  4 14:15 readme.txt
+drwxrwxr-x  2 acoronad acoronad 4,0K nov  1 00:22 redirs
+-rw-rw-r--  1 acoronad acoronad 2,2K nov  1 00:23 resultadosJapo
+[0;31m❌[0m  /bin/ls -lhS
+     Diferencias:
+-rwxrwxr-x 1 acoronad acoronad 211K nov  1 00:22 minishell
+-rwxrwxr-x 1 acoronad acoronad  17K oct 31 14:00 JapoTester.sh
+drwxrwxr-x 2 acoronad acoronad 4,0K nov  1 00:22 redirs
+-rw-rw-r-- 1 acoronad acoronad 3,0K nov  1 00:23 resultadosJapo
+total 244K
+-rwxrwxr-x 1 acoronad acoronad 211K nov  1 00:22 minishell
+-rwxrwxr-x 1 acoronad acoronad  17K oct 31 14:00 JapoTester.sh
+drwxrwxr-x 2 acoronad acoronad 4,0K nov  1 00:22 redirs
+-rw-rw-r-- 1 acoronad acoronad 3,0K nov  1 00:23 resultadosJapo
+-rw-rw-r-- 1 acoronad acoronad  883 jul  4 14:15 readme.txt
+[0;31m❌[0m  /bin/cat redirs/a redirs/b
+     Diferencias:
+rollon
+otra
+ejemplo
+rollon
+otra
+cosa
+[0;31m❌[0m  head -n 5 redirs/a
+     Diferencias:
+ejemplo
+rollon
+
+
+##############
+# ECHO       #
+##############
+
+
+[0;31m❌[0m  echo patata
+     Diferencias:
+patata
+[0;31m❌[0m  echo $a""a
+     Diferencias:
+a
+[0;31m❌[0m  echo $a"" a
+     Diferencias:
+ a
+[0;31m❌[0m  echo $a" " a
+     Diferencias:
+  a
+[0;31m❌[0m  echo $a "" a
+     Diferencias:
+ a
+[0;31m❌[0m  echo $a" $USER"
+     Diferencias:
+ acoronad
+[0;31m❌[0m  echo $a"$USER"
+     Diferencias:
+acoronad
+[0;31m❌[0m  echo $USERa$HOME
+     Diferencias:
+/home/acoronad
+[0;31m❌[0m  echo "$  a"
+     Diferencias:
+$  a
+[0;31m❌[0m  echo "$  a "
+     Diferencias:
+$  a 
+[0;31m❌[0m  echo "$?u "
+     Diferencias:
+0u 
+[0;31m❌[0m  echo "$? us "
+     Diferencias:
+0 us 
+[0;32m✔️[0m  echo $kk run_echo
+[0;32m✔️[0m  echo $kk tomate
+[0;31m❌[0m  echo $a
+     Diferencias:
+
+[0;31m❌[0m  echo $"mgs"
+     Diferencias:
+mgs
+[0;31m❌[0m  echo $'msg'
+     Diferencias:
+msg
+[0;32m✔️[0m  $kk msg2
+[0;32m✔️[0m  $kk msg2
+[0;31m❌[0m  $kk -n msg2
+     Diferencias:
+msg1 -n msg2
+[0;32m✔️[0m  echo ""-n run_echo
+[0;31m❌[0m  echo "" -n run_echo
+     Diferencias:
+ -n run_echo
+[0;32m✔️[0m  echo "-n" run_echo
+[0;32m✔️[0m  echo '-n' run_echo
+[0;31m❌[0m  echo "-n run_echo"
+     Diferencias:
+-n run_echo
+[0;31m❌[0m  echo '-n run_echo'
+     Diferencias:
+-n run_echo
+[0;31m❌[0m  echo "-n -na" run_echo
+     Diferencias:
+-n -na run_echo
+[0;32m✔️[0m  echo "-nnnnnn" run_echo
+[0;31m❌[0m  echo "-nnnnn " run_echo
+     Diferencias:
+-nnnnn  run_echo
+[0;31m❌[0m  echo " " -n run_echo
+     Diferencias:
+  -n run_echo
+[0;31m❌[0m  echo " " run_echo
+     Diferencias:
+  run_echo
+[0;31m❌[0m  echo $kk
+     Diferencias:
+hola que tal
+[0;31m❌[0m  echo "$kk"
+     Diferencias:
+  hola         que     tal      
+[0;31m❌[0m  echo '$kk'
+     Diferencias:
+$kk
+[0;31m❌[0m  $kk
+     Diferencias:
+tomate
+[0;31m❌[0m  echo "$ a"
+     Diferencias:
+$ a
+[0;31m❌[0m  echo "$a5e#tomate p"
+     Diferencias:
+#tomate p
+[0;31m❌[0m  echo "$a p"
+     Diferencias:
+ p
+[0;31m❌[0m  echo "$%run_echo"
+     Diferencias:
+$%run_echo
+[0;31m❌[0m  echo "$!run_echo"
+     Diferencias:
+run_echo
+[0;31m❌[0m  echo "$a664464562ssertetr)p"
+     Diferencias:
+)p
+[0;31m❌[0m  echo $2run_echo
+     Diferencias:
+run_echo
+[0;31m❌[0m  echo $2 run_echo
+     Diferencias:
+run_echo
+[0;31m❌[0m  echo $* run_echo
+     Diferencias:
+run_echo
+[0;31m❌[0m  echo 'run_echo$USER'
+     Diferencias:
+run_echo$USER
+[0;31m❌[0m  echo $.
+     Diferencias:
+$.
+[0;31m❌[0m  echo $
+     Diferencias:
+$
+[0;31m❌[0m  echo hola
+     Diferencias:
+hola
+[0;31m❌[0m  echo "hola"
+     Diferencias:
+hola
+[0;31m❌[0m  echo 'hola'
+     Diferencias:
+hola
+[0;32m✔️[0m  echo -n hola
+[0;32m✔️[0m  echo -n -n hola
+[0;32m✔️[0m  echo -n -n -n hola
+[0;32m✔️[0m  echo -n -n -n -n hola
+[0;32m✔️[0m  echo -n -nnnn hola
+[0;32m✔️[0m  echo -nnnn hola
+[0;31m❌[0m  echo hola "\"n mundo
+     Diferencias:
+hola \n mundo
+[0;31m❌[0m  echo "hola mundo"
+     Diferencias:
+hola mundo
+[0;31m❌[0m  echo 'hola mundo'
+     Diferencias:
+hola mundo
+[0;31m❌[0m  echo hola" mundo"
+     Diferencias:
+hola mundo
+[0;31m❌[0m  echo "hola mundo"
+     Diferencias:
+hola mundo
+[0;31m❌[0m  echo 'hola mundo'
+     Diferencias:
+hola mundo
+[0;31m❌[0m  echo 'hola'" mundo"
+     Diferencias:
+hola mundo
+[0;31m❌[0m  echo "saludo: $HOME"
+     Diferencias:
+saludo: /home/acoronad
+[0;31m❌[0m  echo $kk
+     Diferencias:
+32
+[0;31m❌[0m  echo "$kk"
+     Diferencias:
+hola
+[0;31m❌[0m  echo $NOEXISTE
+     Diferencias:
+
+[0;31m❌[0m  echo $PATH
+     Diferencias:
+/home/acoronad/.local/bin:/home/acoronad/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/acoronad/.config/Code/User/globalStorage/github.copilot-chat/debugCommand
+[0;31m❌[0m  echo $LS_COLORS
+     Diferencias:
+rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:
+[0;31m❌[0m  echo "$USER$HOME"
+     Diferencias:
+acoronad/home/acoronad
+[0;31m❌[0m  echo $LS_COLORS$PATH$LS_COLORS$PATH$LS_COLORS$PATH$LS_COLORS$PATH$LS_COLORS$PATH
+     Diferencias:
+rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:/home/acoronad/.local/bin:/home/acoronad/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/acoronad/.config/Code/User/globalStorage/github.copilot-chat/debugCommandrs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:/home/acoronad/.local/bin:/home/acoronad/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/acoronad/.config/Code/User/globalStorage/github.copilot-chat/debugCommandrs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:/home/acoronad/.local/bin:/home/acoronad/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/acoronad/.config/Code/User/globalStorage/github.copilot-chat/debugCommandrs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:/home/acoronad/.local/bin:/home/acoronad/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/acoronad/.config/Code/User/globalStorage/github.copilot-chat/debugCommandrs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:/home/acoronad/.local/bin:/home/acoronad/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/acoronad/.config/Code/User/globalStorage/github.copilot-chat/debugCommand
+[0;31m❌[0m  echo "$USER"
+     Diferencias:
+acoronad
+[0;31m❌[0m  echo $USER
+     Diferencias:
+acoronad
+[0;31m❌[0m  echo '$USER'
+     Diferencias:
+$USER
+[0;31m❌[0m  echo "$?"
+     Diferencias:
+0
+[0;31m❌[0m  echo "$USER literal $HOME"
+     Diferencias:
+acoronad literal /home/acoronad
+[0;31m❌[0m  echo $UNSETVAR
+     Diferencias:
+
+[0;31m❌[0m  echo ""
+     Diferencias:
+
+[0;31m❌[0m  echo ''
+     Diferencias:
+
+[0;31m❌[0m  echo "hola     mundo"
+     Diferencias:
+hola     mundo
+[0;31m❌[0m  echo hola     mundo
+     Diferencias:
+hola mundo
+[0;32m✔️[0m  echo -n "hola
+mundo"
+[0;31m❌[0m  echo "a$USER"
+     Diferencias:
+aacoronad
+[0;31m❌[0m  echo "$USER"
+     Diferencias:
+acoronad
+[0;31m❌[0m  echo "$USER's folder"
+     Diferencias:
+acoronad's folder
+[0;31m❌[0m  echo "$UNDEFINED"
+     Diferencias:
+
+[0;31m❌[0m  echo "$UNDEFINED texto"
+     Diferencias:
+ texto
+[0;31m❌[0m  echo '$UNDEFINED texto'
+     Diferencias:
+$UNDEFINED texto
+[0;31m❌[0m  echo "$USER$HOME"
+     Diferencias:
+acoronad/home/acoronad
+[0;31m❌[0m  echo "$USER  $HOME"
+     Diferencias:
+acoronad  /home/acoronad
+[0;31m❌[0m  echo "  $USER  "
+     Diferencias:
+  acoronad  
+[0;31m❌[0m  echo "'single' "double""
+     Diferencias:
+'single' double
+[0;31m❌[0m  echo "$? status"
+     Diferencias:
+0 status
+[0;31m❌[0m  echo $?
+     Diferencias:
+0
+[0;31m❌[0m  echo "'$?'"
+     Diferencias:
+'0'
+[0;31m❌[0m  echo '"hola"'
+     Diferencias:
+"hola"
+[0;31m❌[0m  echo " " $USER " "
+     Diferencias:
+  acoronad  
+[0;31m❌[0m  echo $a " " a
+     Diferencias:
+  a
+[0;31m❌[0m  echo "$ a "
+     Diferencias:
+$ a 
+[0;31m❌[0m  echo run_echo "" "" "" tomate
+     Diferencias:
+run_echo    tomate
+[0;31m❌[0m  echo $a run_echo $a "" "" "" "" tomate
+     Diferencias:
+run_echo     tomate
+[0;31m❌[0m  echo run_echo $a "" "" "" "" tomate
+     Diferencias:
+run_echo     tomate
+[0;31m❌[0m  echo run_echo $a "" "" "" "" $a tomate
+     Diferencias:
+run_echo     tomate
+[0;31m❌[0m  echo run_echo $a """""""" $a tomate
+     Diferencias:
+run_echo  tomate
+[0;31m❌[0m  echo ""$a""t
+     Diferencias:
+t
+[0;31m❌[0m  echo ""$a"" t
+     Diferencias:
+ t
+[0;31m❌[0m  echo ""$a" " t
+     Diferencias:
+  t
+[0;31m❌[0m  echo ""$a "  " t ""$a "  " t 
+     Diferencias:
+    t     t
+[0;32m✔️[0m   echo run_echo
+[0;32m✔️[0m   echo run_echo
+[0;32m✔️[0m   echo -n run_echo
+[0;32m✔️[0m   echo -nnnnn -na run_echo
+[0;32m✔️[0m   echo -nnnnn
+[0;32m✔️[0m   echo
+
+
+############
+# EXIT     #
+############
+
+
+[0;32m✔️[0m  exit (exit 0)
+[0;32m✔️[0m  exit 42 (exit 42)
+[0;32m✔️[0m  exit 255 (exit 255)
+[0;32m✔️[0m  exit 255 (exit 255)
+[0;32m✔️[0m  exit 256 (exit 0)
+[0;32m✔️[0m  exit -1 (exit 255)
+[0;32m✔️[0m  exit -255 (exit 1)
+[0;32m✔️[0m  exit -256 (exit 0)
+[0;32m✔️[0m  exit 2147483647 (exit 255)
+[0;32m✔️[0m  exit 2147483648 (exit 0)
+[0;32m✔️[0m  exit 9223372036854775807 (exit 255)
+[0;32m✔️[0m  exit -9223372036854775808 (exit 0)
+[0;32m✔️[0m  exit 9223372036854775808 (exit 2)
+[0;32m✔️[0m  exit -9223372036854775809 (exit 2)
+[0;32m✔️[0m  exit -922337203685477580834 (exit 2)
+[0;32m✔️[0m  exit run_echo (exit 2)
+
+
+###################################
+# VALOR RETORNO DE UN PROCESO     #
+###################################
+
+
+[0;32m✔️[0m  /bin/run_echo (exit 127)
+[0;32m✔️[0m  /bin/ls (exit 0)
+[0;32m✔️[0m  /bin/run_echo (exit 127)
+[0;32m✔️[0m  /bin/run_echo (exit 127)
+[0;32m✔️[0m  /bin/grep "ejemplo" redirs/a (exit 0)
+[0;31m❌[0m  /bin/grep "rollon" redirs/a (got 0, expected 1)
+[0;32m✔️[0m  /bin/grep "rollon" redirs/c (exit 2)
+[0;32m✔️[0m  /bin/diff redirs/a redirs/b (exit 1)
+[0;32m✔️[0m  /bin/diff redirs/a redirs/a (exit 0)
+[0;32m✔️[0m  /bin/diff redirs/a redirs/c (exit 2)
+[0;32m✔️[0m  /bin/test -f redirs/a (exit 0)
+[0;32m✔️[0m  /bin/test -f redirs/c (exit 1)
+[0;32m✔️[0m  /bin/test 5 -gt 3 (exit 0)
+[0;32m✔️[0m  /bin/test 1 -gt 3 (exit 1)
+[0;32m✔️[0m  /bin/test 3 -eq 3 (exit 0)
+[0;31m❌[0m  expr 2 + 2
+     Diferencias:
+4
+[0;31m❌[0m  expr $SHLVL + $SHLVL
+     Diferencias:
+4
+
+
+######################
+# COMILLAS DOBLES    #
+######################
+
+
+[0;31m❌[0m  "/bin/ls"
+     Diferencias:
+minishell
+readme.txt
+redirs
+JapoTester.sh
+minishell
+readme.txt
+redirs
+resultadosJapo
+[0;31m❌[0m  "/bin/pwd"
+     Diferencias:
+/home/acoronad/Documentos/FORMACIÓN/42/MINISHELL/minishell_arai/Tester_Japo
+[0;31m❌[0m  "/bin/echo" run_echo
+     Diferencias:
+run_echo
+[0;32m✔️[0m  "/bin/echo" -n run_echo
+[0;32m✔️[0m  "/bin/printf" run_echo
+[0;31m❌[0m  "/bin/cat" redirs/a
+     Diferencias:
+ejemplo
+rollon
+[0;31m❌[0m  "whoami"
+     Diferencias:
+acoronad
+[0;31m❌[0m  ""
+     Diferencias:
+minishell: : command not found
+bash: línea 1: : orden no encontrada
+[0;31m❌[0m     ""    
+     Diferencias:
+minishell: : command not found
+bash: línea 1: : orden no encontrada
+[0;31m❌[0m  "/bin/ls" -la
+     Diferencias:
+drwxr-xr-x  3 acoronad acoronad   4096 nov  1 00:23 .
+drwxrwxr-x 13 acoronad acoronad   4096 nov  1 00:23 ..
+-rwxrwxr-x  1 acoronad acoronad  17310 oct 31 14:00 JapoTester.sh
+-rwxrwxr-x  1 acoronad acoronad 215624 nov  1 00:22 minishell
+-rw-rw-r--  1 acoronad acoronad    883 jul  4 14:15 readme.txt
+drwxrwxr-x  2 acoronad acoronad   4096 nov  1 00:23 redirs
+total 276
+drwxr-xr-x  3 acoronad acoronad   4096 nov  1 00:23 .
+drwxrwxr-x 13 acoronad acoronad   4096 nov  1 00:23 ..
+-rwxrwxr-x  1 acoronad acoronad  17310 oct 31 14:00 JapoTester.sh
+-rwxrwxr-x  1 acoronad acoronad 215624 nov  1 00:22 minishell
+-rw-rw-r--  1 acoronad acoronad    883 jul  4 14:15 readme.txt
+drwxrwxr-x  2 acoronad acoronad   4096 nov  1 00:23 redirs
+-rw-rw-r--  1 acoronad acoronad  25023 nov  1 00:23 resultadosJapo
+[0;31m❌[0m  "/bin/ls" -l
+     Diferencias:
+-rwxrwxr-x 1 acoronad acoronad  17310 oct 31 14:00 JapoTester.sh
+-rwxrwxr-x 1 acoronad acoronad 215624 nov  1 00:22 minishell
+-rw-rw-r-- 1 acoronad acoronad    883 jul  4 14:15 readme.txt
+drwxrwxr-x 2 acoronad acoronad   4096 nov  1 00:23 redirs
+total 268
+-rwxrwxr-x 1 acoronad acoronad  17310 oct 31 14:00 JapoTester.sh
+-rwxrwxr-x 1 acoronad acoronad 215624 nov  1 00:22 minishell
+-rw-rw-r-- 1 acoronad acoronad    883 jul  4 14:15 readme.txt
+drwxrwxr-x 2 acoronad acoronad   4096 nov  1 00:23 redirs
+-rw-rw-r-- 1 acoronad acoronad  25866 nov  1 00:23 resultadosJapo
+[0;31m❌[0m  "echo" uno dos tres cuatro
+     Diferencias:
+uno dos tres cuatro
+[0;31m❌[0m  "/bin/ls" -l -a -h
+     Diferencias:
+drwxr-xr-x  3 acoronad acoronad 4,0K nov  1 00:23 .
+drwxrwxr-x 13 acoronad acoronad 4,0K nov  1 00:23 ..
+-rwxrwxr-x  1 acoronad acoronad  17K oct 31 14:00 JapoTester.sh
+-rwxrwxr-x  1 acoronad acoronad 211K nov  1 00:22 minishell
+-rw-rw-r--  1 acoronad acoronad  883 jul  4 14:15 readme.txt
+drwxrwxr-x  2 acoronad acoronad 4,0K nov  1 00:23 redirs
+total 276K
+drwxr-xr-x  3 acoronad acoronad 4,0K nov  1 00:23 .
+drwxrwxr-x 13 acoronad acoronad 4,0K nov  1 00:23 ..
+-rwxrwxr-x  1 acoronad acoronad  17K oct 31 14:00 JapoTester.sh
+-rwxrwxr-x  1 acoronad acoronad 211K nov  1 00:22 minishell
+-rw-rw-r--  1 acoronad acoronad  883 jul  4 14:15 readme.txt
+drwxrwxr-x  2 acoronad acoronad 4,0K nov  1 00:23 redirs
+-rw-rw-r--  1 acoronad acoronad  26K nov  1 00:23 resultadosJapo
+[0;31m❌[0m  "/bin/ls" -lhS
+     Diferencias:
+-rwxrwxr-x 1 acoronad acoronad 211K nov  1 00:22 minishell
+-rw-rw-r-- 1 acoronad acoronad  27K nov  1 00:23 resultadosJapo
+-rwxrwxr-x 1 acoronad acoronad  17K oct 31 14:00 JapoTester.sh
+drwxrwxr-x 2 acoronad acoronad 4,0K nov  1 00:23 redirs
+total 268K
+-rwxrwxr-x 1 acoronad acoronad 211K nov  1 00:22 minishell
+-rw-rw-r-- 1 acoronad acoronad  27K nov  1 00:23 resultadosJapo
+-rwxrwxr-x 1 acoronad acoronad  17K oct 31 14:00 JapoTester.sh
+drwxrwxr-x 2 acoronad acoronad 4,0K nov  1 00:23 redirs
+-rw-rw-r-- 1 acoronad acoronad  883 jul  4 14:15 readme.txt
+[0;31m❌[0m  "/bin/cat" redirs/a redirs/b
+     Diferencias:
+rollon
+otra
+ejemplo
+rollon
+otra
+cosa
+[0;31m❌[0m  "head" -n 5 redirs/a
+     Diferencias:
+ejemplo
+rollon
+[0;31m❌[0m  """p"w"d"""
+     Diferencias:
+/home/acoronad/Documentos/FORMACIÓN/42/MINISHELL/minishell_arai/Tester_Japo
+[0;31m❌[0m  "pwd "
+     Diferencias:
+minishell: pwd : command not found
+bash: línea 1: pwd : orden no encontrada
+[0;31m❌[0m  "run_echo"
+     Diferencias:
+minishell: run_echo: command not found
+bash: línea 1: run_echo: orden no encontrada
+[0;31m❌[0m  echo "cat lol.c | cat > lol.c"
+     Diferencias:
+cat lol.c | cat > lol.c
+[0;31m❌[0m  "ls "
+     Diferencias:
+minishell: ls : command not found
+bash: línea 1: ls : orden no encontrada
+[0;31m❌[0m  "abc def"
+     Diferencias:
+minishell: abc def: command not found
+bash: línea 1: abc def: orden no encontrada
+[0;31m❌[0m  "echoo"
+     Diferencias:
+minishell: echoo: command not found
+bash: línea 1: echoo: orden no encontrada
+[0;31m❌[0m  "/noexiste"
+     Diferencias:
+minishell: /noexiste: No such file or directory
+bash: línea 1: /noexiste: No existe el archivo o el directorio
+
+
+#######################
+# COMILLAS SIMPLES    #
+#######################
+
+
+[0;31m❌[0m  '/bin/ls'
+     Diferencias:
+minishell
+readme.txt
+redirs
+JapoTester.sh
+minishell
+readme.txt
+redirs
+resultadosJapo
+[0;31m❌[0m  '/bin/pwd'
+     Diferencias:
+/home/acoronad/Documentos/FORMACIÓN/42/MINISHELL/minishell_arai/Tester_Japo
+[0;31m❌[0m  '/bin/echo' run_echo
+     Diferencias:
+run_echo
+[0;32m✔️[0m  '/bin/echo' -n run_echo
+[0;31m❌[0m  '/bin/cat' redirs/a
+     Diferencias:
+ejemplo
+rollon
+[0;31m❌[0m  'whoami'
+     Diferencias:
+acoronad
+[0;31m❌[0m  ''
+     Diferencias:
+minishell: : command not found
+bash: línea 1: : orden no encontrada
+[0;31m❌[0m     ''    
+     Diferencias:
+minishell: : command not found
+bash: línea 1: : orden no encontrada
+[0;31m❌[0m  '/bin/ls' -la
+     Diferencias:
+drwxr-xr-x  3 acoronad acoronad   4096 nov  1 00:23 .
+drwxrwxr-x 13 acoronad acoronad   4096 nov  1 00:23 ..
+-rwxrwxr-x  1 acoronad acoronad  17310 oct 31 14:00 JapoTester.sh
+-rwxrwxr-x  1 acoronad acoronad 215624 nov  1 00:22 minishell
+-rw-rw-r--  1 acoronad acoronad    883 jul  4 14:15 readme.txt
+drwxrwxr-x  2 acoronad acoronad   4096 nov  1 00:23 redirs
+total 280
+drwxr-xr-x  3 acoronad acoronad   4096 nov  1 00:23 .
+drwxrwxr-x 13 acoronad acoronad   4096 nov  1 00:23 ..
+-rwxrwxr-x  1 acoronad acoronad  17310 oct 31 14:00 JapoTester.sh
+-rwxrwxr-x  1 acoronad acoronad 215624 nov  1 00:22 minishell
+-rw-rw-r--  1 acoronad acoronad    883 jul  4 14:15 readme.txt
+drwxrwxr-x  2 acoronad acoronad   4096 nov  1 00:23 redirs
+-rw-rw-r--  1 acoronad acoronad  29914 nov  1 00:23 resultadosJapo
+[0;31m❌[0m  '/bin/ls' -l
+     Diferencias:
+-rwxrwxr-x 1 acoronad acoronad  17310 oct 31 14:00 JapoTester.sh
+-rwxrwxr-x 1 acoronad acoronad 215624 nov  1 00:22 minishell
+-rw-rw-r-- 1 acoronad acoronad    883 jul  4 14:15 readme.txt
+drwxrwxr-x 2 acoronad acoronad   4096 nov  1 00:23 redirs
+total 272
+-rwxrwxr-x 1 acoronad acoronad  17310 oct 31 14:00 JapoTester.sh
+-rwxrwxr-x 1 acoronad acoronad 215624 nov  1 00:22 minishell
+-rw-rw-r-- 1 acoronad acoronad    883 jul  4 14:15 readme.txt
+drwxrwxr-x 2 acoronad acoronad   4096 nov  1 00:23 redirs
+-rw-rw-r-- 1 acoronad acoronad  30757 nov  1 00:23 resultadosJapo
+[0;31m❌[0m  'echo' uno dos tres cuatro
+     Diferencias:
+uno dos tres cuatro
+[0;31m❌[0m  '/bin/ls' -l -a -h
+     Diferencias:
+drwxr-xr-x  3 acoronad acoronad 4,0K nov  1 00:23 .
+drwxrwxr-x 13 acoronad acoronad 4,0K nov  1 00:23 ..
+-rwxrwxr-x  1 acoronad acoronad  17K oct 31 14:00 JapoTester.sh
+-rwxrwxr-x  1 acoronad acoronad 211K nov  1 00:22 minishell
+-rw-rw-r--  1 acoronad acoronad  883 jul  4 14:15 readme.txt
+drwxrwxr-x  2 acoronad acoronad 4,0K nov  1 00:23 redirs
+total 280K
+drwxr-xr-x  3 acoronad acoronad 4,0K nov  1 00:23 .
+drwxrwxr-x 13 acoronad acoronad 4,0K nov  1 00:23 ..
+-rwxrwxr-x  1 acoronad acoronad  17K oct 31 14:00 JapoTester.sh
+-rwxrwxr-x  1 acoronad acoronad 211K nov  1 00:22 minishell
+-rw-rw-r--  1 acoronad acoronad  883 jul  4 14:15 readme.txt
+drwxrwxr-x  2 acoronad acoronad 4,0K nov  1 00:23 redirs
+-rw-rw-r--  1 acoronad acoronad  31K nov  1 00:23 resultadosJapo
+[0;31m❌[0m  '/bin/ls' -lhS
+     Diferencias:
+-rwxrwxr-x 1 acoronad acoronad 211K nov  1 00:22 minishell
+-rw-rw-r-- 1 acoronad acoronad  32K nov  1 00:23 resultadosJapo
+-rwxrwxr-x 1 acoronad acoronad  17K oct 31 14:00 JapoTester.sh
+drwxrwxr-x 2 acoronad acoronad 4,0K nov  1 00:23 redirs
+total 272K
+-rwxrwxr-x 1 acoronad acoronad 211K nov  1 00:22 minishell
+-rw-rw-r-- 1 acoronad acoronad  32K nov  1 00:23 resultadosJapo
+-rwxrwxr-x 1 acoronad acoronad  17K oct 31 14:00 JapoTester.sh
+drwxrwxr-x 2 acoronad acoronad 4,0K nov  1 00:23 redirs
+-rw-rw-r-- 1 acoronad acoronad  883 jul  4 14:15 readme.txt
+[0;31m❌[0m  '/bin/cat' redirs/a redirs/b
+     Diferencias:
+rollon
+otra
+ejemplo
+rollon
+otra
+cosa
+[0;31m❌[0m  'head' -n 5 redirs/a
+     Diferencias:
+ejemplo
+rollon
+[0;31m❌[0m  '''p'w'd'''
+     Diferencias:
+/home/acoronad/Documentos/FORMACIÓN/42/MINISHELL/minishell_arai/Tester_Japo
+[0;31m❌[0m  'pwd '
+     Diferencias:
+minishell: pwd : command not found
+bash: línea 1: pwd : orden no encontrada
+[0;31m❌[0m  'run_echo'
+     Diferencias:
+minishell: run_echo: command not found
+bash: línea 1: run_echo: orden no encontrada
+[0;31m❌[0m  echo 'cat lol.c | cat > lol.c'
+     Diferencias:
+cat lol.c | cat > lol.c
+[0;31m❌[0m  'ls '
+     Diferencias:
+minishell: ls : command not found
+bash: línea 1: ls : orden no encontrada
+[0;31m❌[0m  'abc def'
+     Diferencias:
+minishell: abc def: command not found
+bash: línea 1: abc def: orden no encontrada
+[0;31m❌[0m  'echoo'
+     Diferencias:
+minishell: echoo: command not found
+bash: línea 1: echoo: orden no encontrada
+[0;31m❌[0m  '/noexiste'
+     Diferencias:
+minishell: /noexiste: No such file or directory
+bash: línea 1: /noexiste: No existe el archivo o el directorio
+[0;31m❌[0m  'echo' '$HOME'
+     Diferencias:
+$HOME
+[0;31m❌[0m  '/bin/echo' '$PATH'
+     Diferencias:
+$PATH
+[0;31m❌[0m  'printenv' 'USER'
+     Diferencias:
+acoronad
+[0;31m❌[0m  'echo' '   uno   dos   tres   '
+     Diferencias:
+   uno   dos   tres   
+[0;31m❌[0m  '/bin/echo' '   '
+     Diferencias:
+   
+[0;31m❌[0m  'cat' '   redirs/a   '
+     Diferencias:
+cat: '   redirs/a   ': No existe el archivo o el directorio
+[0;31m❌[0m  '/bin/echo' run_echo '|' 'cat'
+     Diferencias:
+run_echo | cat
+[0;31m❌[0m  '/bin/ls' '-l' '|' 'wc' '-l'
+     Diferencias:
+/bin/ls: no se puede acceder a '|': No existe el archivo o el directorio
+/bin/ls: no se puede acceder a 'wc': No existe el archivo o el directorio
+[0;31m❌[0m  'cat' redirs/a '|' 'grep' hola
+     Diferencias:
+ejemplo
+rollon
+cat: '|': No existe el archivo o el directorio
+cat: grep: No existe el archivo o el directorio
+cat: hola: No existe el archivo o el directorio
+ejemplo
+rollon
+cat: '|': No existe el archivo o el directorio
+cat: grep: No existe el archivo o el directorio
+cat: hola: No existe el archivo o el directorio
+[0;31m❌[0m  'echo' hola '>' redirs/salida.txt
+     Diferencias:
+hola > redirs/salida.txt
+[0;31m❌[0m  'cat' '<' redirs/a
+     Diferencias:
+ejemplo
+cat: '<': No existe el archivo o el directorio
+ejemplo
+rollon
+[0;31m❌[0m  'grep' hola '<' redirs/a '>' redirs/out
+     Diferencias:
+grep: <: No existe el archivo o el directorio
+grep: >: No existe el archivo o el directorio
+grep: redirs/out: No existe el archivo o el directorio
+grep: <: No existe el archivo o el directorio
+grep: >: No existe el archivo o el directorio
+grep: redirs/out: No existe el archivo o el directorio
+[0;31m❌[0m  echo '$USER'
+     Diferencias:
+$USER
+[0;31m❌[0m  cd '~'
+     Diferencias:
+minishell: cd: ~: No such file or directory
+bash: línea 1: cd: ~: No existe el archivo o el directorio

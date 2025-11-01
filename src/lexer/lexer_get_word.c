@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:25:33 by acoronad          #+#    #+#             */
-/*   Updated: 2025/10/31 22:11:51 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/01 15:08:40 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ static int	word_end(const char *s, int i)
 			}
 			if (ft_isspace(s[i]))
 				break ;
-			if (is_operator(s + i, NULL, NULL))
-				break ;
+			if (is_operator(s + i, NULL, NULL) && s[i] != '=')
+				break;
 			i++;
 			continue ;
 		}
