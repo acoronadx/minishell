@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:25:12 by acoronad          #+#    #+#             */
-/*   Updated: 2025/07/04 12:25:37 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/01 15:15:31 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@ int	run_cd(char **argv, t_shell *shell)
 {
 	const char	*path;
 	char		*home;
+
+	/* demasiados args */
+	if (argv[1] && argv[2])
+	{
+		ft_dprintf(2, "minishell: cd: too many arguments\n");
+		return (1);
+	}
 
 	path = argv[1];
 	if (!path)
