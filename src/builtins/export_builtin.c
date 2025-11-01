@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:26:37 by acoronad          #+#    #+#             */
-/*   Updated: 2025/07/04 12:27:03 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/01 15:13:13 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,21 @@
 #include "builtins.h"
 #include "env.h"
 
-// ----------- EXPORT -----------
+/* ----------- EXPORT ----------- */
 static int	valid_export_key(const char *key)
 {
 	int	i;
 
-	i = 0;
-	if (!key || !ft_isalpha(key[0]))
+	if (!key || !*key)
 		return (0);
-	while (key[i])
+	/* admite '_' como primer char */
+	if (!(ft_isalpha((unsigned char)key[0]) || key[0] == '_'))
+		return (0);
+	i = 1;
+	/* valida hasta '=' si existe */
+	while (key[i] && key[i] != '=')
 	{
-		if (!ft_isalnum(key[i]) && key[i] != '_')
+		if (!(ft_isalnum((unsigned char)key[i]) || key[i] == '_'))
 			return (0);
 		i++;
 	}
@@ -34,11 +38,13 @@ static int	valid_export_key(const char *key)
 int	run_export(char **argv, t_shell *shell)
 {
 	int		i;
+	int		rc;      /* acumula si hay identificadores inválidos */
 	char	*sep;
 	char	*key;
 	char	*value;
 	t_env	*envv;
 
+	rc = 0;
 	i = 1;
 	while (argv[i])
 	{
@@ -65,28 +71,37 @@ int	run_export(char **argv, t_shell *shell)
 					env_add_back(&shell->env, env_create(key, value, 1));
 			}
 			else
+			{
 				ft_dprintf(2, "minishell: export: `%s': not a valid identifier\n", key);
+				rc = 1; /* ojo: 1 (no 2) */
+			}
 			free(key);
 			free(value);
 		}
-		else if (valid_export_key(argv[i]))
-		{
-			envv = shell->env;
-			while (envv)
-			{
-				if (ft_strcmp(envv->key, argv[i]) == 0)
-				{
-					envv->exported = 1;
-					break ;
-				}
-				envv = envv->next;
-			}
-			if (!envv)
-				env_add_back(&shell->env, env_create(argv[i], "", 1));
-		}
 		else
-			ft_dprintf(2, "minishell: export: `%s': not a valid identifier\n", argv[i]);
+		{
+			if (valid_export_key(argv[i]))
+			{
+				envv = shell->env;
+				while (envv)
+				{
+					if (ft_strcmp(envv->key, argv[i]) == 0)
+					{
+						envv->exported = 1;
+						break ;
+					}
+					envv = envv->next;
+				}
+				if (!envv)
+					env_add_back(&shell->env, env_create(argv[i], "", 1));
+			}
+			else
+			{
+				ft_dprintf(2, "minishell: export: `%s': not a valid identifier\n", argv[i]);
+				rc = 1;
+			}
+		}
 		i++;
 	}
-	return (0);
+	return rc;
 }
