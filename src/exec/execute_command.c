@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 14:20:54 by acoronad          #+#    #+#             */
-/*   Updated: 2025/10/31 22:11:15 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/01 15:19:59 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,68 +37,110 @@ int	execute_command(t_ast *node, t_shell *shell)
 	char	**env;
 	char	*exec_path;
 	int		status;
-	int		saved_in;
-	int		saved_out;
-	int		saved_err;
+	int		saved_in  = -1;
+	int		saved_out = -1;
+	int		saved_err = -1;
 
-	if (!node || !node->cmd.argv || !node->cmd.argv[0])
-		return (0);
-	if (node->cmd.argv[0][0] == '\0')
+	if (!node)
 	{
-		ft_dprintf(2, "minishell: : command not found\n");
-		shell->exit_status = 127;
-		return (127);
+		shell->exit_status = 0;
+		return 0;
 	}
-	if (is_builtin(node->cmd.argv[0]))
+
+	/* === SOLO REDIRECCIONES (sin argv) ===
+	   Bash permite comandos vacíos con redirs; aplicamos redirs y devolvemos 0 si no hay error. */
+	if ((!node->cmd.argv || !node->cmd.argv[0]) && node->cmd.redirections)
 	{
-		saved_in = dup(STDIN_FILENO);
+		saved_in  = dup(STDIN_FILENO);
 		saved_out = dup(STDOUT_FILENO);
 		saved_err = dup(STDERR_FILENO);
 		if (saved_in == -1 || saved_out == -1 || saved_err == -1)
 		{
 			perror("minishell: dup");
-			if (saved_in != -1)
-				close(saved_in);
-			if (saved_out != -1)
-				close(saved_out);
-			if (saved_err != -1)
-				close(saved_err);
+			if (saved_in  != -1) close(saved_in);
+			if (saved_out != -1) close(saved_out);
+			if (saved_err != -1) close(saved_err);
 			shell->exit_status = 1;
-			return (1);
+			return 1;
 		}
 		if (apply_redirections(node->cmd.redirections) != 0)
 		{
 			restore_std_fds(saved_in, saved_out, saved_err);
 			shell->exit_status = 1;
-			return (1);
+			return 1;
+		}
+		restore_std_fds(saved_in, saved_out, saved_err);
+		shell->exit_status = 0;
+		return 0;
+	}
+
+	/* Comando vacío y sin redirecciones → no hace nada, exit 0 */
+	if (!node->cmd.argv || !node->cmd.argv[0])
+	{
+		shell->exit_status = 0;
+		return 0;
+	}
+
+	/* argv[0] vacío -> "command not found" */
+	if (node->cmd.argv[0][0] == '\0')
+	{
+		ft_dprintf(2, "minishell: : command not found\n");
+		shell->exit_status = 127;
+		return 127;
+	}
+
+	/* Builtins en el proceso padre con redirecciones aplicadas temporalmente */
+	if (is_builtin(node->cmd.argv[0]))
+	{
+		saved_in  = dup(STDIN_FILENO);
+		saved_out = dup(STDOUT_FILENO);
+		saved_err = dup(STDERR_FILENO);
+		if (saved_in == -1 || saved_out == -1 || saved_err == -1)
+		{
+			perror("minishell: dup");
+			if (saved_in  != -1) close(saved_in);
+			if (saved_out != -1) close(saved_out);
+			if (saved_err != -1) close(saved_err);
+			shell->exit_status = 1;
+			return 1;
+		}
+		if (apply_redirections(node->cmd.redirections) != 0)
+		{
+			restore_std_fds(saved_in, saved_out, saved_err);
+			shell->exit_status = 1;
+			return 1;
 		}
 		shell->exit_status = run_builtin(node, shell);
 		restore_std_fds(saved_in, saved_out, saved_err);
-		return (shell->exit_status);
+		return shell->exit_status;
 	}
+
+	/* Búsqueda de ejecutable externo */
 	exec_path = find_executable(node->cmd.argv[0], shell);
 	if (!exec_path)
 	{
 		if (!ft_strchr(node->cmd.argv[0], '/'))
-			return (print_exec_error(shell, node->cmd.argv[0], ENOENT));
+			return print_exec_error(shell, node->cmd.argv[0], ENOENT);
 		if (errno == 0)
-			return (print_exec_error(shell, node->cmd.argv[0], ENOENT));
-		return (print_exec_error(shell, node->cmd.argv[0], errno));
+			return print_exec_error(shell, node->cmd.argv[0], ENOENT);
+		return print_exec_error(shell, node->cmd.argv[0], errno);
 	}
+
 	env = env_to_array(shell->env);
 	if (!env)
 	{
 		free(exec_path);
 		shell->exit_status = 1;
-		return (1);
+		return 1;
 	}
+
 	pid = fork();
 	if (pid < 0)
 	{
 		status = print_exec_error(shell, node->cmd.argv[0], errno);
 		free(exec_path);
 		ft_free_strtab(env);
-		return (status);
+		return status;
 	}
 	if (pid == 0)
 	{
@@ -110,6 +152,7 @@ int	execute_command(t_ast *node, t_shell *shell)
 		print_exec_error(shell, node->cmd.argv[0], errno);
 		_exit(127);
 	}
+
 	if (waitpid(pid, &status, 0) == -1)
 		shell->exit_status = 1;
 	else if (WIFEXITED(status))
@@ -125,7 +168,8 @@ int	execute_command(t_ast *node, t_shell *shell)
 	}
 	else
 		shell->exit_status = 1;
+
 	free(exec_path);
 	ft_free_strtab(env);
-	return (shell->exit_status);
+	return shell->exit_status;
 }

@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:12:04 by acoronad          #+#    #+#             */
-/*   Updated: 2025/10/27 18:01:30 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/01 15:23:43 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	redirect_to(int fd, int std_fd)
 	return (ret);
 }
 
-static int	handle_heredoc(t_ast *redir)
+int	handle_heredoc(t_ast *redir)
 {
 	int	fd = heredoc_prepare(redir->redir.delimiter);
 	if (fd < 0)
@@ -100,33 +100,51 @@ int	handle_simple_redir(t_ast *redir)
 	return (ret);
 }
 
-int	apply_redirections(t_ast *redir_list)
+int apply_redirections(t_ast *redir_list)
 {
-	t_ast	*curr = redir_list;
-	int		fail = 0;
+    t_ast *curr = redir_list;
+    int    fail = 0;
 
-	while (curr)
-	{
-		if (curr->type != N_REDIR)
-			return (1);
+    while (curr)
+    {
+        if (curr->type != N_REDIR)
+            return 1;
 
-		if (curr->redir.redir_type == REDIR_HEREDOC)
-		{
-			if (handle_heredoc(curr))
-				fail = 1;
-		}
-		else if (curr->redir.redir_type == REDIR_DUP_IN
-			|| curr->redir.redir_type == REDIR_DUP_OUT)
-		{
-			if (handle_dup_redir(curr))
-				fail = 1;
-		}
-		else
-		{
-			if (handle_simple_redir(curr))
-				fail = 1;
-		}
-		curr = curr->bin.right;
-	}
-	return (fail ? 1 : 0);
+        if (curr->redir.redir_type == REDIR_HEREDOC)
+        {
+            /* === HEREDOC inline, sin handle_heredoc === */
+            int fd = heredoc_prepare(curr->redir.delimiter);
+            if (fd < 0)
+            {
+                fail = 1;
+            }
+            else
+            {
+                /* reutilizamos tu helper redirect_to() para enganchar a STDIN */
+                if (dup2(fd, STDIN_FILENO) < 0)
+                {
+                    perror("minishell: dup2");
+                    close(fd);
+                    fail = 1;
+                }
+                else
+                {
+                    close(fd);
+                }
+            }
+        }
+        else if (curr->redir.redir_type == REDIR_DUP_IN
+              || curr->redir.redir_type == REDIR_DUP_OUT)
+        {
+            if (handle_dup_redir(curr))
+                fail = 1;
+        }
+        else
+        {
+            if (handle_simple_redir(curr))
+                fail = 1;
+        }
+        curr = curr->bin.right;
+    }
+    return fail ? 1 : 0;
 }
