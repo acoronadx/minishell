@@ -5,34 +5,37 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/27 14:42:10 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/27 20:01:59 by acoronad         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   init_env_list.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:28:27 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/26 06:18:34 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:31:29 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "env.h"
 
-/*
-** Crea un nuevo nodo de variable de entorno (t_env).
-** - key: nombre de la variable (ej: "USER")
-** - value: valor de la variable (ej: "acoronadx")
-** - exported: 1 si la variable está exportada, 0 si es local/interna
-** Devuelve un puntero al nuevo nodo, o NULL si falla el malloc.
-** El campo .next se inicializa a NULL.
-*/
+// Based on POSIX definition of valid environment variable names
+// “Environment variable names consist solely of uppercase letters, digits, and the underscore (‘_’). The first character shall not be a digit.”
+static int	is_valid_env_name(const char *s)
+{
+	int				i;
+	unsigned char	c;
+
+	if (!s || !*s)
+		return (0);
+	c = (unsigned char)s[0];
+	if (!(c == '_' || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')))
+		return (0);
+	i = 1;
+	while (s[i])
+	{
+		c = (unsigned char)s[i];
+		if (!(c == '_' || (c >= 'A' && c <= 'Z')
+				|| (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9')))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 t_env	*env_create(char *key, char *value, int exported)
 {
 	t_env	*new;
@@ -41,23 +44,15 @@ t_env	*env_create(char *key, char *value, int exported)
 	if (!new)
 		return (NULL);
 	new->key = ft_strdup(key);
-	if (value)
-		new->value = ft_strdup(value);
-	else
-		new->value = NULL;
+	if (!new->key)
+		return (free(new), NULL);
+	new->value = (value) ? ft_strdup(value) : NULL;
+	if (value && !new->value)
+		return (free(new->key), free(new), NULL);
 	new->exported = exported;
 	new->next = NULL;
 	return (new);
 }
-
-/*
-** Añade un nodo t_env al final de la lista de entorno.
-** - *env: puntero al inicio de la lista (puede ser NULL si está vacía)
-** - new: nuevo nodo a añadir
-** Si la lista está vacía, pone el nuevo como primer elemento.
-** Si no, recorre la lista y lo añade al final.
-** No hace nada si alguno de los punteros es NULL.
-*/
 
 void	env_add_back(t_env **env, t_env *new)
 {
@@ -76,36 +71,26 @@ void	env_add_back(t_env **env, t_env *new)
 	}
 }
 
-/*
-** Inicializa la lista enlazada de entorno (t_env) a partir del array envp.
-** - envp: array de strings "KEY=VALUE" que viene de main().
-** Por cada string, separa la clave y el valor, crea un nodo y lo añade a la lista.
-** Marca todas las variables como exportadas (exported = 1).
-** Devuelve el inicio de la lista, o NULL si falla algún malloc.
-** Ejemplo de uso: shell->env = init_env_list(envp);
-*/
-static t_env	*create_exported_env_var(char *str, t_env **env)
+static int	add_exported_from_str(char *str, t_env **env)
 {
 	char	*sep;
 	char	*key;
 	t_env	*new;
 
 	sep = ft_strchr(str, '=');
+	if (!sep)
+		return (1); /* ignorar entradas sin '=' */
 	key = ft_substr(str, 0, sep - str);
 	if (!key)
-	{
-		free_env_list(*env);
-		return (NULL);
-	}
+		return (0);
+	if (!is_valid_env_name(key))
+		return (free(key), 1); /* ignorar nombres inválidos */
 	new = env_create(key, sep + 1, 1);
 	free(key);
 	if (!new)
-	{
-		free_env_list(*env);
-		return (NULL);
-	}
+		return (0);
 	env_add_back(env, new);
-	return (*env);
+	return (1);
 }
 
 t_env	*init_env_list(char **envp)
@@ -115,12 +100,12 @@ t_env	*init_env_list(char **envp)
 
 	env = NULL;
 	i = 0;
-	while (envp[i])
+	while (envp && envp[i])
 	{
-		if (ft_strchr(envp[i], '='))
+		if (!add_exported_from_str(envp[i], &env))
 		{
-			if (!create_exported_env_var(envp[i], &env))
-				return (NULL);
+			free_env_list(env);
+			return (NULL);
 		}
 		i++;
 	}

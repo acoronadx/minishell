@@ -1,5 +1,0 @@
-err.txt
-file.txt
-minishell_output_results.txt
-out.txt
-test_commands.in

@@ -1,6 +1,0 @@
-bash_output_results.txt
-err.txt
-file.txt
-out.txt
-test_commands.in
-todo.txt

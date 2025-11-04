@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:39:45 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/01 15:24:29 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/01 17:33:01 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,27 @@ t_ast	*parse_simple_command(t_token **cur)
 	if (!parse_redirections(cur, &redir_head, &redir_tail))
 		return (NULL);
 
-	/* argumentos (palabras) */
-	argv = parse_arguments(cur);
-	if (!argv)
-	{
-		if (redir_head)
-		{
-			free_ast(redir_head);
-			ft_dprintf(2,
-				"minishell: syntax error: empty command before redirection\n");
-			return (NULL);
-		}
-		ft_dprintf(2,
-			"minishell: syntax error: empty command or unexpected token\n");
-		return (NULL);
-	}
+/* parse_simple_command.c */
+
+    argv = parse_arguments(cur);
+    if (!argv)
+    {
+        /* === ANTES: error si había redirecciones sin argv ===
+        if (redir_head) {
+            free_ast(redir_head);
+            ft_dprintf(2,"minishell: syntax error: empty command before redirection\n");
+            return (NULL);
+        }
+        ft_dprintf(2,"minishell: syntax error: empty command or unexpected token\n");
+        return (NULL);
+        */
+
+        /* === AHORA: comportamiento bash — permitir solo redirecciones === */
+        if (redir_head)
+            return ast_new_command(NULL, redir_head);  /* argv == NULL */
+        ft_dprintf(2, "minishell: syntax error: empty command\n");
+        return (NULL);
+    }
 
 	/* redirecciones finales */
 	if (!parse_redirections(cur, &redir_head, &redir_tail))

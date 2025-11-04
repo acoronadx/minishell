@@ -1,0 +1,173 @@
+
+[1mLeyenda de colores[0m
+ [31m[RED][0m Punto de entrada / main / modos
+ [34m[BLUE][0m Creación / inicialización
+ [32m[GREEN][0m Consulta / ejecución / lectura
+ [33m[ORANGE][0m Liberación / cleanup
+ [35m[PURPLE][0m Helpers / static (visibilidad local)
+ [90m[GRAY][0m Dependencias externas (libft/stdlib/rl)
+
+[1mDiagrama de funciones (árbol de llamadas por función)[0m
+
+[31mmain(argc, argv, envp) [RED][0m
+ └─ (en otro fichero) llama -> [32mrun_shell_modes(argc, argv, envp, &shell)[0m
+
+[32mrun_shell_modes(argc, argv, envp, shell) [RED][0m
+ ├─ calls -> [34mhandle_help_version(argc, argv)[0m
+ ├─ calls -> [34minit_env(shell, envp)[0m
+ │ └─ calls -> [34minit_env_list(envp) (en env/*.c)[0m
+ ├─ consulta -> [90misatty(STDIN_FILENO) / isatty(STDOUT_FILENO)[0m
+ ├─ si interactivo -> calls -> [90msetup_signals()[0m
+ │ -> calls -> [32mrun_interactive(shell)[0m
+ └─ si no interactivo -> calls -> [90msetup_default_signals()[0m
+ -> calls -> [32mrun_non_interactive(shell)[0m
+
+[34minit_shell_name(t_shell *shell, char **argv) [BLUE][0m
+ ├─ usa -> [90mft_memset(shell, 0, sizeof(t_shell))[0m
+ ├─ usa -> [90mft_strdup(argv[0])[0m
+ └─ devuelve 0 o 1 (error)
+
+[34minit_env(t_shell *shell, char **envp) [BLUE][0m
+ └─ calls -> [34minit_env_list(envp)[0m (ve en src/env)
+
+[34mhandle_help_version(argc, argv) [BLUE][0m
+ ├─ compara -> [90mft_strcmp(argv[1], "--help")[0m
+ ├─ compara -> [90mft_strcmp(argv[1], "--version")[0m
+ ├─ en --help -> calls -> [32mprint_help()[0m
+ └─ en --version -> calls -> [32mprint_version()[0m
+
+[32mprint_help() [GREEN][0m
+ └─ usa -> [90mft_dprintf(1, ...)[0m (imprime ayuda)
+
+[32mprint_version() [GREEN][0m
+ └─ usa -> [90mft_dprintf(1, "minishell, version 1.0
+")[0m
+
+[32mprint_usage(const char *invalid) [GREEN][0m
+ ├─ si invalid -> usa -> [90mft_dprintf(2, "minishell: : invalid option
+", invalid)[0m
+ └─ imprime usage con [90mft_dprintf(2,...)[0m
+
+[33mcleanup_shell(t_shell *shell) [ORANGE][0m
+ ├─ si shell->env -> calls -> [33mfree_env_list(shell->env)[0m
+ ├─ si shell->line -> free(line)
+ ├─ si shell->tokens -> calls -> [33mfree_token_list(shell->tokens)[0m
+ ├─ si shell->program_name -> free(program_name)
+ └─ calls -> [90mrestore_vquit()[0m
+
+[33mcleanup_loop(t_shell *shell) [ORANGE][0m
+ ├─ libera shell->line si existe
+ └─ libera shell->tokens si existe (free_token_list)
+
+[35mhas_slash_local(const char *s) [PURPLE] (static)[0m
+ ├─ helper sin "for" para Norma V4
+ └─ recorre con while (s[i]) y busca /
+
+[32mprint_exec_error(t_shell *shell, const char *cmd, int err_code) [GREEN][0m
+ ├─ valida cmd vacío -> imprime "command not found" y set exit_status 127
+ ├─ usa -> [35mhas_slash_local(cmd)[0m para decidir mensaje
+ ├─ usa -> [90mstrerror(err_code)[0m para mensaje detallado
+ └─ setea shell->exit_status con el código adecuado (126/127)
+
+[35mft_quotes_closed(const char *line) [PURPLE] (static)[0m
+ └─ helper que recorre line con while y gestiona estados de comillas/backslash
+
+[35mft_backslach_closed(char *line) [PURPLE] (static)[0m
+ └─ helper que cuenta backslashes finales con while y devuelve paridad
+
+[32mread_line_interactive(t_shell *shell) [GREEN][0m
+ ├─ calls -> [90msetup_prompt_signals()[0m y g_signal = 0
+ ├─ shell->line = [90mreadline(prompt ANSI colored)[0m
+ ├─ mientras !ft_quotes_closed(shell->line) || !ft_backslach_closed(...) -> pide more lines
+ ├─ usa -> [90madd_history(shell->line)[0m (en caller)
+ └─ retorna shell->line o NULL si EOF
+
+[32mrun_interactive(t_shell *shell) [GREEN][0m
+ ├─ set is_interactive = 1
+ ├─ bucle while (1):
+ │ ├─ setup_prompt_signals()
+ │ ├─ libera shell->line si existe
+ │ ├─ shell->line = read_line_interactive(shell)
+ │ ├─ si NULL -> break (Ctrl-D)
+ │ ├─ si línea vacía -> free y continue
+ │ ├─ add_history(shell->line)
+ │ ├─ setup_exec_parent_signals()
+ │ ├─ libera tokens si existen
+ │ ├─ calls -> [32mshell_exec(shell)[0m
+ │ ├─ setup_prompt_signals()
+ │ ├─ cleanup_loop(shell)
+ │ └─ if (shell->should_exit) break
+ └─ al salir: imprime "exit
+" y rl_clear_history()
+
+[35mchomp_nl(char *s) [PURPLE] (static)[0m
+ └─ quita terminador n (y optional r) del final con ft_strlen y ajustes
+
+[32mrun_non_interactive(t_shell *shell) [GREEN][0m
+ ├─ set is_interactive = 0
+ ├─ while (1):
+ │ ├─ libera shell->line si existe
+ │ ├─ line = [90mget_next_line(STDIN_FILENO)[0m (tu GNL)
+ │ ├─ si !line -> break
+ │ ├─ chomp_nl(line)
+ │ ├─ shell->line = line
+ │ ├─ if (*shell->line) -> setup_exec_parent_signals(); libera tokens; calls -> shell_exec(shell)
+ │ ├─ cleanup_loop(shell)
+ │ └─ if (shell->should_exit) break
+ └─ no imprime "exit" al final (solo modo interactivo)
+
+[32mshell_exec(t_shell *shell) [GREEN][0m
+ ├─ shell->tokens = [90mlexer(shell->line)[0m
+ ├─ si !tokens -> shell->exit_status = 2; return 2
+ ├─ calls -> [90mexpand_variables(shell)[0m
+ ├─ shell->ast = [90mbuild_ast(shell->tokens)[0m
+ ├─ free_token_list(shell->tokens); shell->tokens = NULL
+ ├─ si !ast -> shell->exit_status = 2; return 2
+ └─ calls -> [90mexecute_ast(shell->ast, shell)[0m -> devuelve shell->exit_status
+
+[32mtoken_type_str(t_token_type type) [GREEN][0m
+ └─ devuelve literal de tipo de token (if chain)
+
+[35mquote_type_str(t_quote q) [PURPLE] (static)[0m
+ └─ devuelve literal del tipo de comilla
+
+[32mprueba_lexer / prueba_expansion / prueba_env [GREEN] (debug helpers)[0m
+ ├─ imprimen tokens / env / expansión iterando con while
+ └─ usan -> [90mprintf(...) / token_type_str / quote_type_str[0m
+
+[35mprint_indent(int level) [PURPLE] (static)[0m
+ └─ imprime indent con while (level--) printf(" ")
+
+[32mprueba_ast(t_shell *shell) [GREEN][0m
+ ├─ valida shell y shell->ast
+ └─ calls -> [32mprint_ast_debug(shell->ast, 0)[0m
+
+[32mprint_ast_debug(t_ast *node, int level) [GREEN][0m
+ ├─ recorrido recursivo del AST, imprime campos segun node->type
+ ├─ usa print_indent(level)
+ ├─ para N_COMMAND imprime argv (nota: el código actual usa for en el snippet; ojo Norminette)
+ └─ para binarios y subshells recurre con while en listas enlazadas y print_ast_debug
+
+[90mDependencias externas (usadas)[0m
+ readline, add_history, rl_clear_history, isatty, get_next_line (tu GNL),
+ ft_strlen, ft_strdup, ft_memset, ft_dprintf, ft_strcmp, ft_strjoin_free_s1,
+ malloc, free, strerror, printf
+
+[1mFunciones llamadas en la ejecución (según estos ficheros)[0m
+
+ [32mshell_exec[0m — llamado desde run_interactive y run_non_interactive.
+ [34minit_env[0m — llamado desde run_shell_modes para inicializar env (usa init_env_list).
+ [33mcleanup_shell[0m — previsto para llamarse al salir (main), y free_env_list lo usa en otros sitios.
+ [32mread_line_interactive[0m — llamado desde run_interactive.
+ [32mrun_interactive / run_non_interactive[0m — llamados desde run_shell_modes según isatty.
+
+[1mFunciones/Helpers static (visibilidad local)[0m
+ [35mhas_slash_local, ft_quotes_closed, ft_backslach_closed, chomp_nl,
+ quote_type_str, env-count-style helpers, print_indent[0m
+
+[1mNotas rápidas (normas y observaciones)[0m
+ - Algunas funciones de debug usan "for" (ej. recorrer argv o arrays) — revisa Norminette
+ y reemplaza por while en las funciones que deban pasar la Norma V4.
+ - Mantén funciones <=25 líneas, <=80 columnas, <=4 variables locales y <=4 parámetros.
+ - Static functions tienen alcance local; no exponer si no es necesario.
+

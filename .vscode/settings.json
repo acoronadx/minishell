@@ -9,6 +9,7 @@
 		"env.h": "c",
 		"lexer.h": "c",
 		"minishell.h": "c",
-		"copyminishell": "c"
+		"copyminishell": "c",
+		"copyms": "c"
 	}
 }

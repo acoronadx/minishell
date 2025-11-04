@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:35:01 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/29 15:55:08 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:20:24 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,27 @@ static char	*join_key_value(const char *key, const char *value)
 	tmp = ft_strjoin(key, "=");
 	if (!tmp)
 		return (NULL);
-	res = ft_strjoin(tmp, value);
+	if (!value)
+		res = ft_strdup(tmp);      /* "KEY=" */
+	else
+		res = ft_strjoin(tmp, value);
 	free(tmp);
 	return (res);
+}
+
+static void	free_strv(char **v)
+{
+	int	i;
+
+	if (!v)
+		return ;
+	i = 0;
+	while (v[i])
+	{
+		free(v[i]);
+		i++;
+	}
+	free(v);
 }
 
 char	**env_to_array(t_env *env)
@@ -51,14 +69,14 @@ char	**env_to_array(t_env *env)
 	if (!env_array)
 		return (NULL);
 	i = 0;
-	while (env && i < size)
+	while (env)
 	{
 		if (env->exported)
 		{
 			env_array[i] = join_key_value(env->key, env->value);
 			if (!env_array[i])
 			{
-				ft_free_strtab(env_array);
+				free_strv(env_array);
 				return (NULL);
 			}
 			i++;

@@ -1,6 +1,0 @@
-cat <&0                                # Duplicar entrada
-echo 'foo'bar'
-
-#autocompletar con tab
-#probar señales
-# gestionar background con & o eliminarlo

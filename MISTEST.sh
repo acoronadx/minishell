@@ -1,5 +1,5 @@
 #!/bin/bash
-./minishell
+bash
 /bin/echo hola
 cat << E
 uno
@@ -23,7 +23,7 @@ foo
 
 echo "BUILTINS"
 
-./minishell
+bash
 exit
 
 echo "it works"
@@ -96,18 +96,18 @@ echo $EMPTY_VAR
 echo $SHLVL
 
 
-./minishell
+bash
 echo $SHLVL
 exit
 echo $?
-./minishell
+bash
 echo $SHLVL
 
-./minishell
+bash
 echo $SHLVL
 
 
-./minishell
+bash
 echo $SHLVL
 
 exit 1
@@ -381,3 +381,11 @@ rm prueba.txt
 #probar señales
 # && || para el bonus
 # wildcards  *
+
+# MANUAL TESTS FOR DEBUGGING PURPOSES
+# cat <&0                                # Duplicar entrada
+# echo 'foo'bar'
+
+#autocompletar con tab
+#probar señales
+# gestionar background con & o eliminarlo
