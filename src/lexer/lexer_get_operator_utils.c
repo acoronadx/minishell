@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils.c                                      :+:      :+:    :+:   */
+/*   lexer_get_operator_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 15:41:21 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/05 15:55:24 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/06 14:31:46 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* pone type/len si no son NULL */
 static void	op_set(t_token_type *type, int *len, t_token_type t, int l)
 {
-	if (type) *type = t;
-	if (len)  *len  = l;
+	if (type)
+		*type = t;
+	if (len)
+		*len = l;
 }
 
-/* operadores de 3 caracteres */
 static int	op_match_len3(const char *s, t_token_type *type, int *len)
 {
-	if (!s) return (0);
+	if (!s)
+		return (0);
 	if (ft_strncmp(s, "<<<", 3) == 0)
 		return (op_set(type, len, T_HEREDOC_STR, 3), 1);
 	if (ft_strncmp(s, "&>>", 3) == 0)
@@ -30,10 +31,10 @@ static int	op_match_len3(const char *s, t_token_type *type, int *len)
 	return (0);
 }
 
-/* operadores de 2 caracteres */
 static int	op_match_len2(const char *s, t_token_type *type, int *len)
 {
-	if (!s) return (0);
+	if (!s)
+		return (0);
 	if (ft_strncmp(s, ">>", 2) == 0)  return (op_set(type, len, T_APPEND, 2), 1);
 	if (ft_strncmp(s, "<<", 2) == 0)  return (op_set(type, len, T_HEREDOC, 2), 1);
 	if (ft_strncmp(s, "||", 2) == 0)  return (op_set(type, len, T_OR, 2), 1);
@@ -45,10 +46,10 @@ static int	op_match_len2(const char *s, t_token_type *type, int *len)
 	return (0);
 }
 
-/* operadores de 1 caracter */
 static int	op_match_len1(const char *s, t_token_type *type, int *len)
 {
-	if (!s) return (0);
+	if (!s)
+		return (0);
 	if (*s == '|') return (op_set(type, len, T_PIPE, 1), 1);
 	if (*s == '&') return (op_set(type, len, T_BG, 1), 1);
 	if (*s == ';') return (op_set(type, len, T_SEMI, 1), 1);
@@ -59,7 +60,6 @@ static int	op_match_len1(const char *s, t_token_type *type, int *len)
 	return (0);
 }
 
-/* principal (≤25 líneas, sin globals) */
 int	is_operator(const char *str, t_token_type *type, int *len)
 {
 	if (!str)

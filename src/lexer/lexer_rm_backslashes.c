@@ -6,13 +6,12 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 15:38:56 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/06 13:11:16 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/06 14:30:16 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* copia el par escapado: avanza i, copia src[i] en out[j], avanza ambos */
 static void	copy_escaped_pair(const char *src, size_t *i, char *out, size_t *j)
 {
 	*i += 1;
@@ -21,45 +20,34 @@ static void	copy_escaped_pair(const char *src, size_t *i, char *out, size_t *j)
 	*i += 1;
 }
 
-/* bucle de copia dentro de "..." (bash): \ escapa $, `, ", \ y newline */
-static void	dq_copy_loop(const char *src, size_t n, char *out, size_t *i, size_t *j)
+static void	dq_copy_loop(const char *s, size_t n, char *out, size_t *i, size_t *j)
 {
 	while (*i < n)
 	{
-		if (src[*i] == '\\' && (*i + 1) < n
-			&& (src[*i + 1] == '$' || src[*i + 1] == '`'
-				|| src[*i + 1] == '"' || src[*i + 1] == '\\'))
-			copy_escaped_pair(src, i, out, j);
-		else if (src[*i] == '\\' && (*i + 1) < n && src[*i + 1] == '\n')
+		if (s[*i] == '\\' && (*i + 1) < n
+			&& (s[*i + 1] == '$' || s[*i + 1] == '`'
+				|| s[*i + 1] == '"' || s[*i + 1] == '\\'))
+			copy_escaped_pair(s, i, out, j);
+		else if (s[*i] == '\\' && (*i + 1) < n && s[*i + 1] == '\n')
 			*i += 2;
 		else
-		{
-			out[*j] = src[*i];
-			*j += 1;
-			*i += 1;
-		}
+			out[(*j)++] = s[(*i)++];
 	}
 }
 
-/* bucle de copia fuera de comillas: \x => x ; \newline => se elimina */
-static void	unq_copy_loop(const char *src, size_t n, char *out, size_t *i, size_t *j)
+static void	unq_copy_loop(const char *s, size_t n, char *out, size_t *i, size_t *j)
 {
 	while (*i < n)
 	{
-		if (src[*i] == '\\' && (*i + 1) < n && src[*i + 1] == '\n')
+		if (s[*i] == '\\' && (*i + 1) < n && s[*i + 1] == '\n')
 			*i += 2;
-		else if (src[*i] == '\\' && (*i + 1) < n)
-			copy_escaped_pair(src, i, out, j);
+		else if (s[*i] == '\\' && (*i + 1) < n)
+			copy_escaped_pair(s, i, out, j);
 		else
-		{
-			out[*j] = src[*i];
-			*j += 1;
-			*i += 1;
-		}
+			out[(*j)++] = s[(*i)++];
 	}
 }
 
-/* elimina backslashes según el contexto de quote del token */
 char	*remove_backslashes_for_token(const char *src, t_quote quote)
 {
 	char	*out;

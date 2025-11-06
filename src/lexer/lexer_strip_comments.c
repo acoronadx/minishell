@@ -12,22 +12,19 @@
 
 #include "minishell.h"
 
-/* fuera de comillas: maneja operadores para reiniciar inicio-de-palabra */
-static int	handle_operator_out(const char *line, int *i, int *aws)
+static void	step_in_squote(const char *line, int *i, t_quote *q, int *aws)
 {
-	t_token_type	t;
-	int				len;
-
-	if (is_operator(line + *i, &t, &len))
+	if (line[*i] == '\'')
 	{
-		*i += len;
-		*aws = 1;
-		return (1);
+		*q = NO_QUOTE;
+		*i += 1;
+		*aws = 0;
+		return ;
 	}
-	return (0);
+	*i += 1;
+	*aws = 0;
 }
 
-/* dentro de comillas dobles: gestiona escapes especiales y cierre */
 static int	handle_in_dquote(char *line, int *i, t_quote *q, int *aws)
 {
 	if (line[*i] == '\\' && (line[*i + 1] == '$' || line[*i + 1] == '`'
@@ -53,7 +50,6 @@ static int	handle_in_dquote(char *line, int *i, t_quote *q, int *aws)
 	return (1);
 }
 
-/* paso fuera de comillas: backslash, comillas, #, operador, espacio, avanzar */
 static void	step_outside(char *line, int *i, t_quote *q, int *aws)
 {
 	char	c;
@@ -75,20 +71,6 @@ static void	step_outside(char *line, int *i, t_quote *q, int *aws)
 		return ;
 	*aws = 0;
 	*i += 1;
-}
-
-/* paso en comillas simples: todo literal hasta encontrar ' */
-static void	step_in_squote(const char *line, int *i, t_quote *q, int *aws)
-{
-	if (line[*i] == '\'')
-	{
-		*q = NO_QUOTE;
-		*i += 1;
-		*aws = 0;
-		return ;
-	}
-	*i += 1;
-	*aws = 0;
 }
 
 void	strip_comment_if_applicable(char *line)

@@ -6,17 +6,19 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 16:07:05 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/05 15:45:16 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/06 14:32:40 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* helper: clona la línea y aplica el strip de comentarios bash */
+/* dup + strip de comentarios bash-like */
 static char	*clone_and_strip(const char *raw)
 {
 	char	*dup;
 
+	if (!raw)
+		return (NULL);
 	dup = ft_strdup(raw);
 	if (!dup)
 		return (NULL);
@@ -24,46 +26,31 @@ static char	*clone_and_strip(const char *raw)
 	return (dup);
 }
 
-/* helper: salta espacios (fuera de comillas) */
+/* salta espacios fuera de comillas */
 static int	skip_spaces(const char *s, int i)
 {
-	while (s[i] && ft_isspace(s[i]))
+	while (s[i] && ft_isspace((unsigned char)s[i]))
 		i++;
 	return (i);
 }
 
-/* helper: lexea un token (operador o palabra) y avanza next_i */
+/* tokeniza una unidad: operador o palabra */
 static int	lex_one(const char *line, int i, t_token **lst, int *next_i)
 {
-	int	ni;
+	int	n;
 
 	if (is_operator(line + i, NULL, NULL))
 	{
-		ni = get_operator(line, i, &*lst);
-		if (ni < 0)
+		n = get_operator(line, i, lst);
+		if (n < 0)
 			return (-1);
-		*next_i = ni;
+		*next_i = n;
 		return (0);
 	}
-	ni = get_word(line, i, &*lst);
-	if (ni < 0)
+	n = get_word(line, i, lst);
+	if (n < 0)
 		return (-1);
-	*next_i = ni;
-	return (0);
-}
-
-/* paso de bucle: salta espacios, lexea 1 token, avanza índice
- * return:  0 = seguir;  1 = fin;  -1 = error */
-static int	lexer_step(char *line, int *i, t_token **lst)
-{
-	int	next_i;
-
-	*i = skip_spaces(line, *i);
-	if (!line[*i])
-		return (1);
-	if (lex_one(line, *i, lst, &next_i) < 0)
-		return (-1);
-	*i = next_i;
+	*next_i = n;
 	return (0);
 }
 
@@ -72,25 +59,21 @@ t_token	*lexer(const char *raw_line)
 	t_token	*lst;
 	char	*line;
 	int		i;
-	int		st;
+	int		next_i;
 
 	lst = NULL;
-	if (!raw_line)
-		return (NULL);
 	line = clone_and_strip(raw_line);
 	if (!line)
 		return (NULL);
 	i = 0;
 	while (line[i])
 	{
-		st = lexer_step(line, &i, &lst);
-		if (st < 0)
-		{
-			free(line);
-			return (free_null_token_list(&lst));
-		}
-		if (st > 0)
+		i = skip_spaces(line, i);
+		if (!line[i])
 			break ;
+		if (lex_one(line, i, &lst, &next_i) < 0)
+			return (free(line), free_null_token_list(&lst));
+		i = next_i;
 	}
 	free(line);
 	return (lst);

@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:24:24 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/06 13:06:58 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/06 14:48:53 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ typedef enum e_token_type
         T_UNKNOWN
 }       t_token_type;
 
-
 typedef enum e_quote
 {
         NO_QUOTE,
@@ -56,39 +55,42 @@ typedef struct s_token
 /* ------------------------- API del lexer ------------------------- */
 t_token         *lexer(const char *line);
 
-/* Construcción/gestión de lista */
+/* tokens */
 t_token         *token_new(char *value, t_token_type type, t_quote quote);
 void            token_addback(t_token **lst, t_token *new);
 void            free_token_list(t_token *tok);
 void            next_token(t_token **cur);
+int             try_add_token(t_token **lst, char *str, t_token_type type, t_quote q);
 
-/* Funciones de extracción */
+/* extracción */
 int             get_operator(const char *line, int i, t_token **lst);
 int             get_word(const char *line, int i, t_token **lst);
 
-/* Detección y utilidades */
+/* detección */
 int             is_operator(const char *str, t_token_type *type, int *len);
 t_token_type    get_token_type(const char *str, int len);
-t_token_type    get_pipe_and_or(const char *str, int len);
-t_token_type    get_semi_redir_left(const char *str, int len);
-t_token_type    get_redir_right(const char *str, int len);
-t_token_type    get_redir_special(const char *str, int len);
 
+/* errores */
 void            free_lexer_list_on_error(t_token **lst);
-void			free_token_list(t_token *tok);
-t_token			*free_null_token_list(t_token **lst);
-int             try_add_token(t_token **lst, char *str, t_token_type type, t_quote quote);
+t_token         *free_null_token_list(t_token **lst);
 
-/* Utilidades específicas de bash */
+/* bash utils */
 void            strip_comment_if_applicable(char *line);
 char            *remove_backslashes_for_token(const char *src, t_quote quote);
 
+/* ------------------------------------------------------------------ */
+/* -----------------Internal (lexer-only) helpers ------------------- */
+/* ------------------------------------------------------------------ */
 
-/* Utilidades para comentarios */
-int		is_comment(char *line, char c, int aws, int i);
-int		enter_quote_out(char c, t_quote *q, int *i, int *aws);
-void	shift_left_two(char *s, int pos);
-int		handle_bs_out(char *line, int *i, int *aws);
+/* get word utils */
+int             outside_step(const char *s, int *i, t_quote *q);
+t_quote         detect_qtype(const char *word);
 
+/*  comments  */
+void            shift_left_two(char *s, int pos);
+int             handle_bs_out(char *line, int *i, int *aws);
+int             enter_quote_out(char c, t_quote *q, int *i, int *aws);
+int             is_comment(char *line, char c, int aws, int i);
+int             handle_operator_out(const char *line, int *i, int *aws);
 
 #endif

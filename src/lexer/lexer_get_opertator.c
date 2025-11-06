@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:55:24 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/05 15:26:45 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/06 14:32:04 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,17 @@ int	get_operator(const char *line, int i, t_token **lst)
 {
 	t_token_type	type;
 	int				len;
-	char			*op_str;
+	char			*op;
 
 	if (!is_operator(line + i, &type, &len))
 		return (i);
-	op_str = ft_substr(line, i, len);
-	if (!op_str)
+	op = ft_substr(line, i, len);
+	if (!op)
 	{
 		free_lexer_list_on_error(lst);
 		return (-1);
 	}
-	if (!try_add_token(lst, op_str, type, NO_QUOTE))
+	if (!try_add_token(lst, op, type, NO_QUOTE))
 		return (-1);
 	return (i + len);
 }
