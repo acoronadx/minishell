@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "parser.h"
 #include "ast.h"
 #include "lexer.h"
+#include "minishell.h"
+#include "parser.h"
 
 t_ast	*parse_pipeline(t_token **cur)
 {
@@ -24,13 +24,13 @@ t_ast	*parse_pipeline(t_token **cur)
 	left = parse_command_and_redirections(cur);
 	if (!left)
 		return (NULL);
-
 	while (*cur && (*cur)->type == T_PIPE)
 	{
 		next_token(cur);
 		if (!*cur)
 		{
-			ft_dprintf(2, "minishell: syntax error near unexpected token 'newline'\n");
+			ft_dprintf(2,
+				"minishell: syntax error near unexpected token 'newline'\n");
 			free_ast(left);
 			return (NULL);
 		}

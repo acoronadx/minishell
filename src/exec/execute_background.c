@@ -12,26 +12,26 @@
 
 #include "minishell.h"
 
-int execute_background(t_ast *node, t_shell *shell)
+int	execute_background(t_ast *node, t_shell *shell)
 {
-    pid_t pid;
+	pid_t	pid;
 
-    pid = fork();
-    if (pid < 0)
-    {
-        ft_dprintf(2, "minishell: fork error\n");
-        shell->exit_status = 1;
-        return (1);
-    }
-    if (pid == 0)
-    {
-        /* Hijo: señales por defecto para comportamiento bash-like */
-        signal(SIGINT, SIG_DFL);
-        signal(SIGQUIT, SIG_DFL);
-        _exit(execute_ast(node->bin.left, shell) & 0xFF);
-    }
-    /* Padre: no espera al hijo en background */
-    shell->exit_status = 0;
-    ft_dprintf(1, "[1] %d\n", pid);
-    return (0);
+	pid = fork();
+	if (pid < 0)
+	{
+		ft_dprintf(2, "minishell: fork error\n");
+		shell->exit_status = 1;
+		return (1);
+	}
+	if (pid == 0)
+	{
+		/* Hijo: señales por defecto para comportamiento bash-like */
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		_exit(execute_ast(node->bin.left, shell) & 0xFF);
+	}
+	/* Padre: no espera al hijo en background */
+	shell->exit_status = 0;
+	ft_dprintf(1, "[1] %d\n", pid);
+	return (0);
 }

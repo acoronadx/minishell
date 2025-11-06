@@ -15,7 +15,7 @@
 
 void	ft_putnbr_bf(char **bf, int n)
 {
-	char *new;
+	char	*new;
 
 	if (n == -2147483648)
 	{

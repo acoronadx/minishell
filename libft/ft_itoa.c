@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static	int	ft_count_char(int num)
+static int	ft_count_char(int num)
 {
 	int	count;
 
@@ -21,7 +21,7 @@ static	int	ft_count_char(int num)
 	{
 		if (num < 0)
 		{
-			num = num *(-1);
+			num = num * (-1);
 			count++;
 		}
 		while (num != 0)
@@ -67,9 +67,11 @@ char	*ft_itoa(int n)
 
 int	main(void)
 {
-	int	num = -12345;
-	char	*str = ft_itoa(num);
+	int		num;
+	char	*str;
 
+	num = -12345;
+	str = ft_itoa(num);
 	if (str)
 	{
 		printf("str: %s\n", str);

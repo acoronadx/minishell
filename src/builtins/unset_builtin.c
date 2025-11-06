@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "builtins.h"
+#include "minishell.h"
 
 // ----------- UNSET -----------
 int	run_unset(char **argv, t_shell *shell)

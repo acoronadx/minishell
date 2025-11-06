@@ -14,8 +14,8 @@
 
 int	ft_isalnum(int c)
 {
-	if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z')
-		|| (c >= 'A' && c <= 'Z'))
+	if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || (c >= 'A'
+			&& c <= 'Z'))
 		return (1);
 	return (0);
 }
@@ -24,9 +24,13 @@ int	ft_isalnum(int c)
 
 int	main(void)
 {
-	char	c1 = 'A';
-	char	c2 = '5';
-	char	c3 = '@';
+	char	c1;
+	char	c2;
+	char	c3;
+
+	c1 = 'A';
+	c2 = '5';
+	c3 = '@';
 	printf("Is %c alphanumeric? %d\n", c1, ft_isalnum(c1));
 	printf("Is %c alphanumeric? %d\n", c2, ft_isalnum(c2));
 	printf("Is %c alphanumeric? %d\n", c3, ft_isalnum(c3));

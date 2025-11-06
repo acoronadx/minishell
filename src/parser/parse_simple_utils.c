@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ast.h"
+#include "lexer.h"
 #include "minishell.h"
 #include "parser.h"
-#include "ast.h"   
-#include "lexer.h"
 
 int	is_lparen(t_token *tok)
 {

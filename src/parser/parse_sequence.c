@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ast.h"
 #include "minishell.h"
 #include "parser.h"
-#include "ast.h"
 
 t_ast	*parse_sequence(t_token **cur)
 {
@@ -23,13 +23,13 @@ t_ast	*parse_sequence(t_token **cur)
 	left = parse_and_or(cur);
 	if (!left)
 		return (NULL);
-
 	while (*cur && (*cur)->type == T_SEMI)
 	{
 		next_token(cur);
 		if (!*cur)
 		{
-			ft_dprintf(2, "minishell: syntax error near unexpected token 'newline'\n");
+			ft_dprintf(2,
+				"minishell: syntax error near unexpected token 'newline'\n");
 			free_ast(left);
 			return (NULL);
 		}

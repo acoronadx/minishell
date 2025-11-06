@@ -12,26 +12,26 @@
 
 #include "minishell.h"
 
-int execute_and(t_ast *node, t_shell *shell)
+int	execute_and(t_ast *node, t_shell *shell)
 {
-    int ret;
+	int	ret;
 
-    ret = execute_ast(node->bin.left, shell);
-    if (ret == 0)
-        ret = execute_ast(node->bin.right, shell);
-    else
-        shell->exit_status = ret;
-    return (ret);
+	ret = execute_ast(node->bin.left, shell);
+	if (ret == 0)
+		ret = execute_ast(node->bin.right, shell);
+	else
+		shell->exit_status = ret;
+	return (ret);
 }
 
-int execute_or(t_ast *node, t_shell *shell)
+int	execute_or(t_ast *node, t_shell *shell)
 {
-    int ret;
+	int	ret;
 
-    ret = execute_ast(node->bin.left, shell);
-    if (ret != 0)
-        ret = execute_ast(node->bin.right, shell);
-    else
-        shell->exit_status = ret;
-    return (ret);
+	ret = execute_ast(node->bin.left, shell);
+	if (ret != 0)
+		ret = execute_ast(node->bin.right, shell);
+	else
+		shell->exit_status = ret;
+	return (ret);
 }

@@ -15,10 +15,9 @@
 t_ast	*parse_command_and_redirections(t_token **cur)
 {
 	if (*cur && (*cur)->type == T_LPAREN)
-		return parse_subshell(cur);
+		return (parse_subshell(cur));
 	if (*cur && ((*cur)->type == T_WORD || is_redirection(*cur)))
-		return parse_simple_command(cur);
-
+		return (parse_simple_command(cur));
 	ft_dprintf(2, "minishell: syntax error near unexpected token '%s'\n",
 		*cur ? (*cur)->value : "newline");
 	return (NULL);

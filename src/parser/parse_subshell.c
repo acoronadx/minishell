@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "parser.h"
 #include "ast.h"
 #include "lexer.h"
+#include "minishell.h"
+#include "parser.h"
 
 t_ast	*parse_subshell(t_token **cur)
 {

@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "parser.h"
 #include "ast.h"
 #include "lexer.h"
+#include "minishell.h"
+#include "parser.h"
 
 t_ast	*parse_background(t_token **cur)
 {
@@ -24,7 +24,6 @@ t_ast	*parse_background(t_token **cur)
 	left = parse_sequence(cur);
 	if (!left)
 		return (NULL);
-
 	while (*cur && (*cur)->type == T_BG)
 	{
 		next_token(cur);

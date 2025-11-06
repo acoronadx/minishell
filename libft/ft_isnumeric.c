@@ -10,10 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "libft.h"
 
-int ft_isnumeric(const char *str)
+int	ft_isnumeric(const char *str)
 {
 	if (*str == '-' || *str == '+')
 		str++;

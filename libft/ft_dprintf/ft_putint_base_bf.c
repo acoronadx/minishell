@@ -15,8 +15,8 @@
 
 static int	ft_check_base(const char *base)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	if (!base || base[0] == '\0' || base[1] == '\0')
 		return (0);
@@ -39,7 +39,7 @@ static int	ft_check_base(const char *base)
 
 void	ft_pint_bs_bf(char **bf, unsigned int nbr, const char *base)
 {
-	int	base_ln;
+	int base_ln;
 	char *new;
 
 	base_ln = ft_check_base(base);

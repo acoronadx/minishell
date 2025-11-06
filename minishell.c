@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 #include "signals.h"
+
 //#include "exec.h"
 
 int	main(int argc, char **argv, char **envp)
@@ -19,7 +20,7 @@ int	main(int argc, char **argv, char **envp)
 	t_shell	shell;
 	int		ret;
 
-//	setup_prompt_signals();
+	//	setup_prompt_signals();
 	setup_signals();
 	if (init_shell_name(&shell, argv) != 0)
 		return (1);

@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
 #include "lexer.h"
+#include "parser.h"
 
 char	**add_argument(char **argv, int *argc, int *size, const char *value)
 {

@@ -14,9 +14,9 @@
 
 void	ft_dprintf(int fd, const char *format, ...)
 {
-	va_list	args;
-	char	*bf;
-	int		i;
+	va_list args;
+	char *bf;
+	int i;
 
 	if (!format)
 		return ;

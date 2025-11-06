@@ -23,9 +23,13 @@ int	ft_isprint(int c)
 
 int	main(void)
 {
-	char	c1 = 'A';
-	char	c2 = '5';
-	char	c3 = '@';
+	char	c1;
+	char	c2;
+	char	c3;
+
+	c1 = 'A';
+	c2 = '5';
+	c3 = '@';
 	printf("Is %c printable? %d\n", c1, ft_isprint(c1));
 	printf("Is %c printable? %d\n", c2, ft_isprint(c2));
 	printf("Is %c printable? %d\n", c3, ft_isprint(c3));

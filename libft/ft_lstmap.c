@@ -58,42 +58,43 @@ void	ft_lstprint(t_list *lst)
 }
 int	main(void)
 {
-	t_list *list = NULL;
+	t_list	*list;
+	int		*num1;
+	int		*num2;
+	int		*num3;
+	t_list	*new_list;
+	t_list	*tmp;
+	t_list	*tmp;
 
-	int *num1 = (int *)malloc(sizeof(int));
+	list = NULL;
+	num1 = (int *)malloc(sizeof(int));
 	*num1 = 42;
-	int *num2 = (int *)malloc(sizeof(int));
+	num2 = (int *)malloc(sizeof(int));
 	*num2 = 36;
-	int *num3 = (int *)malloc(sizeof(int));
+	num3 = (int *)malloc(sizeof(int));
 	*num3 = 58;
-
 	ft_lstadd_front(&list, ft_lstnew(num1));
 	ft_lstadd_front(&list, ft_lstnew(num2));
 	ft_lstadd_front(&list, ft_lstnew(num3));
-
 	printf("Original list:\n");
-    ft_lstprint(list);
-
-    t_list *new_list = ft_lstmap(list, increment, del);
-
-    printf("\nNew list after incrementing:\n");
-    ft_lstprint(new_list);
-
-    while (list)
-    {
-        t_list *tmp = list->next;
-        del(list->content);
-        free(list);
-        list = tmp;
-    }
-
-    while (new_list)
-    {
-        t_list *tmp = new_list->next;
-        del(new_list->content);
-        free(new_list);
-        new_list = tmp;
-    }
+	ft_lstprint(list);
+	new_list = ft_lstmap(list, increment, del);
+	printf("\nNew list after incrementing:\n");
+	ft_lstprint(new_list);
+	while (list)
+	{
+		tmp = list->next;
+		del(list->content);
+		free(list);
+		list = tmp;
+	}
+	while (new_list)
+	{
+		tmp = new_list->next;
+		del(new_list->content);
+		free(new_list);
+		new_list = tmp;
+	}
 	return (0);
 }
 */

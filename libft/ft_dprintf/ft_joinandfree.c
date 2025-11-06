@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_dprintf.h"
 #include "../libft.h"
+#include "ft_dprintf.h"
 
 char	*ft_joinandfreestr(char *s1, const char *s2)
 {
@@ -38,8 +38,8 @@ char	*ft_joinandfreestr(char *s1, const char *s2)
 
 char	*ft_joinandfree(char *s1, char s2)
 {
-	char	*str;
-	size_t	len1;
+	char *str;
+	size_t len1;
 
 	if (!s1)
 		return (NULL);

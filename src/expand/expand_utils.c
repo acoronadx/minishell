@@ -10,24 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "expand.h"
 #include "env.h"
+#include "expand.h"
+#include "minishell.h"
 
-char *find_var(t_env *env, char *name)
+char	*find_var(t_env *env, char *name)
 {
-    while (env)
-    {
-        if (ft_strcmp(env->key, name) == 0)
-            return (env->value ? env->value : "");
-        env = env->next;
-    }
-    return "";
+	while (env)
+	{
+		if (ft_strcmp(env->key, name) == 0)
+			return (env->value ? env->value : "");
+		env = env->next;
+	}
+	return ("");
 }
 
-char *get_program_name_str(t_shell *shell)
+char	*get_program_name_str(t_shell *shell)
 {
-    if (!shell->program_name)
-        return ft_strdup("minishell");
-    return ft_strdup(shell->program_name);
+	if (!shell->program_name)
+		return (ft_strdup("minishell"));
+	return (ft_strdup(shell->program_name));
 }

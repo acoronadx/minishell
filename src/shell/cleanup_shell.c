@@ -6,17 +6,12 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 03:25:37 by acoronad          #+#    #+#             */
-/*   Updated: 2025/10/31 22:12:22 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/06 12:28:08 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "lexer.h"
-#include "env.h"
-#include <string.h>
-#include <errno.h>
 
-/* --- NUEVO: helper sin 'for' para Norma --- */
 static int	has_slash_local(const char *s)
 {
 	int	i;
@@ -35,33 +30,20 @@ static int	has_slash_local(const char *s)
 
 int	print_exec_error(t_shell *shell, const char *cmd, int err_code)
 {
-	int	ret;
-
 	if (!cmd || !*cmd)
-	{
-		ft_dprintf(2, "minishell: : command not found\n");
-		shell->exit_status = 127;
-		return (127);
-	}
+		return (shell->exit_status = 127, ft_dprintf(2,
+				"minishell: : command not found\n"), 127);
 	if (!has_slash_local(cmd) && err_code == ENOENT)
-	{
-		ft_dprintf(2, "minishell: %s: command not found\n", cmd);
-		ret = 127;
-	}
-	else
-	{
-		ft_dprintf(2, "minishell: %s: %s\n", cmd, strerror(err_code));
-		if (err_code == EACCES || err_code == ENOEXEC
-			|| err_code == EISDIR || err_code == EPERM)
-			ret = 126;
-		else if (err_code == ENOENT || err_code == ENOTDIR
-			|| err_code == ENAMETOOLONG || err_code == ELOOP)
-			ret = 127;
-		else
-			ret = 126;
-	}
-	shell->exit_status = ret;
-	return (ret);
+		return (shell->exit_status = 127, ft_dprintf(2,
+			"minishell: %s: command not found\n", cmd), 127);
+	ft_dprintf(2, "minishell: %s: %s\n", cmd, strerror(err_code));
+	if (err_code == EACCES || err_code == ENOEXEC || err_code == EISDIR
+		|| err_code == EPERM)
+		return (shell->exit_status = 126);
+	if (err_code == ENOENT || err_code == ENOTDIR || err_code == ENAMETOOLONG
+		|| err_code == ELOOP)
+		return (shell->exit_status = 127);
+	return (shell->exit_status = 126);
 }
 
 void	cleanup_loop(t_shell *shell)

@@ -6,12 +6,11 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:25:33 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/01 15:08:40 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/05 15:25:53 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "lexer.h"
 
 static int	word_end(const char *s, int i)
 {
@@ -50,7 +49,7 @@ static int	word_end(const char *s, int i)
 			if (ft_isspace(s[i]))
 				break ;
 			if (is_operator(s + i, NULL, NULL) && s[i] != '=')
-				break;
+				break ;
 			i++;
 			continue ;
 		}
@@ -61,9 +60,8 @@ static int	word_end(const char *s, int i)
 			i++;
 			continue ;
 		}
-		if (s[i] == '\\' && (s[i + 1] == '$' || s[i + 1] == '`'
-				|| s[i + 1] == '"' || s[i + 1] == '\\'
-				|| s[i + 1] == '\n'))
+		if (s[i] == '\\' && (s[i + 1] == '$' || s[i + 1] == '`' || s[i
+				+ 1] == '"' || s[i + 1] == '\\' || s[i + 1] == '\n'))
 		{
 			if (s[i + 1])
 				i += 2;
@@ -92,7 +90,7 @@ int	get_word(const char *line, int i, t_token **lst)
 	qtype = NO_QUOTE;
 	if (end < 0)
 	{
-		fprintf(stderr, "minishell: syntax error: unclosed quote\n");
+		ft_dprintf(2, "minishell: syntax error: unclosed quote\n");
 		free_lexer_list_on_error(lst);
 		return (-1);
 	}

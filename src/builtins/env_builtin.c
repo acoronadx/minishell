@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "builtins.h"
 #include "env.h"
+#include "minishell.h"
 
 // ----------- ENV -----------
 int	run_env(t_shell *shell)

@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "builtins.h"
 #include "env.h"
+#include "minishell.h"
 
 // ----------- CD -----------
 int	run_cd(char **argv, t_shell *shell)
@@ -26,7 +26,6 @@ int	run_cd(char **argv, t_shell *shell)
 		ft_dprintf(2, "minishell: cd: too many arguments\n");
 		return (1);
 	}
-
 	path = argv[1];
 	if (!path)
 	{

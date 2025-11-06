@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "exec.h"
 #include "ast.h"
+#include "exec.h"
+#include "minishell.h"
 
-int execute_sequence(t_ast *node, t_shell *shell)
+int	execute_sequence(t_ast *node, t_shell *shell)
 {
 	execute_ast(node->bin.left, shell);
 	return (execute_ast(node->bin.right, shell));

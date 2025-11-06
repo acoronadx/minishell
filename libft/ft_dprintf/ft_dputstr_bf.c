@@ -15,7 +15,7 @@
 
 void	ft_dputstr_bf(char **bf, const char *s)
 {
-	char *new;
+	char	*new;
 
 	if (!s)
 		new = ft_joinandfreestr(*bf, "(null)");

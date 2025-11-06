@@ -35,8 +35,9 @@ void	*ft_memchr(const void *s, int c, size_t n)
 int	main(void)
 {
 	char	str[] = "Hola, mundo!";
-	char	*result = (char *)ft_memchr(str, 'm', strlen(str));
+	char	*result;
 
+	result = (char *)ft_memchr(str, 'm', strlen(str));
 	if (result)
 		printf("Character found: '%c'\n",  *result);
 	else

@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "ast.h"
 #include "env.h"
 #include "exec.h"
-#include "ast.h"
+#include "minishell.h"
 #include <errno.h>
 #include <sys/stat.h>
 

@@ -6,116 +6,92 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 16:07:05 by acoronad          #+#    #+#             */
-/*   Updated: 2025/10/24 14:40:49 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/05 15:45:16 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "lexer.h"
 
-/*
-** Reglas principales que seguimos (resumen):
-** - Comentarios: un '#' que comienza una palabra (inicio de línea, tras espacio
-**   no comillado o tras un operador) e *imprimible* y *no comillado* inicia un
-**   comentario hasta fin de línea. (Bash: en modo interactivo depende de
-**   shopt interactive_comments; aquí lo activamos siempre en no-interactivo).
-**   Ref: Bash manual, "Comments". :contentReference[oaicite:0]{index=0}
-**
-** - Comillas:
-**   * '...': literal, sin escapes, hasta la próxima ' (no se puede anidar). :contentReference[oaicite:1]{index=1}
-**   * "...": backslash sólo escapa: $, `, ", \ y newline para continuación de
-**            línea. (El resto de backslashes se preservan). :contentReference[oaicite:2]{index=2}
-**   * fuera de comillas: '\' escapa el siguiente carácter; '\<newline>'
-**     elimina ambos (continuación de línea POSIX). :contentReference[oaicite:3]{index=3}
-**
-** - Operadores reconocidos: ||, &&, |, ;, &, <, >, >>, <<, <<<, >|, <&, >&,
-**   2>, 2>>, &>, &>>, paréntesis y llaves. (Algunos son Bash-specific, p.ej. &>, <<<). :contentReference[oaicite:4]{index=4}
-**
-** Nota: la *expansión* ($VAR, ~, etc.) no es parte del lexer; aquí sólo
-** tokenizamos y marcamos si el token estaba comillado.
-*/
-
-static t_token *free_null_token_list(t_token **lst)
+/* helper: clona la línea y aplica el strip de comentarios bash */
+static char	*clone_and_strip(const char *raw)
 {
-    free_token_list(*lst);
-    *lst = NULL;
-    return (NULL);
+	char	*dup;
+
+	dup = ft_strdup(raw);
+	if (!dup)
+		return (NULL);
+	strip_comment_if_applicable(dup);
+	return (dup);
 }
 
-/* Detecta prefijos de fd redundantes: "1>", "0<", "2>&1"...;
- * aquí solo los saltamos para simplificar equivalencias de bash.
- * (No altera el AST, sólo evita tokens numéricos sueltos). */
-static int  skip_default_fd_prefix(const char *s)
+/* helper: salta espacios (fuera de comillas) */
+static int	skip_spaces(const char *s, int i)
 {
-    if (s[0] == '1' && (s[1] == '>' || (s[1] == '<' && s[2] == '<')))
-        return 1; /* 1>, 1<< */
-    if (s[0] == '0' && (s[1] == '<' || (s[1] == '<' && s[2] == '<')))
-        return 1; /* 0<, 0<< */
-    if (s[0] == '2' && s[1] == '>' && s[2] == '&' && s[3] == '1')
-        return 1; /* 2>&1 */
-    return 0;
+	while (s[i] && ft_isspace(s[i]))
+		i++;
+	return (i);
 }
 
-/* Sufijos fd redundantes tras un operador (>1, >>1, <&0, >&1...) */
-static int  skip_default_fd_suffix(const char *s)
+/* helper: lexea un token (operador o palabra) y avanza next_i */
+static int	lex_one(const char *line, int i, t_token **lst, int *next_i)
 {
-    if (s[0] == '>' && s[1] == '1' && s[2] != '>')
-        return 1; /* >1 */
-    if (s[0] == '>' && s[1] == '>' && s[2] == '1')
-        return 1; /* >>1 */
-    if (s[0] == '<' && s[1] == '&' && s[2] == '0')
-        return 1; /* <&0 */
-    if (s[0] == '>' && s[1] == '&' && s[2] == '1')
-        return 1; /* >&1 */
-    if (s[0] == '<' && s[1] == '<' && s[2] == '<' && s[3] == '1')
-        return 1; /* <<<1 */
-    return 0;
+	int	ni;
+
+	if (is_operator(line + i, NULL, NULL))
+	{
+		ni = get_operator(line, i, &*lst);
+		if (ni < 0)
+			return (-1);
+		*next_i = ni;
+		return (0);
+	}
+	ni = get_word(line, i, &*lst);
+	if (ni < 0)
+		return (-1);
+	*next_i = ni;
+	return (0);
 }
 
-t_token *lexer(const char *raw_line)
+/* paso de bucle: salta espacios, lexea 1 token, avanza índice
+ * return:  0 = seguir;  1 = fin;  -1 = error */
+static int	lexer_step(char *line, int *i, t_token **lst)
 {
-    t_token *lst = NULL;
-    int     i = 0, next_i = 0;
+	int	next_i;
 
-    if (!raw_line)
-        return NULL;
+	*i = skip_spaces(line, *i);
+	if (!line[*i])
+		return (1);
+	if (lex_one(line, *i, lst, &next_i) < 0)
+		return (-1);
+	*i = next_i;
+	return (0);
+}
 
-    /* Hacemos una copia mutable para poder cortar comentarios de forma segura */
-    char *line = ft_strdup(raw_line);
-    if (!line)
-        return NULL;
+t_token	*lexer(const char *raw_line)
+{
+	t_token	*lst;
+	char	*line;
+	int		i;
+	int		st;
 
-    /* Comentarios estilo bash: si # comienza palabra descomillada -> corta línea. */
-    strip_comment_if_applicable(line); /* :contentReference[oaicite:5]{index=5} */
-
-    while (line[i])
-    {
-        /* Saltar espacios fuera de comillas */
-        while (line[i] && ft_isspace(line[i]))
-            i++;
-        if (!line[i])
-            break;
-
-        /* Normaliza casos 1>, 0<, 2>&1 (los fd explícitos por defecto) */
-        i += skip_default_fd_prefix(line + i);
-
-        if (is_operator(line + i, NULL, NULL))
-        {
-            next_i = get_operator(line, i, &lst);
-            if (next_i < 0)
-                return free_null_token_list(&lst);
-            /* Saltar sufijos redundantes tras el operador */
-            next_i += skip_default_fd_suffix(line + next_i);
-        }
-        else
-        {
-            next_i = get_word(line, i, &lst);
-            if (next_i < 0)
-                return free_null_token_list(&lst);
-        }
-        i = next_i;
-    }
-
-    free(line);
-    return lst;
+	lst = NULL;
+	if (!raw_line)
+		return (NULL);
+	line = clone_and_strip(raw_line);
+	if (!line)
+		return (NULL);
+	i = 0;
+	while (line[i])
+	{
+		st = lexer_step(line, &i, &lst);
+		if (st < 0)
+		{
+			free(line);
+			return (free_null_token_list(&lst));
+		}
+		if (st > 0)
+			break ;
+	}
+	free(line);
+	return (lst);
 }

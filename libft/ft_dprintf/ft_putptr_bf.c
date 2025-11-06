@@ -17,7 +17,7 @@
 static void	ft_putnbr_x_bf(char **bf, uintptr_t ptr)
 {
 	const char	*base = "0123456789abcdef";
-	char *new;
+	char		*new;
 
 	if (ptr >= 16)
 		ft_putnbr_x_bf(bf, ptr / 16);

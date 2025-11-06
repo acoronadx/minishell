@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-void	ft_lstdelone(t_list *lst, void (*del)(void*))
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
 	if (!lst || !del)
 		return ;
@@ -20,20 +20,20 @@ void	ft_lstdelone(t_list *lst, void (*del)(void*))
 	free(lst);
 }
 /*
-t_list *ft_lstnew(void *content)
+t_list	*ft_lstnew(void *content)
 {
-    t_list *new_node;
+	t_list	*new_node;
 
-    new_node = (t_list *)malloc(sizeof(t_list));
-    if (!new_node)
-        return (NULL);
-    new_node->content = content;
-    new_node->next = NULL;
-    return (new_node);
+	new_node = (t_list *)malloc(sizeof(t_list));
+	if (!new_node)
+		return (NULL);
+	new_node->content = content;
+	new_node->next = NULL;
+	return (new_node);
 }
-void del(void *content)
+void	del(void *content)
 {
-    free(content);
+	free(content);
 }
 void	ft_lstprint(t_list *lst)
 {
@@ -47,24 +47,21 @@ void	ft_lstprint(t_list *lst)
 
 int	main(void)
 {
-	t_list *head = ft_lstnew(strdup("First"));
+	t_list	*head;
+	t_list	*to_delete;
+
+	head = ft_lstnew(strdup("First"));
 	head->next = ft_lstnew(strdup("Second"));
 	head->next->next = ft_lstnew(strdup("Third"));
-
 	printf("The linked list before deletion: ");
 	ft_lstprint(head);
-
-	t_list *to_delete = head->next;
-    head->next = to_delete->next; 
-
+	to_delete = head->next;
+	head->next = to_delete->next;
 	ft_lstdelone(to_delete, del);
-
 	printf("The linked list after deletion: ");
 	ft_lstprint(head);
-
 	free(head->content);
-    free(head);
-
+	free(head);
 	return (0);
 }
 */

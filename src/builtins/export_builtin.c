@@ -6,81 +6,127 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:26:37 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/01 16:52:26 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/06 12:25:59 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int is_valid_name(const char *s)
+/* nombre válido POSIX-like: [_A-Za-z][_A-Za-z0-9]* */
+static int	is_valid_name(const char *s)
 {
-    if (!s || !*s) return 0;
-    if (!(isalpha((unsigned char)*s) || *s == '_')) return 0;
-    for (const char *p = s+1; *p; ++p)
-        if (!(isalnum((unsigned char)*p) || *p == '_')) return 0;
-    return 1;
+	int	i;
+
+	if (!s || !*s)
+		return (0);
+	if (!(ft_isalpha((unsigned char)s[0]) || s[0] == '_'))
+		return (0);
+	i = 1;
+	while (s[i])
+	{
+		if (!(ft_isalnum((unsigned char)s[i]) || s[i] == '_'))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
-static t_env *env_find(t_env *e, const char *key)
+static t_env	*env_find(t_env *e, const char *key)
 {
-    while (e) { if (e->key && key && strcmp(e->key, key)==0) return e; e = e->next; }
-    return NULL;
+	while (e)
+	{
+		if (e->key && key && ft_strcmp(e->key, key) == 0)
+			return (e);
+		e = e->next;
+	}
+	return (NULL);
 }
 
-/* set/mark exported en tu lista enlazada */
-static void env_set_exported(t_shell *sh, const char *key, const char *val_opt, int mark_only)
+/* crea si no existe (valor "" si mark_only), marca exportada; si val y !mark_only, actualiza */
+static void	env_set_exported(t_shell *sh, const char *key, const char *val, int mark_only)
 {
-    t_env *n = env_find(sh->env, key);
-    if (!n) {
-        /* crea nuevo */
-        n = env_create(strdup(key), val_opt ? strdup(val_opt) : NULL, 1);
-        env_add_back(&sh->env, n);
-        return;
-    }
-    n->exported = 1;
-    if (!mark_only && val_opt) {
-        free(n->value);
-        n->value = strdup(val_opt);
-    }
+	t_env	*n;
+	char	*newv;
+
+	n = env_find(sh->env, key);
+	if (!n)
+	{
+		newv = (mark_only || !val) ? "" : (char *)val;
+		n = env_create((char *)key, newv, 1);
+		if (!n)
+			return ;
+		env_add_back(&sh->env, n);
+		return ;
+	}
+	n->exported = 1;
+	if (!mark_only && val)
+	{
+		if (n->value)
+			free(n->value);
+		n->value = ft_strdup(val);
+	}
 }
 
-int run_export(char **argv, t_shell *shell)
+static int	export_mark_only(t_shell *sh, const char *name)
 {
-    int status = 0;
+	if (!is_valid_name(name))
+	{
+		ft_dprintf(2, "minishell: export: `%s': not a valid identifier\n", name);
+		return (1);
+	}
+	env_set_exported(sh, name, NULL, 1);
+	return (0);
+}
 
-    /* Sin argumentos: Bash imprime el entorno exportado (declare -x).
-       Aquí devolvemos 0 para tus tests actuales. */
-    if (!argv[1]) return 0;
+/* procesa NAME=VALUE sin modificar argv */
+static int	export_with_value(t_shell *sh, const char *arg)
+{
+	const char	*eq;
+	char		*name;
+	char		*value;
+	int			name_len;
+	int			rc;
 
-    for (int i = 1; argv[i]; ++i) {
-        char *arg = argv[i];
-        char *eq  = strchr(arg, '=');
+	eq = ft_strchr(arg, '=');
+	if (!eq)
+		return (export_mark_only(sh, arg));
+	name_len = (int)(eq - arg);
+	name = ft_substr(arg, 0, name_len);
+	if (!name)
+		return (1);
+	if (!is_valid_name(name))
+	{
+		ft_dprintf(2, "minishell: export: `%s=': not a valid identifier\n", name);
+		free(name);
+		return (1);
+	}
+	value = ft_strdup(eq + 1);
+	if (!value)
+		return (free(name), 1);
+	env_set_exported(sh, name, value, 0);
+	rc = 0;
+	free(name);
+	free(value);
+	return (rc);
+}
 
-        if (!eq) {
-            /* solo marcar como exportada */
-            if (!is_valid_name(arg)) {
-                fprintf(stderr, "minishell: export: `%s': not a valid identifier\n", arg);
-                status = 1;
-                continue;
-            }
-            env_set_exported(shell, arg, NULL, 1);
-            continue;
-        }
+/* builtin: export [NAME[=VALUE]]... ; sin args: (pendiente) imprimir declare -x */
+int	run_export(char **argv, t_shell *shell)
+{
+	int	i;
+	int	status;
 
-        /* NAME=VALUE (sin espacios) */
-        *eq = '\0';
-        const char *name  = arg;
-        const char *value = eq + 1;
-
-        if (!is_valid_name(name)) {
-            fprintf(stderr, "minishell: export: `%s=': not a valid identifier\n", name);
-            status = 1;
-            *eq = '=';
-            continue;
-        }
-
-        env_set_exported(shell, name, value, 0);
-        *eq = '=';
-    }
-    return status;
+	if (!argv || !shell)
+		return (1);
+	if (!argv[1])
+		return (0);
+	status = 0;
+	i = 1;
+	while (argv[i])
+	{
+		if (export_with_value(shell, argv[i]) != 0)
+			status = 1;
+		i++;
+	}
+	return (status);
 }

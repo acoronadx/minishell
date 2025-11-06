@@ -10,20 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "expand.h"
 #include "env.h"
+#include "expand.h"
+#include "minishell.h"
 
 /* ========= helpers existentes (sin cambios de interfaz) ========= */
 
-static char *dup_program_name(t_shell *shell)
+static char	*dup_program_name(t_shell *shell)
 {
 	if (!shell || !shell->program_name)
 		return (ft_strdup("minishell"));
 	return (ft_strdup(shell->program_name));
 }
 
-static char *expand_specials(const char *s, int *i, t_shell *shell)
+static char	*expand_specials(const char *s, int *i, t_shell *shell)
 {
 	if (s[*i] == '?')
 	{
@@ -40,8 +40,8 @@ static char *expand_specials(const char *s, int *i, t_shell *shell)
 		(*i)++;
 		return (dup_program_name(shell));
 	}
-	if (s[*i] == '*' || s[*i] == '@' || s[*i] == '#'
-		|| s[*i] == '-' || s[*i] == '!')
+	if (s[*i] == '*' || s[*i] == '@' || s[*i] == '#' || s[*i] == '-'
+		|| s[*i] == '!')
 	{
 		(*i)++;
 		return (ft_strdup("")); /* vacíos en tu diseño */
@@ -54,7 +54,7 @@ static char *expand_specials(const char *s, int *i, t_shell *shell)
 	return (NULL);
 }
 
-static char *expand_name(const char *s, int *i, t_shell *shell)
+static char	*expand_name(const char *s, int *i, t_shell *shell)
 {
 	int		start;
 	char	*name;
@@ -79,60 +79,78 @@ static char *expand_name(const char *s, int *i, t_shell *shell)
    - Soporta: ${VAR}, ${?}, ${$}, ${0}, ${DIGITOS} (vacío)
    - Si falta '}', devuelve literal "${" consumiendo solo '{'
 */
-static char *expand_braced(const char *s, int *i, t_shell *shell)
+static char	*expand_braced(const char *s, int *i, t_shell *shell)
 {
-	int   j;
-	char *name;
-	char *val;
+	int		j;
+	char	*name;
+	char	*val;
+	int		start;
 
 	if (s[*i] != '{')
 		return (NULL);
-
 	j = *i + 1; /* apunta al primer char tras '{' */
-
 	/* ${} -> vacío (consumimos todo si hay '}') */
 	if (s[j] == '}')
 	{
 		*i = j + 1;
 		return (ft_strdup(""));
 	}
-
 	/* ${?} / ${$} / ${0} / ${<digits>} */
 	if (s[j] == '?')
 	{
 		j++;
-		if (s[j] == '}') { *i = j + 1; return ft_itoa(shell->exit_status); }
-		(*i)++; return ft_strdup("${"); /* degradado literal */
+		if (s[j] == '}')
+		{
+			*i = j + 1;
+			return (ft_itoa(shell->exit_status));
+		}
+		(*i)++;
+		return (ft_strdup("${")); /* degradado literal */
 	}
 	if (s[j] == '$')
 	{
 		j++;
-		if (s[j] == '}') { *i = j + 1; return ft_itoa(getpid()); }
-		(*i)++; return ft_strdup("${");
+		if (s[j] == '}')
+		{
+			*i = j + 1;
+			return (ft_itoa(getpid()));
+		}
+		(*i)++;
+		return (ft_strdup("${"));
 	}
 	if (s[j] == '0')
 	{
 		j++;
-		if (s[j] == '}') { *i = j + 1; return dup_program_name(shell); }
-		(*i)++; return ft_strdup("${");
+		if (s[j] == '}')
+		{
+			*i = j + 1;
+			return (dup_program_name(shell));
+		}
+		(*i)++;
+		return (ft_strdup("${"));
 	}
 	if (ft_isdigit((unsigned char)s[j]))
 	{
-		while (ft_isdigit((unsigned char)s[j])) j++;
-		if (s[j] == '}') { *i = j + 1; return ft_strdup(""); }
-		(*i)++; return ft_strdup("${");
+		while (ft_isdigit((unsigned char)s[j]))
+			j++;
+		if (s[j] == '}')
+		{
+			*i = j + 1;
+			return (ft_strdup(""));
+		}
+		(*i)++;
+		return (ft_strdup("${"));
 	}
-
 	/* ${VAR_NAME} */
 	if (ft_isalpha((unsigned char)s[j]) || s[j] == '_')
 	{
-		int start = j;
+		start = j;
 		while (ft_isalnum((unsigned char)s[j]) || s[j] == '_')
 			j++;
 		if (s[j] != '}')
 		{
 			(*i)++; /* consumimos solo '{' para emitir "${" y dejar continuar */
-			return ft_strdup("${");
+			return (ft_strdup("${"));
 		}
 		name = ft_substr(s, start, j - start);
 		if (!name)
@@ -144,12 +162,10 @@ static char *expand_braced(const char *s, int *i, t_shell *shell)
 			return (ft_strdup(""));
 		return (ft_strdup(val));
 	}
-
 	/* Cualquier otro patrón: tratamos como literal "${" */
 	(*i)++;
 	return (ft_strdup("${"));
 }
-
 
 /* ========= CORREGIDA: respeta $"..." y $'...' (descarta el '$') =========
    Precondición: expand_value se llama con *i en el primer carácter TRAS '$'.
@@ -157,19 +173,17 @@ static char *expand_braced(const char *s, int *i, t_shell *shell)
    - $"...": quitamos el '$' y dejamos que el parser trate las comillas.
    - $'...': idem (sin implementar ANSI-C escapes).
 */
-char *expand_value(const char *s, int *i, t_shell *shell)
+char	*expand_value(const char *s, int *i, t_shell *shell)
 {
-	char *br;
-	char *sp;
-	char *nm;
+	char	*br;
+	char	*sp;
+	char	*nm;
 
 	if (!s)
 		return (ft_strdup(""));
-
 	/* Fin de cadena tras '$' -> literal "$" */
 	if (!s[*i])
 		return (ft_strdup("$"));
-
 	/* ${...} antes que el resto */
 	if (s[*i] == '{')
 	{
@@ -178,21 +192,17 @@ char *expand_value(const char *s, int *i, t_shell *shell)
 			return (br);
 		/* si no devolvió, seguimos con flujo normal */
 	}
-
 	/* Especiales: ?, $$, 0, dígitos y otros que ya defines */
 	sp = expand_specials(s, i, shell);
 	if (sp)
 		return (sp);
-
 	/* NUEVO: si lo siguiente es una comilla, descarta el '$' */
-    if (s[*i] == '"' || s[*i] == '\'')
+	if (s[*i] == '"' || s[*i] == '\'')
 		return (ft_strdup("$"));
-		
 	/* Nombre de variable clásico */
 	nm = expand_name(s, i, shell);
 	if (nm)
 		return (nm);
-
 	/* Por defecto: NO consumir el siguiente char → conserva "$" literal */
 	return (ft_strdup("$"));
 }

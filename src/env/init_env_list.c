@@ -6,17 +6,18 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:28:27 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/04 14:31:29 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/05 17:06:16 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // Based on POSIX definition of valid environment variable names
-// “Environment variable names consist solely of uppercase letters, digits, and the underscore (‘_’). The first character shall not be a digit.”
+// “Environment variable names consist solely of uppercase letters, digits,
+// and the underscore (‘_’). The first character shall not be a digit.”
 static int	is_valid_env_name(const char *s)
 {
-	int				i;
+	int				i;	
 	unsigned char	c;
 
 	if (!s || !*s)
@@ -28,8 +29,8 @@ static int	is_valid_env_name(const char *s)
 	while (s[i])
 	{
 		c = (unsigned char)s[i];
-		if (!(c == '_' || (c >= 'A' && c <= 'Z')
-				|| (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9')))
+		if (!(c == '_' || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')
+				|| (c >= '0' && c <= '9')))
 			return (0);
 		i++;
 	}

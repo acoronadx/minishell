@@ -10,28 +10,32 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "expand.h"
 #include "env.h"
+#include "expand.h"
+#include "minishell.h"
 
-size_t handle_exit_status_len(t_shell *shell)
+size_t	handle_exit_status_len(t_shell *shell)
 {
-    char   *s = ft_itoa(shell->exit_status);
-    size_t  n;
+	char	*s;
+	size_t	n;
 
-    if (!s) return (size_t)-1;
-    n = ft_strlen(s);
-    free(s);
-    return n;
+	s = ft_itoa(shell->exit_status);
+	if (!s)
+		return ((size_t)-1);
+	n = ft_strlen(s);
+	free(s);
+	return (n);
 }
 
-size_t handle_pid_len(void)
+size_t	handle_pid_len(void)
 {
-    char   *s = ft_itoa(getpid());
-    size_t  n;
+	char	*s;
+	size_t	n;
 
-    if (!s) return (size_t)-1;
-    n = ft_strlen(s);
-    free(s);
-    return n;
+	s = ft_itoa(getpid());
+	if (!s)
+		return ((size_t)-1);
+	n = ft_strlen(s);
+	free(s);
+	return (n);
 }

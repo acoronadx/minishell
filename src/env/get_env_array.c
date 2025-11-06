@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "env.h"
+#include "minishell.h"
 
 static int	env_count(t_env *env)
 {
@@ -36,7 +36,7 @@ static char	*join_key_value(const char *key, const char *value)
 	if (!tmp)
 		return (NULL);
 	if (!value)
-		res = ft_strdup(tmp);      /* "KEY=" */
+		res = ft_strdup(tmp); /* "KEY=" */
 	else
 		res = ft_strjoin(tmp, value);
 	free(tmp);

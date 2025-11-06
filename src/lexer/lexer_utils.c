@@ -5,189 +5,70 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/11 16:36:48 by acoronad          #+#    #+#             */
-/*   Updated: 2025/10/31 22:12:03 by acoronad         ###   ########.fr       */
+/*   Created: 2025/11/05 15:41:21 by acoronad          #+#    #+#             */
+/*   Updated: 2025/11/05 15:55:24 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "lexer.h"
 
-t_token	*token_new(char *value, t_token_type type, t_quote quote)
+/* pone type/len si no son NULL */
+static void	op_set(t_token_type *type, int *len, t_token_type t, int l)
 {
-	t_token	*tok;
-
-	tok = (t_token *)malloc(sizeof(t_token));
-	if (!tok)
-		return (NULL);
-	tok->value = value;
-	tok->type = type;
-	tok->quoted = quote;
-	tok->next = NULL;
-	return (tok);
+	if (type) *type = t;
+	if (len)  *len  = l;
 }
 
-void	token_addback(t_token **lst, t_token *new)
+/* operadores de 3 caracteres */
+static int	op_match_len3(const char *s, t_token_type *type, int *len)
 {
-	t_token	*tmp;
-
-	if (!lst || !new)
-		return ;
-	if (!*lst)
-	{
-		*lst = new;
-		return ;
-	}
-	tmp = *lst;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = new;
-}
-
-void	free_token_list(t_token *tok)
-{
-	t_token	*next;
-
-	while (tok)
-	{
-		next = tok->next;
-		free(tok->value);
-		free(tok);
-		tok = next;
-	}
-}
-
-void	next_token(t_token **cur)
-{
-	if (cur && *cur)
-		*cur = (*cur)->next;
-}
-
-int	is_operator(const char *str, t_token_type *type, int *len)
-{
-	static const char		*ops[] = {
-		"<<<", ">>", "<<", "||", "&&", "&>>", "&>", ">|", "<&", ">&",
-		"2>>", "2>", "|", "&", ";", "<", ">", "(", ")", "{", "}", "="
-	};
-	static const int		lens[] = {
-		3, 2, 2, 2, 2, 3, 2, 2, 2, 2,
-		3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
-	};
-	static const t_token_type types[] = {
-		T_HEREDOC_STR, T_APPEND, T_HEREDOC, T_OR, T_AND, T_APPEND_ALL,
-		T_REDIR_ALL, T_FORCE_OUT, T_DUP_IN, T_DUP_OUT, T_APPEND_ERR,
-		T_REDIR_ERR, T_PIPE, T_BG, T_SEMI, T_REDIR_IN, T_REDIR_OUT,
-		T_LPAREN, T_RPAREN, T_LBRACE, T_RBRACE, T_EQUAL
-	};
-	int						i;
-
-	i = 0;
-	while (i < (int)(sizeof(lens) / sizeof(lens[0]))
-		&& i < (int)(sizeof(types) / sizeof(types[0])))
-	{
-		if (ft_strncmp(str, ops[i], lens[i]) == 0)
-		{
-			if (type)
-				*type = types[i];
-			if (len)
-				*len = lens[i];
-			return (1);
-		}
-		i++;
-	}
+	if (!s) return (0);
+	if (ft_strncmp(s, "<<<", 3) == 0)
+		return (op_set(type, len, T_HEREDOC_STR, 3), 1);
+	if (ft_strncmp(s, "&>>", 3) == 0)
+		return (op_set(type, len, T_APPEND_ALL, 3), 1);
 	return (0);
 }
 
-void	free_lexer_list_on_error(t_token **lst)
+/* operadores de 2 caracteres */
+static int	op_match_len2(const char *s, t_token_type *type, int *len)
 {
-	if (lst && *lst)
-	{
-		free_token_list(*lst);
-		*lst = NULL;
-	}
+	if (!s) return (0);
+	if (ft_strncmp(s, ">>", 2) == 0)  return (op_set(type, len, T_APPEND, 2), 1);
+	if (ft_strncmp(s, "<<", 2) == 0)  return (op_set(type, len, T_HEREDOC, 2), 1);
+	if (ft_strncmp(s, "||", 2) == 0)  return (op_set(type, len, T_OR, 2), 1);
+	if (ft_strncmp(s, "&&", 2) == 0)  return (op_set(type, len, T_AND, 2), 1);
+	if (ft_strncmp(s, "&>", 2) == 0)  return (op_set(type, len, T_REDIR_ALL, 2), 1);
+	if (ft_strncmp(s, ">|", 2) == 0)  return (op_set(type, len, T_FORCE_OUT, 2), 1);
+	if (ft_strncmp(s, "<&", 2) == 0)  return (op_set(type, len, T_DUP_IN, 2), 1);
+	if (ft_strncmp(s, ">&", 2) == 0)  return (op_set(type, len, T_DUP_OUT, 2), 1);
+	return (0);
 }
 
-int	try_add_token(t_token **lst, char *str, t_token_type type, t_quote quote)
+/* operadores de 1 caracter */
+static int	op_match_len1(const char *s, t_token_type *type, int *len)
 {
-	t_token	*tok;
+	if (!s) return (0);
+	if (*s == '|') return (op_set(type, len, T_PIPE, 1), 1);
+	if (*s == '&') return (op_set(type, len, T_BG, 1), 1);
+	if (*s == ';') return (op_set(type, len, T_SEMI, 1), 1);
+	if (*s == '<') return (op_set(type, len, T_REDIR_IN, 1), 1);
+	if (*s == '>') return (op_set(type, len, T_REDIR_OUT, 1), 1);
+	if (*s == '(') return (op_set(type, len, T_LPAREN, 1), 1);
+	if (*s == ')') return (op_set(type, len, T_RPAREN, 1), 1);
+	return (0);
+}
 
-	tok = token_new(str, type, quote);
-	if (!tok)
-	{
-		ft_strdel(&str);
+/* principal (≤25 líneas, sin globals) */
+int	is_operator(const char *str, t_token_type *type, int *len)
+{
+	if (!str)
 		return (0);
-	}
-	token_addback(lst, tok);
-	return (1);
-}
-
-static void	copy_escaped_pair(const char *src, size_t *i, char *out, size_t *j)
-{
-	(*i)++;
-	out[*j] = src[*i];
-	(*j)++;
-	(*i)++;
-}
-
-char	*remove_backslashes_for_token(const char *src, t_quote quote)
-{
-	char	*out;
-	size_t	i;
-	size_t	j;
-	size_t	n;
-
-	if (!src)
-		return (NULL);
-	n = ft_strlen(src);
-	out = (char *)malloc(n + 1);
-	if (!out)
-		return (NULL);
-	i = 0;
-	j = 0;
-	if (quote == SINGLE_QUOTE)
-	{
-		while (i < n)
-		{
-			out[j] = src[i];
-			j++;
-			i++;
-		}
-		out[j] = '\0';
-		return (out);
-	}
-	if (quote == DOUBLE_QUOTE)
-	{
-		while (i < n)
-		{
-			if (src[i] == '\\' && (i + 1) < n && (src[i + 1] == '$'
-					|| src[i + 1] == '`' || src[i + 1] == '"'
-					|| src[i + 1] == '\\'))
-				copy_escaped_pair(src, &i, out, &j);
-			else if (src[i] == '\\' && (i + 1) < n && src[i + 1] == '\n')
-				i += 2;
-			else
-			{
-				out[j] = src[i];
-				j++;
-				i++;
-			}
-		}
-		out[j] = '\0';
-		return (out);
-	}
-	while (i < n)
-	{
-		if (src[i] == '\\' && (i + 1) < n && src[i + 1] == '\n')
-			i += 2;
-		else if (src[i] == '\\' && (i + 1) < n)
-			copy_escaped_pair(src, &i, out, &j);
-		else
-		{
-			out[j] = src[i];
-			j++;
-			i++;
-		}
-	}
-	out[j] = '\0';
-	return (out);
+	if (op_match_len3(str, type, len))
+		return (1);
+	if (op_match_len2(str, type, len))
+		return (1);
+	if (op_match_len1(str, type, len))
+		return (1);
+	return (0);
 }

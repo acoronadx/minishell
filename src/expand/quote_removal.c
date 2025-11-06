@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "expand.h"
+#include "minishell.h"
 
 static char	*quote_remove_like_bash(const char *s)
 {
@@ -84,8 +84,8 @@ static char	*quote_remove_like_bash(const char *s)
 				i += 2;
 				continue ;
 			}
-			if (s[i + 1] && (s[i + 1] == '$' || s[i + 1] == '`'
-					|| s[i + 1] == '"' || s[i + 1] == '\\'))
+			if (s[i + 1] && (s[i + 1] == '$' || s[i + 1] == '`' || s[i
+					+ 1] == '"' || s[i + 1] == '\\'))
 			{
 				i++;
 				out[j++] = s[i];

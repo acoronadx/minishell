@@ -1,0 +1,1504 @@
+hola
+uno
+dos
+pasando E
+pasando exit
+copyminishell
+copyms
+diagram_colored.txt
+diagram_shell.txt
+err.txt
+file.txt
+format_all.sh
+iciamyplant-tester
+includes
+Japotest_version.sh
+libft
+LucasKuhn-tester
+Makefile
+minishell
+minishell.c
+MISTEST.sh
+obj
+redirs
+resbsbs
+resbsmin
+run_minishell_test.sh
+src
+Tester_Japo
+todo.txt
+total 736
+drwxrwxr-x 12 acoronad acoronad   4096 nov  4 15:58 ./
+drwxrwxr-x 12 acoronad acoronad   4096 nov  1 00:37 ../
+-rw-rw-r--  1 acoronad acoronad 168974 nov  1 16:50 copyminishell
+-rw-rw-r--  1 acoronad acoronad 167767 nov  1 17:08 copyms
+-rw-rw-r--  1 acoronad acoronad   2526 nov  4 13:45 diagram_colored.txt
+-rw-rw-r--  1 acoronad acoronad   7723 nov  4 14:39 diagram_shell.txt
+-rw-rw-r--  1 acoronad acoronad      0 nov  4 15:58 err.txt
+-rw-rw-r--  1 acoronad acoronad      5 nov  4 15:58 file.txt
+-rwxrwxr-x  1 acoronad acoronad    195 oct 31 19:15 format_all.sh*
+drwxrwxr-x  8 acoronad acoronad   4096 nov  4 14:50 .git/
+drwxrwxr-x  3 acoronad acoronad   4096 nov  1 13:58 iciamyplant-tester/
+drwxrwxr-x  2 acoronad acoronad   4096 nov  1 16:51 includes/
+-rwxrwxr-x  1 acoronad acoronad  26952 nov  1 13:58 Japotest_version.sh*
+drwxrwxr-x  4 acoronad acoronad   4096 nov  4 15:44 libft/
+drwxrwxr-x  5 acoronad acoronad   4096 nov  1 17:13 LucasKuhn-tester/
+-rw-rw-r--  1 acoronad acoronad   1529 jul 22 13:44 Makefile
+-rwxrwxr-x  1 acoronad acoronad 211288 nov  4 15:44 minishell*
+-rw-rw-r--  1 acoronad acoronad   1223 nov  1 16:50 minishell.c
+-rwxrwxr-x  1 acoronad acoronad   6516 nov  4 15:56 MISTEST.sh*
+drwxrwxr-x  3 acoronad acoronad   4096 nov  4 15:44 obj/
+drwxrwxr-x  2 acoronad acoronad   4096 nov  1 17:07 redirs/
+-rw-rw-r--  1 acoronad acoronad  51977 nov  4 15:58 resbsbs
+-rw-r--r--  1 acoronad acoronad    314 nov  4 15:58 resbsmin
+-rwxrwxr-x  1 acoronad acoronad  21416 nov  1 13:58 run_minishell_test.sh*
+drwxrwxr-x 11 acoronad acoronad   4096 nov  4 15:35 src/
+drwxr-xr-x  3 acoronad acoronad   4096 nov  1 17:16 Tester_Japo/
+-rw-rw-r--  1 acoronad acoronad    277 nov  4 15:58 todo.txt
+drwxrwxr-x  2 acoronad acoronad   4096 oct 27 17:52 .vscode/
+total 720
+-rw-rw-r--  1 acoronad acoronad 168974 nov  1 16:50 copyminishell
+-rw-rw-r--  1 acoronad acoronad 167767 nov  1 17:08 copyms
+-rw-rw-r--  1 acoronad acoronad   2526 nov  4 13:45 diagram_colored.txt
+-rw-rw-r--  1 acoronad acoronad   7723 nov  4 14:39 diagram_shell.txt
+-rw-rw-r--  1 acoronad acoronad      0 nov  4 15:58 err.txt
+-rw-rw-r--  1 acoronad acoronad      5 nov  4 15:58 file.txt
+-rwxrwxr-x  1 acoronad acoronad    195 oct 31 19:15 format_all.sh
+drwxrwxr-x  3 acoronad acoronad   4096 nov  1 13:58 iciamyplant-tester
+drwxrwxr-x  2 acoronad acoronad   4096 nov  1 16:51 includes
+-rwxrwxr-x  1 acoronad acoronad  26952 nov  1 13:58 Japotest_version.sh
+drwxrwxr-x  4 acoronad acoronad   4096 nov  4 15:44 libft
+drwxrwxr-x  5 acoronad acoronad   4096 nov  1 17:13 LucasKuhn-tester
+-rw-rw-r--  1 acoronad acoronad   1529 jul 22 13:44 Makefile
+-rwxrwxr-x  1 acoronad acoronad 211288 nov  4 15:44 minishell
+-rw-rw-r--  1 acoronad acoronad   1223 nov  1 16:50 minishell.c
+-rwxrwxr-x  1 acoronad acoronad   6516 nov  4 15:56 MISTEST.sh
+drwxrwxr-x  3 acoronad acoronad   4096 nov  4 15:44 obj
+drwxrwxr-x  2 acoronad acoronad   4096 nov  1 17:07 redirs
+-rw-rw-r--  1 acoronad acoronad  51977 nov  4 15:58 resbsbs
+-rw-r--r--  1 acoronad acoronad   2093 nov  4 15:58 resbsmin
+-rwxrwxr-x  1 acoronad acoronad  21416 nov  1 13:58 run_minishell_test.sh
+drwxrwxr-x 11 acoronad acoronad   4096 nov  4 15:35 src
+drwxr-xr-x  3 acoronad acoronad   4096 nov  1 17:16 Tester_Japo
+-rw-rw-r--  1 acoronad acoronad    277 nov  4 15:58 todo.txt
+.
+..
+copyminishell
+copyms
+diagram_colored.txt
+diagram_shell.txt
+err.txt
+file.txt
+format_all.sh
+.git
+iciamyplant-tester
+includes
+Japotest_version.sh
+libft
+LucasKuhn-tester
+Makefile
+minishell
+minishell.c
+MISTEST.sh
+obj
+redirs
+resbsbs
+resbsmin
+run_minishell_test.sh
+src
+Tester_Japo
+todo.txt
+.vscode
+copyminishell
+copyms
+diagram_colored.txt
+diagram_shell.txt
+err.txt
+file.txt
+format_all.sh*
+iciamyplant-tester/
+includes/
+Japotest_version.sh*
+libft/
+LucasKuhn-tester/
+Makefile
+minishell*
+minishell.c
+MISTEST.sh*
+obj/
+redirs/
+resbsbs
+resbsmin
+run_minishell_test.sh*
+src/
+Tester_Japo/
+todo.txt
+total 740
+drwxrwxr-x 12 acoronad acoronad   4096 nov  4 15:58 .
+drwxrwxr-x 12 acoronad acoronad   4096 nov  1 00:37 ..
+-rw-rw-r--  1 acoronad acoronad 168974 nov  1 16:50 copyminishell
+-rw-rw-r--  1 acoronad acoronad 167767 nov  1 17:08 copyms
+-rw-rw-r--  1 acoronad acoronad   2526 nov  4 13:45 diagram_colored.txt
+-rw-rw-r--  1 acoronad acoronad   7723 nov  4 14:39 diagram_shell.txt
+-rw-rw-r--  1 acoronad acoronad      0 nov  4 15:58 err.txt
+-rw-rw-r--  1 acoronad acoronad      5 nov  4 15:58 file.txt
+-rwxrwxr-x  1 acoronad acoronad    195 oct 31 19:15 format_all.sh
+drwxrwxr-x  8 acoronad acoronad   4096 nov  4 14:50 .git
+drwxrwxr-x  3 acoronad acoronad   4096 nov  1 13:58 iciamyplant-tester
+drwxrwxr-x  2 acoronad acoronad   4096 nov  1 16:51 includes
+-rwxrwxr-x  1 acoronad acoronad  26952 nov  1 13:58 Japotest_version.sh
+drwxrwxr-x  4 acoronad acoronad   4096 nov  4 15:44 libft
+drwxrwxr-x  5 acoronad acoronad   4096 nov  1 17:13 LucasKuhn-tester
+-rw-rw-r--  1 acoronad acoronad   1529 jul 22 13:44 Makefile
+-rwxrwxr-x  1 acoronad acoronad 211288 nov  4 15:44 minishell
+-rw-rw-r--  1 acoronad acoronad   1223 nov  1 16:50 minishell.c
+-rwxrwxr-x  1 acoronad acoronad   6516 nov  4 15:56 MISTEST.sh
+drwxrwxr-x  3 acoronad acoronad   4096 nov  4 15:44 obj
+drwxrwxr-x  2 acoronad acoronad   4096 nov  1 17:07 redirs
+-rw-rw-r--  1 acoronad acoronad  51977 nov  4 15:58 resbsbs
+-rw-r--r--  1 acoronad acoronad   4216 nov  4 15:58 resbsmin
+-rwxrwxr-x  1 acoronad acoronad  21416 nov  1 13:58 run_minishell_test.sh
+drwxrwxr-x 11 acoronad acoronad   4096 nov  4 15:35 src
+drwxr-xr-x  3 acoronad acoronad   4096 nov  1 17:16 Tester_Japo
+-rw-rw-r--  1 acoronad acoronad    277 nov  4 15:58 todo.txt
+drwxrwxr-x  2 acoronad acoronad   4096 oct 27 17:52 .vscode
+total 724
+-rw-rw-r--  1 acoronad acoronad 168974 nov  1 16:50 copyminishell
+-rw-rw-r--  1 acoronad acoronad 167767 nov  1 17:08 copyms
+-rw-rw-r--  1 acoronad acoronad   2526 nov  4 13:45 diagram_colored.txt
+-rw-rw-r--  1 acoronad acoronad   7723 nov  4 14:39 diagram_shell.txt
+-rw-rw-r--  1 acoronad acoronad      0 nov  4 15:58 err.txt
+-rw-rw-r--  1 acoronad acoronad      5 nov  4 15:58 file.txt
+-rwxrwxr-x  1 acoronad acoronad    195 oct 31 19:15 format_all.sh*
+drwxrwxr-x  3 acoronad acoronad   4096 nov  1 13:58 iciamyplant-tester/
+drwxrwxr-x  2 acoronad acoronad   4096 nov  1 16:51 includes/
+-rwxrwxr-x  1 acoronad acoronad  26952 nov  1 13:58 Japotest_version.sh*
+drwxrwxr-x  4 acoronad acoronad   4096 nov  4 15:44 libft/
+drwxrwxr-x  5 acoronad acoronad   4096 nov  1 17:13 LucasKuhn-tester/
+-rw-rw-r--  1 acoronad acoronad   1529 jul 22 13:44 Makefile
+-rwxrwxr-x  1 acoronad acoronad 211288 nov  4 15:44 minishell*
+-rw-rw-r--  1 acoronad acoronad   1223 nov  1 16:50 minishell.c
+-rwxrwxr-x  1 acoronad acoronad   6516 nov  4 15:56 MISTEST.sh*
+drwxrwxr-x  3 acoronad acoronad   4096 nov  4 15:44 obj/
+drwxrwxr-x  2 acoronad acoronad   4096 nov  1 17:07 redirs/
+-rw-rw-r--  1 acoronad acoronad  51977 nov  4 15:58 resbsbs
+-rw-r--r--  1 acoronad acoronad   5978 nov  4 15:58 resbsmin
+-rwxrwxr-x  1 acoronad acoronad  21416 nov  1 13:58 run_minishell_test.sh*
+drwxrwxr-x 11 acoronad acoronad   4096 nov  4 15:35 src/
+drwxr-xr-x  3 acoronad acoronad   4096 nov  1 17:16 Tester_Japo/
+-rw-rw-r--  1 acoronad acoronad    277 nov  4 15:58 todo.txt
+BUILTINS
+it works
+it works
+it works
+it worksit worksit worksit worksit works0
+0 + 0
+cat lol.c | cat lol.c
+$
+
+
+$?
+0
+echo 0
+echo '0'
+echo "0"
+echo $?
+echo $$
+ hola >> file 
+copyminishell
+copyms
+diagram_colored.txt
+diagram_shell.txt
+err.txt
+file.txt
+format_all.sh
+iciamyplant-tester
+includes
+Japotest_version.sh
+libft
+LucasKuhn-tester
+Makefile
+minishell
+minishell.c
+MISTEST.sh
+obj
+redirs
+resbsbs
+resbsmin
+run_minishell_test.sh
+src
+Tester_Japo
+todo.txt
+ hola >> file 
+copyminishell
+copyms
+diagram_colored.txt
+diagram_shell.txt
+err.txt
+file.txt
+format_all.sh
+iciamyplant-tester
+includes
+Japotest_version.sh
+libft
+LucasKuhn-tester
+Makefile
+minishell
+minishell.c
+MISTEST.sh
+obj
+redirs
+resbsbs
+resbsmin
+run_minishell_test.sh
+src
+Tester_Japo
+todo.txt
+copyminishell
+copyms
+diagram_colored.txt
+diagram_shell.txt
+err.txt
+file
+file.txt
+format_all.sh
+iciamyplant-tester
+includes
+Japotest_version.sh
+libft
+LucasKuhn-tester
+Makefile
+minishell
+minishell.c
+MISTEST.sh
+obj
+redirs
+resbsbs
+resbsmin
+run_minishell_test.sh
+src
+Tester_Japo
+todo.txt
+hola
+a
+ a
+
+
+
+acoronad
+$USER
+1   5  8
+1 acoronad acoronad acoronad 4
+1     6
+acoronad''z
+acoronadz
+acoronad''
+1 6
+1   6
+abcd
+foobar
+
+
+
+
+
+
+2
+3
+0
+3
+4
+5
+1
+4
+123
+3
+2
+2
+/home/acoronad/Documentos/FORMACIÓN/42/MINISHELL/minishell_arai
+/home/acoronad/Documentos/FORMACIÓN/42/MINISHELL/minishell_arai
+/home/acoronad/Documentos/FORMACIÓN/42/MINISHELL
+/home/acoronad/Documentos/FORMACIÓN
+/home/acoronad/Documentos/FORMACIÓN/42/MINISHELL/minishell_arai
+/home
+/home
+/home/acoronad
+/home/acoronad
+ENV MANAGEMENT
+SHELL=/usr/bin/bash
+SESSION_MANAGER=local/acoronad:@/tmp/.ICE-unix/3573,unix/acoronad:/tmp/.ICE-unix/3573
+QT_ACCESSIBILITY=1
+COLORTERM=truecolor
+XDG_CONFIG_DIRS=/etc/xdg/xdg-ubuntu:/etc/xdg
+XDG_MENU_PREFIX=gnome-
+TERM_PROGRAM_VERSION=1.101.0
+GNOME_DESKTOP_SESSION_ID=this-is-deprecated
+LANGUAGE=es:en
+LC_ADDRESS=es_ES.UTF-8
+GNOME_SHELL_SESSION_MODE=ubuntu
+LC_NAME=es_ES.UTF-8
+SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
+MEMORY_PRESSURE_WRITE=c29tZSAyMDAwMDAgMjAwMDAwMAA=
+XMODIFIERS=@im=ibus
+DESKTOP_SESSION=ubuntu
+LC_MONETARY=es_ES.UTF-8
+GTK_MODULES=gail:atk-bridge
+PWD=/home/acoronad
+LOGNAME=acoronad
+XDG_SESSION_DESKTOP=ubuntu
+XDG_SESSION_TYPE=wayland
+SYSTEMD_EXEC_PID=3623
+XAUTHORITY=/run/user/1000/.mutter-Xwaylandauth.K62KF3
+VSCODE_GIT_ASKPASS_NODE=/usr/share/code/code
+IM_CONFIG_CHECK_ENV=1
+GJS_DEBUG_TOPICS=JS ERROR;JS LOG
+HOME=/home/acoronad
+USERNAME=acoronad
+IM_CONFIG_PHASE=1
+LANG=es_ES.UTF-8
+LC_PAPER=es_ES.UTF-8
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:
+XDG_CURRENT_DESKTOP=Unity
+MEMORY_PRESSURE_WATCH=/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.Shell@wayland.service/memory.pressure
+WAYLAND_DISPLAY=wayland-0
+GIT_ASKPASS=/usr/share/code/resources/app/extensions/git/dist/askpass.sh
+INVOCATION_ID=2499ba9ac38d45378fc417d5a251c88a
+MANAGERPID=3391
+CHROME_DESKTOP=code.desktop
+GJS_DEBUG_OUTPUT=stderr
+VSCODE_GIT_ASKPASS_EXTRA_ARGS=
+GNOME_SETUP_DISPLAY=:1
+LESSCLOSE=/usr/bin/lesspipe %s %s
+XDG_SESSION_CLASS=user
+LC_IDENTIFICATION=es_ES.UTF-8
+TERM=xterm-256color
+LESSOPEN=| /usr/bin/lesspipe %s
+USER=acoronad
+VSCODE_GIT_IPC_HANDLE=/run/user/1000/vscode-git-93560dfde4.sock
+CLUTTER_DISABLE_MIPMAPPED_TEXT=1
+DISPLAY=:0
+SHLVL=2
+GSM_SKIP_SSH_AGENT_WORKAROUND=true
+LC_TELEPHONE=es_ES.UTF-8
+QT_IM_MODULE=ibus
+LC_MEASUREMENT=es_ES.UTF-8
+PAPERSIZE=a4
+XDG_RUNTIME_DIR=/run/user/1000
+DEBUGINFOD_URLS=https://debuginfod.ubuntu.com 
+LC_TIME=es_ES.UTF-8
+VSCODE_GIT_ASKPASS_MAIN=/usr/share/code/resources/app/extensions/git/dist/askpass-main.js
+JOURNAL_STREAM=9:35046
+XDG_DATA_DIRS=/usr/share/ubuntu:/usr/share/gnome:/home/acoronad/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+GDK_BACKEND=x11
+PATH=/home/acoronad/.local/bin:/home/acoronad/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/acoronad/.config/Code/User/globalStorage/github.copilot-chat/debugCommand
+GDMSESSION=ubuntu
+ORIGINAL_XDG_CURRENT_DESKTOP=ubuntu:GNOME
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+GIO_LAUNCHED_DESKTOP_FILE_PID=6668
+GIO_LAUNCHED_DESKTOP_FILE=/usr/share/applications/code.desktop
+LC_NUMERIC=es_ES.UTF-8
+TERM_PROGRAM=vscode
+_=/usr/bin/env
+OLDPWD=/home/acoronad
+SHELL=/usr/bin/bash
+SESSION_MANAGER=local/acoronad:@/tmp/.ICE-unix/3573,unix/acoronad:/tmp/.ICE-unix/3573
+QT_ACCESSIBILITY=1
+COLORTERM=truecolor
+XDG_CONFIG_DIRS=/etc/xdg/xdg-ubuntu:/etc/xdg
+XDG_MENU_PREFIX=gnome-
+TERM_PROGRAM_VERSION=1.101.0
+GNOME_DESKTOP_SESSION_ID=this-is-deprecated
+LANGUAGE=es:en
+LC_ADDRESS=es_ES.UTF-8
+GNOME_SHELL_SESSION_MODE=ubuntu
+LC_NAME=es_ES.UTF-8
+SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
+MEMORY_PRESSURE_WRITE=c29tZSAyMDAwMDAgMjAwMDAwMAA=
+XMODIFIERS=@im=ibus
+DESKTOP_SESSION=ubuntu
+LC_MONETARY=es_ES.UTF-8
+GTK_MODULES=gail:atk-bridge
+PWD=/home/acoronad
+LOGNAME=acoronad
+XDG_SESSION_DESKTOP=ubuntu
+XDG_SESSION_TYPE=wayland
+SYSTEMD_EXEC_PID=3623
+XAUTHORITY=/run/user/1000/.mutter-Xwaylandauth.K62KF3
+VSCODE_GIT_ASKPASS_NODE=/usr/share/code/code
+IM_CONFIG_CHECK_ENV=1
+GJS_DEBUG_TOPICS=JS ERROR;JS LOG
+HOME=/home/acoronad
+USERNAME=acoronad
+IM_CONFIG_PHASE=1
+LANG=es_ES.UTF-8
+LC_PAPER=es_ES.UTF-8
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:
+XDG_CURRENT_DESKTOP=Unity
+MEMORY_PRESSURE_WATCH=/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.Shell@wayland.service/memory.pressure
+WAYLAND_DISPLAY=wayland-0
+GIT_ASKPASS=/usr/share/code/resources/app/extensions/git/dist/askpass.sh
+INVOCATION_ID=2499ba9ac38d45378fc417d5a251c88a
+MANAGERPID=3391
+CHROME_DESKTOP=code.desktop
+GJS_DEBUG_OUTPUT=stderr
+VSCODE_GIT_ASKPASS_EXTRA_ARGS=
+GNOME_SETUP_DISPLAY=:1
+LESSCLOSE=/usr/bin/lesspipe %s %s
+XDG_SESSION_CLASS=user
+LC_IDENTIFICATION=es_ES.UTF-8
+TERM=xterm-256color
+LESSOPEN=| /usr/bin/lesspipe %s
+USER=acoronad
+VSCODE_GIT_IPC_HANDLE=/run/user/1000/vscode-git-93560dfde4.sock
+CLUTTER_DISABLE_MIPMAPPED_TEXT=1
+DISPLAY=:0
+SHLVL=2
+GSM_SKIP_SSH_AGENT_WORKAROUND=true
+LC_TELEPHONE=es_ES.UTF-8
+QT_IM_MODULE=ibus
+LC_MEASUREMENT=es_ES.UTF-8
+PAPERSIZE=a4
+XDG_RUNTIME_DIR=/run/user/1000
+DEBUGINFOD_URLS=https://debuginfod.ubuntu.com 
+LC_TIME=es_ES.UTF-8
+VSCODE_GIT_ASKPASS_MAIN=/usr/share/code/resources/app/extensions/git/dist/askpass-main.js
+JOURNAL_STREAM=9:35046
+XDG_DATA_DIRS=/usr/share/ubuntu:/usr/share/gnome:/home/acoronad/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+GDK_BACKEND=x11
+PATH=/home/acoronad/.local/bin:/home/acoronad/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/acoronad/.config/Code/User/globalStorage/github.copilot-chat/debugCommand
+GDMSESSION=ubuntu
+ORIGINAL_XDG_CURRENT_DESKTOP=ubuntu:GNOME
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+GIO_LAUNCHED_DESKTOP_FILE_PID=6668
+GIO_LAUNCHED_DESKTOP_FILE=/usr/share/applications/code.desktop
+LC_NUMERIC=es_ES.UTF-8
+TERM_PROGRAM=vscode
+_=/bin/env
+OLDPWD=/home/acoronad
+
+
+
+SHELL=/usr/bin/bash
+SESSION_MANAGER=local/acoronad:@/tmp/.ICE-unix/3573,unix/acoronad:/tmp/.ICE-unix/3573
+QT_ACCESSIBILITY=1
+COLORTERM=truecolor
+XDG_CONFIG_DIRS=/etc/xdg/xdg-ubuntu:/etc/xdg
+XDG_MENU_PREFIX=gnome-
+TERM_PROGRAM_VERSION=1.101.0
+GNOME_DESKTOP_SESSION_ID=this-is-deprecated
+LANGUAGE=es:en
+LC_ADDRESS=es_ES.UTF-8
+GNOME_SHELL_SESSION_MODE=ubuntu
+LC_NAME=es_ES.UTF-8
+SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
+MEMORY_PRESSURE_WRITE=c29tZSAyMDAwMDAgMjAwMDAwMAA=
+XMODIFIERS=@im=ibus
+DESKTOP_SESSION=ubuntu
+LC_MONETARY=es_ES.UTF-8
+GTK_MODULES=gail:atk-bridge
+PWD=/home/acoronad
+LOGNAME=acoronad
+XDG_SESSION_DESKTOP=ubuntu
+XDG_SESSION_TYPE=wayland
+SYSTEMD_EXEC_PID=3623
+XAUTHORITY=/run/user/1000/.mutter-Xwaylandauth.K62KF3
+VSCODE_GIT_ASKPASS_NODE=/usr/share/code/code
+IM_CONFIG_CHECK_ENV=1
+GJS_DEBUG_TOPICS=JS ERROR;JS LOG
+HOME=/home/acoronad
+USERNAME=acoronad
+IM_CONFIG_PHASE=1
+LANG=es_ES.UTF-8
+LC_PAPER=es_ES.UTF-8
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:
+XDG_CURRENT_DESKTOP=Unity
+MEMORY_PRESSURE_WATCH=/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.Shell@wayland.service/memory.pressure
+WAYLAND_DISPLAY=wayland-0
+GIT_ASKPASS=/usr/share/code/resources/app/extensions/git/dist/askpass.sh
+INVOCATION_ID=2499ba9ac38d45378fc417d5a251c88a
+MANAGERPID=3391
+CHROME_DESKTOP=code.desktop
+GJS_DEBUG_OUTPUT=stderr
+VSCODE_GIT_ASKPASS_EXTRA_ARGS=
+GNOME_SETUP_DISPLAY=:1
+LESSCLOSE=/usr/bin/lesspipe %s %s
+XDG_SESSION_CLASS=user
+LC_IDENTIFICATION=es_ES.UTF-8
+TERM=xterm-256color
+LESSOPEN=| /usr/bin/lesspipe %s
+USER=acoronad
+VSCODE_GIT_IPC_HANDLE=/run/user/1000/vscode-git-93560dfde4.sock
+CLUTTER_DISABLE_MIPMAPPED_TEXT=1
+DISPLAY=:0
+SHLVL=2
+GSM_SKIP_SSH_AGENT_WORKAROUND=true
+LC_TELEPHONE=es_ES.UTF-8
+QT_IM_MODULE=ibus
+LC_MEASUREMENT=es_ES.UTF-8
+PAPERSIZE=a4
+XDG_RUNTIME_DIR=/run/user/1000
+DEBUGINFOD_URLS=https://debuginfod.ubuntu.com 
+LC_TIME=es_ES.UTF-8
+VSCODE_GIT_ASKPASS_MAIN=/usr/share/code/resources/app/extensions/git/dist/askpass-main.js
+JOURNAL_STREAM=9:35046
+XDG_DATA_DIRS=/usr/share/ubuntu:/usr/share/gnome:/home/acoronad/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+GDK_BACKEND=x11
+PATH=/home/acoronad/.local/bin:/home/acoronad/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/acoronad/.config/Code/User/globalStorage/github.copilot-chat/debugCommand
+GDMSESSION=ubuntu
+ORIGINAL_XDG_CURRENT_DESKTOP=ubuntu:GNOME
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+GIO_LAUNCHED_DESKTOP_FILE_PID=6668
+GIO_LAUNCHED_DESKTOP_FILE=/usr/share/applications/code.desktop
+LC_NUMERIC=es_ES.UTF-8
+TERM_PROGRAM=vscode
+_=/usr/bin/env
+OLDPWD=/home/acoronad
+SHELL=/usr/bin/bash
+SESSION_MANAGER=local/acoronad:@/tmp/.ICE-unix/3573,unix/acoronad:/tmp/.ICE-unix/3573
+QT_ACCESSIBILITY=1
+COLORTERM=truecolor
+XDG_CONFIG_DIRS=/etc/xdg/xdg-ubuntu:/etc/xdg
+XDG_MENU_PREFIX=gnome-
+TERM_PROGRAM_VERSION=1.101.0
+GNOME_DESKTOP_SESSION_ID=this-is-deprecated
+LANGUAGE=es:en
+LC_ADDRESS=es_ES.UTF-8
+GNOME_SHELL_SESSION_MODE=ubuntu
+LC_NAME=es_ES.UTF-8
+SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
+MEMORY_PRESSURE_WRITE=c29tZSAyMDAwMDAgMjAwMDAwMAA=
+XMODIFIERS=@im=ibus
+DESKTOP_SESSION=ubuntu
+LC_MONETARY=es_ES.UTF-8
+GTK_MODULES=gail:atk-bridge
+PWD=/home/acoronad
+LOGNAME=acoronad
+XDG_SESSION_DESKTOP=ubuntu
+XDG_SESSION_TYPE=wayland
+SYSTEMD_EXEC_PID=3623
+XAUTHORITY=/run/user/1000/.mutter-Xwaylandauth.K62KF3
+VSCODE_GIT_ASKPASS_NODE=/usr/share/code/code
+IM_CONFIG_CHECK_ENV=1
+GJS_DEBUG_TOPICS=JS ERROR;JS LOG
+HOME=/home/acoronad
+USERNAME=acoronad
+IM_CONFIG_PHASE=1
+LANG=es_ES.UTF-8
+LC_PAPER=es_ES.UTF-8
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:
+XDG_CURRENT_DESKTOP=Unity
+MEMORY_PRESSURE_WATCH=/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.Shell@wayland.service/memory.pressure
+WAYLAND_DISPLAY=wayland-0
+GIT_ASKPASS=/usr/share/code/resources/app/extensions/git/dist/askpass.sh
+INVOCATION_ID=2499ba9ac38d45378fc417d5a251c88a
+MANAGERPID=3391
+CHROME_DESKTOP=code.desktop
+GJS_DEBUG_OUTPUT=stderr
+VSCODE_GIT_ASKPASS_EXTRA_ARGS=
+GNOME_SETUP_DISPLAY=:1
+LESSCLOSE=/usr/bin/lesspipe %s %s
+XDG_SESSION_CLASS=user
+LC_IDENTIFICATION=es_ES.UTF-8
+TERM=xterm-256color
+LESSOPEN=| /usr/bin/lesspipe %s
+USER=acoronad
+VSCODE_GIT_IPC_HANDLE=/run/user/1000/vscode-git-93560dfde4.sock
+CLUTTER_DISABLE_MIPMAPPED_TEXT=1
+DISPLAY=:0
+SHLVL=2
+GSM_SKIP_SSH_AGENT_WORKAROUND=true
+LC_TELEPHONE=es_ES.UTF-8
+QT_IM_MODULE=ibus
+LC_MEASUREMENT=es_ES.UTF-8
+PAPERSIZE=a4
+XDG_RUNTIME_DIR=/run/user/1000
+DEBUGINFOD_URLS=https://debuginfod.ubuntu.com 
+LC_TIME=es_ES.UTF-8
+VSCODE_GIT_ASKPASS_MAIN=/usr/share/code/resources/app/extensions/git/dist/askpass-main.js
+JOURNAL_STREAM=9:35046
+XDG_DATA_DIRS=/usr/share/ubuntu:/usr/share/gnome:/home/acoronad/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+GDK_BACKEND=x11
+PATH=/home/acoronad/.local/bin:/home/acoronad/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/acoronad/.config/Code/User/globalStorage/github.copilot-chat/debugCommand
+GDMSESSION=ubuntu
+ORIGINAL_XDG_CURRENT_DESKTOP=ubuntu:GNOME
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+GIO_LAUNCHED_DESKTOP_FILE_PID=6668
+GIO_LAUNCHED_DESKTOP_FILE=/usr/share/applications/code.desktop
+LC_NUMERIC=es_ES.UTF-8
+TERM_PROGRAM=vscode
+_=/usr/bin/env
+OLDPWD=/home/acoronad
+PATH MANAGEMENT
+/home/acoronad/.local/bin:/home/acoronad/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/acoronad/.config/Code/User/globalStorage/github.copilot-chat/debugCommand
+/home/acoronad/.local/bin:/home/acoronad/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/acoronad/.config/Code/User/globalStorage/github.copilot-chat/debugCommand
+SHELL=/usr/bin/bash
+SESSION_MANAGER=local/acoronad:@/tmp/.ICE-unix/3573,unix/acoronad:/tmp/.ICE-unix/3573
+QT_ACCESSIBILITY=1
+COLORTERM=truecolor
+XDG_CONFIG_DIRS=/etc/xdg/xdg-ubuntu:/etc/xdg
+XDG_MENU_PREFIX=gnome-
+TERM_PROGRAM_VERSION=1.101.0
+GNOME_DESKTOP_SESSION_ID=this-is-deprecated
+LANGUAGE=es:en
+LC_ADDRESS=es_ES.UTF-8
+GNOME_SHELL_SESSION_MODE=ubuntu
+LC_NAME=es_ES.UTF-8
+SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
+MEMORY_PRESSURE_WRITE=c29tZSAyMDAwMDAgMjAwMDAwMAA=
+XMODIFIERS=@im=ibus
+DESKTOP_SESSION=ubuntu
+LC_MONETARY=es_ES.UTF-8
+GTK_MODULES=gail:atk-bridge
+PWD=/home/acoronad
+LOGNAME=acoronad
+XDG_SESSION_DESKTOP=ubuntu
+XDG_SESSION_TYPE=wayland
+SYSTEMD_EXEC_PID=3623
+XAUTHORITY=/run/user/1000/.mutter-Xwaylandauth.K62KF3
+VSCODE_GIT_ASKPASS_NODE=/usr/share/code/code
+IM_CONFIG_CHECK_ENV=1
+GJS_DEBUG_TOPICS=JS ERROR;JS LOG
+HOME=/home/acoronad
+USERNAME=acoronad
+IM_CONFIG_PHASE=1
+LANG=es_ES.UTF-8
+LC_PAPER=es_ES.UTF-8
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:
+XDG_CURRENT_DESKTOP=Unity
+MEMORY_PRESSURE_WATCH=/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.Shell@wayland.service/memory.pressure
+WAYLAND_DISPLAY=wayland-0
+GIT_ASKPASS=/usr/share/code/resources/app/extensions/git/dist/askpass.sh
+INVOCATION_ID=2499ba9ac38d45378fc417d5a251c88a
+MANAGERPID=3391
+CHROME_DESKTOP=code.desktop
+GJS_DEBUG_OUTPUT=stderr
+VSCODE_GIT_ASKPASS_EXTRA_ARGS=
+GNOME_SETUP_DISPLAY=:1
+LESSCLOSE=/usr/bin/lesspipe %s %s
+XDG_SESSION_CLASS=user
+LC_IDENTIFICATION=es_ES.UTF-8
+TERM=xterm-256color
+LESSOPEN=| /usr/bin/lesspipe %s
+USER=acoronad
+VSCODE_GIT_IPC_HANDLE=/run/user/1000/vscode-git-93560dfde4.sock
+CLUTTER_DISABLE_MIPMAPPED_TEXT=1
+DISPLAY=:0
+SHLVL=2
+GSM_SKIP_SSH_AGENT_WORKAROUND=true
+LC_TELEPHONE=es_ES.UTF-8
+QT_IM_MODULE=ibus
+LC_MEASUREMENT=es_ES.UTF-8
+PAPERSIZE=a4
+XDG_RUNTIME_DIR=/run/user/1000
+DEBUGINFOD_URLS=https://debuginfod.ubuntu.com 
+LC_TIME=es_ES.UTF-8
+VSCODE_GIT_ASKPASS_MAIN=/usr/share/code/resources/app/extensions/git/dist/askpass-main.js
+JOURNAL_STREAM=9:35046
+XDG_DATA_DIRS=/usr/share/ubuntu:/usr/share/gnome:/home/acoronad/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+GDK_BACKEND=x11
+PATH=/home/acoronad/.local/bin:/home/acoronad/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/acoronad/.config/Code/User/globalStorage/github.copilot-chat/debugCommand
+GDMSESSION=ubuntu
+ORIGINAL_XDG_CURRENT_DESKTOP=ubuntu:GNOME
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+GIO_LAUNCHED_DESKTOP_FILE_PID=6668
+GIO_LAUNCHED_DESKTOP_FILE=/usr/share/applications/code.desktop
+LC_NUMERIC=es_ES.UTF-8
+TERM_PROGRAM=vscode
+_=/usr/bin/env
+OLDPWD=/home/acoronad
+SHELL=/usr/bin/bash
+SESSION_MANAGER=local/acoronad:@/tmp/.ICE-unix/3573,unix/acoronad:/tmp/.ICE-unix/3573
+QT_ACCESSIBILITY=1
+COLORTERM=truecolor
+XDG_CONFIG_DIRS=/etc/xdg/xdg-ubuntu:/etc/xdg
+XDG_MENU_PREFIX=gnome-
+TERM_PROGRAM_VERSION=1.101.0
+GNOME_DESKTOP_SESSION_ID=this-is-deprecated
+LANGUAGE=es:en
+LC_ADDRESS=es_ES.UTF-8
+GNOME_SHELL_SESSION_MODE=ubuntu
+LC_NAME=es_ES.UTF-8
+SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
+MEMORY_PRESSURE_WRITE=c29tZSAyMDAwMDAgMjAwMDAwMAA=
+XMODIFIERS=@im=ibus
+DESKTOP_SESSION=ubuntu
+LC_MONETARY=es_ES.UTF-8
+GTK_MODULES=gail:atk-bridge
+PWD=/home/acoronad
+LOGNAME=acoronad
+XDG_SESSION_DESKTOP=ubuntu
+XDG_SESSION_TYPE=wayland
+SYSTEMD_EXEC_PID=3623
+XAUTHORITY=/run/user/1000/.mutter-Xwaylandauth.K62KF3
+VSCODE_GIT_ASKPASS_NODE=/usr/share/code/code
+IM_CONFIG_CHECK_ENV=1
+GJS_DEBUG_TOPICS=JS ERROR;JS LOG
+HOME=/home/acoronad
+USERNAME=acoronad
+IM_CONFIG_PHASE=1
+LANG=es_ES.UTF-8
+LC_PAPER=es_ES.UTF-8
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:
+XDG_CURRENT_DESKTOP=Unity
+MEMORY_PRESSURE_WATCH=/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.Shell@wayland.service/memory.pressure
+WAYLAND_DISPLAY=wayland-0
+GIT_ASKPASS=/usr/share/code/resources/app/extensions/git/dist/askpass.sh
+INVOCATION_ID=2499ba9ac38d45378fc417d5a251c88a
+MANAGERPID=3391
+CHROME_DESKTOP=code.desktop
+GJS_DEBUG_OUTPUT=stderr
+VSCODE_GIT_ASKPASS_EXTRA_ARGS=
+GNOME_SETUP_DISPLAY=:1
+LESSCLOSE=/usr/bin/lesspipe %s %s
+XDG_SESSION_CLASS=user
+LC_IDENTIFICATION=es_ES.UTF-8
+TERM=xterm-256color
+LESSOPEN=| /usr/bin/lesspipe %s
+USER=acoronad
+VSCODE_GIT_IPC_HANDLE=/run/user/1000/vscode-git-93560dfde4.sock
+CLUTTER_DISABLE_MIPMAPPED_TEXT=1
+DISPLAY=:0
+SHLVL=2
+GSM_SKIP_SSH_AGENT_WORKAROUND=true
+LC_TELEPHONE=es_ES.UTF-8
+QT_IM_MODULE=ibus
+LC_MEASUREMENT=es_ES.UTF-8
+PAPERSIZE=a4
+XDG_RUNTIME_DIR=/run/user/1000
+DEBUGINFOD_URLS=https://debuginfod.ubuntu.com 
+LC_TIME=es_ES.UTF-8
+VSCODE_GIT_ASKPASS_MAIN=/usr/share/code/resources/app/extensions/git/dist/askpass-main.js
+JOURNAL_STREAM=9:35046
+XDG_DATA_DIRS=/usr/share/ubuntu:/usr/share/gnome:/home/acoronad/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+GDK_BACKEND=x11
+PATH=/home/acoronad/.local/bin:/home/acoronad/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/acoronad/.config/Code/User/globalStorage/github.copilot-chat/debugCommand
+GDMSESSION=ubuntu
+ORIGINAL_XDG_CURRENT_DESKTOP=ubuntu:GNOME
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+GIO_LAUNCHED_DESKTOP_FILE_PID=6668
+GIO_LAUNCHED_DESKTOP_FILE=/usr/share/applications/code.desktop
+LC_NUMERIC=es_ES.UTF-8
+TERM_PROGRAM=vscode
+_=/usr/bin/env
+OLDPWD=/home/acoronad
+-
+_
+$A
+a
+abc
+abcdefghijklmnop'q'rstuvwxyz
+abcdefghijklmnopqrstuvwxyz
+b
+backup_firefox_profile
+backup_vscode_config
+bar
+bash-5.0
+bash_5.0-6ubuntu1.debian.tar.xz
+bash_5.0-6ubuntu1.dsc
+bash_5.0.orig.tar.xz
+bonjour
+c
+CA.pem
+c_formatter_42
+d
+Descargas
+Documentos
+Downloads
+Escritorio
+fi le
+foo
+francinette
+hide.me
+hide.me@.service
+Imágenes
+install.sh
+je
+ls
+m1
+m2
+m3
+MEGA
+megasync-xUbuntu_24.04_amd64.deb
+megasync-xUbuntu_24.04_amd64.deb.1
+microsoft.gpg
+Música
+noperm
+path
+Plantillas
+Público
+snap
+somedir
+somedirsoftlink
+somefile
+suis
+test
+teststicked
+testyosticked
+tr
+uninstall.sh
+venv
+Vídeos
+VirtualBox VMs
+VPN-configs
+vscode_extensions_list.txt
+-
+_
+$A
+a
+abc
+abcdefghijklmnop'q'rstuvwxyz
+abcdefghijklmnopqrstuvwxyz
+b
+backup_firefox_profile
+backup_vscode_config
+bar
+bash-5.0
+bash_5.0-6ubuntu1.debian.tar.xz
+bash_5.0-6ubuntu1.dsc
+bash_5.0.orig.tar.xz
+bonjour
+c
+CA.pem
+c_formatter_42
+d
+Descargas
+Documentos
+Downloads
+Escritorio
+fi le
+foo
+francinette
+hide.me
+hide.me@.service
+Imágenes
+install.sh
+je
+ls
+m1
+m2
+m3
+MEGA
+megasync-xUbuntu_24.04_amd64.deb
+megasync-xUbuntu_24.04_amd64.deb.1
+microsoft.gpg
+Música
+noperm
+path
+Plantillas
+Público
+snap
+somedir
+somedirsoftlink
+somefile
+suis
+test
+teststicked
+testyosticked
+tr
+uninstall.sh
+venv
+Vídeos
+VirtualBox VMs
+VPN-configs
+vscode_extensions_list.txt
+-
+_
+$A
+a
+abc
+abcdefghijklmnop'q'rstuvwxyz
+abcdefghijklmnopqrstuvwxyz
+b
+backup_firefox_profile
+backup_vscode_config
+bar
+bash-5.0
+bash_5.0-6ubuntu1.debian.tar.xz
+bash_5.0-6ubuntu1.dsc
+bash_5.0.orig.tar.xz
+bonjour
+c
+CA.pem
+c_formatter_42
+d
+Descargas
+Documentos
+Downloads
+Escritorio
+fi le
+foo
+francinette
+hide.me
+hide.me@.service
+Imágenes
+install.sh
+je
+ls
+m1
+m2
+m3
+MEGA
+megasync-xUbuntu_24.04_amd64.deb
+megasync-xUbuntu_24.04_amd64.deb.1
+microsoft.gpg
+Música
+noperm
+path
+Plantillas
+Público
+snap
+somedir
+somedirsoftlink
+somefile
+suis
+test
+teststicked
+testyosticked
+tr
+uninstall.sh
+venv
+Vídeos
+VirtualBox VMs
+VPN-configs
+vscode_extensions_list.txt
+-
+_
+$A
+a
+abc
+abcdefghijklmnop'q'rstuvwxyz
+abcdefghijklmnopqrstuvwxyz
+b
+backup_firefox_profile
+backup_vscode_config
+bar
+bash-5.0
+bash_5.0-6ubuntu1.debian.tar.xz
+bash_5.0-6ubuntu1.dsc
+bash_5.0.orig.tar.xz
+bonjour
+c
+CA.pem
+c_formatter_42
+d
+Descargas
+Documentos
+Downloads
+Escritorio
+fi le
+foo
+francinette
+hide.me
+hide.me@.service
+Imágenes
+install.sh
+je
+ls
+m1
+m2
+m3
+MEGA
+megasync-xUbuntu_24.04_amd64.deb
+megasync-xUbuntu_24.04_amd64.deb.1
+microsoft.gpg
+Música
+noperm
+path
+Plantillas
+Público
+snap
+somedir
+somedirsoftlink
+somefile
+suis
+test
+teststicked
+testyosticked
+tr
+uninstall.sh
+venv
+Vídeos
+VirtualBox VMs
+VPN-configs
+vscode_extensions_list.txt
+/home/acoronad/.local/bin:/home/acoronad/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/acoronad/.config/Code/User/globalStorage/github.copilot-chat/debugCommand
+SHELL=/usr/bin/bash
+SESSION_MANAGER=local/acoronad:@/tmp/.ICE-unix/3573,unix/acoronad:/tmp/.ICE-unix/3573
+QT_ACCESSIBILITY=1
+COLORTERM=truecolor
+XDG_CONFIG_DIRS=/etc/xdg/xdg-ubuntu:/etc/xdg
+XDG_MENU_PREFIX=gnome-
+TERM_PROGRAM_VERSION=1.101.0
+GNOME_DESKTOP_SESSION_ID=this-is-deprecated
+LANGUAGE=es:en
+LC_ADDRESS=es_ES.UTF-8
+GNOME_SHELL_SESSION_MODE=ubuntu
+LC_NAME=es_ES.UTF-8
+SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
+MEMORY_PRESSURE_WRITE=c29tZSAyMDAwMDAgMjAwMDAwMAA=
+XMODIFIERS=@im=ibus
+DESKTOP_SESSION=ubuntu
+LC_MONETARY=es_ES.UTF-8
+GTK_MODULES=gail:atk-bridge
+PWD=/home/acoronad
+LOGNAME=acoronad
+XDG_SESSION_DESKTOP=ubuntu
+XDG_SESSION_TYPE=wayland
+SYSTEMD_EXEC_PID=3623
+XAUTHORITY=/run/user/1000/.mutter-Xwaylandauth.K62KF3
+VSCODE_GIT_ASKPASS_NODE=/usr/share/code/code
+IM_CONFIG_CHECK_ENV=1
+GJS_DEBUG_TOPICS=JS ERROR;JS LOG
+HOME=/home/acoronad
+USERNAME=acoronad
+IM_CONFIG_PHASE=1
+LANG=es_ES.UTF-8
+LC_PAPER=es_ES.UTF-8
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:
+XDG_CURRENT_DESKTOP=Unity
+MEMORY_PRESSURE_WATCH=/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.Shell@wayland.service/memory.pressure
+WAYLAND_DISPLAY=wayland-0
+GIT_ASKPASS=/usr/share/code/resources/app/extensions/git/dist/askpass.sh
+INVOCATION_ID=2499ba9ac38d45378fc417d5a251c88a
+MANAGERPID=3391
+CHROME_DESKTOP=code.desktop
+GJS_DEBUG_OUTPUT=stderr
+VSCODE_GIT_ASKPASS_EXTRA_ARGS=
+GNOME_SETUP_DISPLAY=:1
+LESSCLOSE=/usr/bin/lesspipe %s %s
+XDG_SESSION_CLASS=user
+LC_IDENTIFICATION=es_ES.UTF-8
+TERM=xterm-256color
+LESSOPEN=| /usr/bin/lesspipe %s
+USER=acoronad
+VSCODE_GIT_IPC_HANDLE=/run/user/1000/vscode-git-93560dfde4.sock
+CLUTTER_DISABLE_MIPMAPPED_TEXT=1
+DISPLAY=:0
+SHLVL=2
+GSM_SKIP_SSH_AGENT_WORKAROUND=true
+LC_TELEPHONE=es_ES.UTF-8
+QT_IM_MODULE=ibus
+LC_MEASUREMENT=es_ES.UTF-8
+PAPERSIZE=a4
+XDG_RUNTIME_DIR=/run/user/1000
+DEBUGINFOD_URLS=https://debuginfod.ubuntu.com 
+LC_TIME=es_ES.UTF-8
+VSCODE_GIT_ASKPASS_MAIN=/usr/share/code/resources/app/extensions/git/dist/askpass-main.js
+JOURNAL_STREAM=9:35046
+XDG_DATA_DIRS=/usr/share/ubuntu:/usr/share/gnome:/home/acoronad/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+GDK_BACKEND=x11
+PATH=/home/acoronad/.local/bin:/home/acoronad/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/acoronad/.config/Code/User/globalStorage/github.copilot-chat/debugCommand
+GDMSESSION=ubuntu
+ORIGINAL_XDG_CURRENT_DESKTOP=ubuntu:GNOME
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+GIO_LAUNCHED_DESKTOP_FILE_PID=6668
+GIO_LAUNCHED_DESKTOP_FILE=/usr/share/applications/code.desktop
+LC_NUMERIC=es_ES.UTF-8
+TERM_PROGRAM=vscode
+_=/usr/bin/env
+OLDPWD=/home/acoronad
+SHELL=/usr/bin/bash
+SESSION_MANAGER=local/acoronad:@/tmp/.ICE-unix/3573,unix/acoronad:/tmp/.ICE-unix/3573
+QT_ACCESSIBILITY=1
+COLORTERM=truecolor
+XDG_CONFIG_DIRS=/etc/xdg/xdg-ubuntu:/etc/xdg
+XDG_MENU_PREFIX=gnome-
+TERM_PROGRAM_VERSION=1.101.0
+GNOME_DESKTOP_SESSION_ID=this-is-deprecated
+LANGUAGE=es:en
+LC_ADDRESS=es_ES.UTF-8
+GNOME_SHELL_SESSION_MODE=ubuntu
+LC_NAME=es_ES.UTF-8
+SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
+MEMORY_PRESSURE_WRITE=c29tZSAyMDAwMDAgMjAwMDAwMAA=
+XMODIFIERS=@im=ibus
+DESKTOP_SESSION=ubuntu
+LC_MONETARY=es_ES.UTF-8
+GTK_MODULES=gail:atk-bridge
+PWD=/home/acoronad
+LOGNAME=acoronad
+XDG_SESSION_DESKTOP=ubuntu
+XDG_SESSION_TYPE=wayland
+SYSTEMD_EXEC_PID=3623
+XAUTHORITY=/run/user/1000/.mutter-Xwaylandauth.K62KF3
+VSCODE_GIT_ASKPASS_NODE=/usr/share/code/code
+IM_CONFIG_CHECK_ENV=1
+GJS_DEBUG_TOPICS=JS ERROR;JS LOG
+HOME=/home/acoronad
+USERNAME=acoronad
+IM_CONFIG_PHASE=1
+LANG=es_ES.UTF-8
+LC_PAPER=es_ES.UTF-8
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:
+XDG_CURRENT_DESKTOP=Unity
+MEMORY_PRESSURE_WATCH=/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.Shell@wayland.service/memory.pressure
+WAYLAND_DISPLAY=wayland-0
+GIT_ASKPASS=/usr/share/code/resources/app/extensions/git/dist/askpass.sh
+INVOCATION_ID=2499ba9ac38d45378fc417d5a251c88a
+MANAGERPID=3391
+CHROME_DESKTOP=code.desktop
+GJS_DEBUG_OUTPUT=stderr
+VSCODE_GIT_ASKPASS_EXTRA_ARGS=
+GNOME_SETUP_DISPLAY=:1
+LESSCLOSE=/usr/bin/lesspipe %s %s
+XDG_SESSION_CLASS=user
+LC_IDENTIFICATION=es_ES.UTF-8
+TERM=xterm-256color
+LESSOPEN=| /usr/bin/lesspipe %s
+USER=acoronad
+VSCODE_GIT_IPC_HANDLE=/run/user/1000/vscode-git-93560dfde4.sock
+CLUTTER_DISABLE_MIPMAPPED_TEXT=1
+DISPLAY=:0
+SHLVL=2
+GSM_SKIP_SSH_AGENT_WORKAROUND=true
+LC_TELEPHONE=es_ES.UTF-8
+QT_IM_MODULE=ibus
+LC_MEASUREMENT=es_ES.UTF-8
+PAPERSIZE=a4
+XDG_RUNTIME_DIR=/run/user/1000
+DEBUGINFOD_URLS=https://debuginfod.ubuntu.com 
+LC_TIME=es_ES.UTF-8
+VSCODE_GIT_ASKPASS_MAIN=/usr/share/code/resources/app/extensions/git/dist/askpass-main.js
+JOURNAL_STREAM=9:35046
+XDG_DATA_DIRS=/usr/share/ubuntu:/usr/share/gnome:/home/acoronad/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+GDK_BACKEND=x11
+PATH=/home/acoronad/.local/bin:/home/acoronad/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/acoronad/.config/Code/User/globalStorage/github.copilot-chat/debugCommand
+GDMSESSION=ubuntu
+ORIGINAL_XDG_CURRENT_DESKTOP=ubuntu:GNOME
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+GIO_LAUNCHED_DESKTOP_FILE_PID=6668
+GIO_LAUNCHED_DESKTOP_FILE=/usr/share/applications/code.desktop
+LC_NUMERIC=es_ES.UTF-8
+TERM_PROGRAM=vscode
+_=/usr/bin/env
+OLDPWD=/home/acoronad
+COMMAND LINE MANAGEMENT
+TOP
+-
+_
+$A
+a
+abc
+abcdefghijklmnop'q'rstuvwxyz
+abcdefghijklmnopqrstuvwxyz
+b
+backup_firefox_profile
+backup_vscode_config
+bar
+bash-5.0
+bash_5.0-6ubuntu1.debian.tar.xz
+bash_5.0-6ubuntu1.dsc
+bash_5.0.orig.tar.xz
+bonjour
+c
+CA.pem
+c_formatter_42
+d
+Descargas
+Documentos
+Downloads
+Escritorio
+fi le
+foo
+francinette
+hide.me
+hide.me@.service
+Imágenes
+install.sh
+je
+ls
+m1
+m2
+m3
+MEGA
+megasync-xUbuntu_24.04_amd64.deb
+megasync-xUbuntu_24.04_amd64.deb.1
+microsoft.gpg
+Música
+noperm
+path
+Plantillas
+Público
+snap
+somedir
+somedirsoftlink
+somefile
+suis
+test
+teststicked
+testyosticked
+tr
+uninstall.sh
+venv
+Vídeos
+VirtualBox VMs
+VPN-configs
+vscode_extensions_list.txt
+MIDDLE
+-
+_
+$A
+a
+abc
+abcdefghijklmnop'q'rstuvwxyz
+abcdefghijklmnopqrstuvwxyz
+b
+backup_firefox_profile
+backup_vscode_config
+bar
+bash-5.0
+bash_5.0-6ubuntu1.debian.tar.xz
+bash_5.0-6ubuntu1.dsc
+bash_5.0.orig.tar.xz
+bonjour
+c
+CA.pem
+c_formatter_42
+d
+Descargas
+Documentos
+Downloads
+Escritorio
+fi le
+foo
+francinette
+hide.me
+hide.me@.service
+Imágenes
+install.sh
+je
+ls
+m1
+m2
+m3
+MEGA
+megasync-xUbuntu_24.04_amd64.deb
+megasync-xUbuntu_24.04_amd64.deb.1
+microsoft.gpg
+Música
+noperm
+path
+Plantillas
+Público
+snap
+somedir
+somedirsoftlink
+somefile
+suis
+test
+teststicked
+testyosticked
+tr
+uninstall.sh
+venv
+Vídeos
+VirtualBox VMs
+VPN-configs
+vscode_extensions_list.txt
+BOTTOM
+3
+0
+0
+/tmp/bin:/home/acoronad/.local/bin:/home/acoronad/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/acoronad/.config/Code/User/globalStorage/github.copilot-chat/debugCommand
+/home/acoronad
+acoronad
+2
+0
+2 + 0
+false_user
+false_user
+acoronad
+acoronad
+copyminishell
+copyms
+diagram_colored.txt
+diagram_shell.txt
+err.txt
+file.txt
+format_all.sh
+iciamyplant-tester
+includes
+Japotest_version.sh
+libft
+LucasKuhn-tester
+Makefile
+minishell
+minishell.c
+MISTEST.sh
+obj
+redirs
+resbsbs
+resbsmin
+run_minishell_test.sh
+src
+Tester_Japo
+todo.txt
+hola
+hola
+hola
+otra
+copyminishell
+copyms
+diagram_colored.txt
+diagram_shell.txt
+err.txt
+file.txt
+format_all.sh
+iciamyplant-tester
+includes
+Japotest_version.sh
+libft
+LucasKuhn-tester
+Makefile
+minishell
+minishell.c
+MISTEST.sh
+obj
+redirs
+resbsbs
+resbsmin
+run_minishell_test.sh
+src
+Tester_Japo
+todo.txt
+cat: noexiste: No existe el archivo o el directorio
+copyminishell
+copyms
+diagram_colored.txt
+diagram_shell.txt
+err.txt
+file.txt
+format_all.sh
+iciamyplant-tester
+includes
+Japotest_version.sh
+libft
+LucasKuhn-tester
+Makefile
+minishell
+minishell.c
+MISTEST.sh
+obj
+out.txt
+redirs
+resbsbs
+resbsmin
+run_minishell_test.sh
+src
+Tester_Japo
+todo.txt
+copyminishell
+copyms
+diagram_colored.txt
+diagram_shell.txt
+err.txt
+file.txt
+format_all.sh
+iciamyplant-tester
+includes
+Japotest_version.sh
+libft
+LucasKuhn-tester
+Makefile
+minishell
+minishell.c
+MISTEST.sh
+obj
+out.txt
+redirs
+resbsbs
+resbsmin
+run_minishell_test.sh
+src
+Tester_Japo
+todo.txt
+copyminishell
+copyms
+diagram_colored.txt
+diagram_shell.txt
+err.txt
+file.txt
+format_all.sh
+iciamyplant-tester
+includes
+Japotest_version.sh
+libft
+LucasKuhn-tester
+Makefile
+minishell
+minishell.c
+MISTEST.sh
+obj
+out.txt
+redirs
+resbsbs
+resbsmin
+run_minishell_test.sh
+src
+Tester_Japo
+todo.txt
+copyminishell
+copyms
+diagram_colored.txt
+diagram_shell.txt
+err.txt
+file.txt
+format_all.sh
+iciamyplant-tester
+includes
+Japotest_version.sh
+libft
+LucasKuhn-tester
+Makefile
+minishell
+minishell.c
+MISTEST.sh
+obj
+out.txt
+redirs
+resbsbs
+resbsmin
+run_minishell_test.sh
+src
+Tester_Japo
+todo.txt
+hola
+hola
+uno
+dos
+se ejecuta
+uno
+dos
+subshell
+uno
+dos
+hola
+hola
+err
+hola
+exportando
+exportando
+HOME=/home/acoronad
+hola mundo
+uno dos tres
+signo? interrogacion
+barra|vertical
+barra\invertida
+comilla'simple
+comilla"doble
+comilla"doble
+comilla\simple
+/bin/echo comilla'simple
+expansion$USER
+UNO
+UNO
+uno
+uno
+dos
+tres
+uno
+dos
+linea 1
+linea 2
+$HOME no debe expandirse
+heredoc ¡¡¡¡¡¡¡¡¡ TODO TIPO DE PROBLEMAS CON EOF !!!!!!!

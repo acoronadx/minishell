@@ -6,16 +6,12 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:24:24 by acoronad          #+#    #+#             */
-/*   Updated: 2025/10/31 16:22:50 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/05 15:46:31 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
-
-/* Importante: NO incluir minishell.h aquí para evitar ciclos. */
-/* Incluye solo lo mínimo estrictamente necesario. */
-# include <stddef.h>
 
 /* ------------------------- Tipos de token ------------------------- */
 typedef enum e_token_type
@@ -30,8 +26,6 @@ typedef enum e_token_type
         T_REDIR_OUT,    // >
         T_APPEND,       // >>
         T_HEREDOC,      // <<
-        T_REDIR_ERR,    // 2>
-        T_APPEND_ERR,   // 2>>
         T_REDIR_ALL,    // &>
         T_APPEND_ALL,   // &>>
         T_FORCE_OUT,    // >|
@@ -40,11 +34,9 @@ typedef enum e_token_type
         T_DUP_OUT,      // >&
         T_LPAREN,       // (
         T_RPAREN,       // )
-        T_LBRACE,       // {
-        T_RBRACE,       // }
-        T_EQUAL,        // =
         T_UNKNOWN
 }       t_token_type;
+
 
 typedef enum e_quote
 {
@@ -83,6 +75,8 @@ t_token_type    get_redir_right(const char *str, int len);
 t_token_type    get_redir_special(const char *str, int len);
 
 void            free_lexer_list_on_error(t_token **lst);
+void			free_token_list(t_token *tok);
+t_token			*free_null_token_list(t_token **lst);
 int             try_add_token(t_token **lst, char *str, t_token_type type, t_quote quote);
 
 /* Utilidades específicas de bash */

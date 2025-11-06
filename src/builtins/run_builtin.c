@@ -10,14 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "ast.h"
-#include "exec.h"
 #include "builtins.h"
+#include "exec.h"
+#include "minishell.h"
 
-int run_builtin(t_ast *node, t_shell *shell)
+int	run_builtin(t_ast *node, t_shell *shell)
 {
-	char **argv;
+	char	**argv;
 
 	if (!node || !node->cmd.argv || !node->cmd.argv[0])
 		return (1);
