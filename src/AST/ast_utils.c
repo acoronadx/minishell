@@ -6,12 +6,11 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 19:53:28 by acoronad          #+#    #+#             */
-/*   Updated: 2025/06/28 03:50:45 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/06 15:29:08 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "ast.h"
 
 t_ast	*ast_new_command(char **argv, t_ast *redirections)
 {
