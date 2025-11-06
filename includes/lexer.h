@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:24:24 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/05 15:46:31 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/06 13:06:58 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,13 @@ int             try_add_token(t_token **lst, char *str, t_token_type type, t_quo
 /* Utilidades específicas de bash */
 void            strip_comment_if_applicable(char *line);
 char            *remove_backslashes_for_token(const char *src, t_quote quote);
+
+
+/* Utilidades para comentarios */
+int		is_comment(char *line, char c, int aws, int i);
+int		enter_quote_out(char c, t_quote *q, int *i, int *aws);
+void	shift_left_two(char *s, int pos);
+int		handle_bs_out(char *line, int *i, int *aws);
+
 
 #endif

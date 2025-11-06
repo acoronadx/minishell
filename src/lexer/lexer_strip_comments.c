@@ -12,122 +12,105 @@
 
 #include "minishell.h"
 
+/* fuera de comillas: maneja operadores para reiniciar inicio-de-palabra */
+static int	handle_operator_out(const char *line, int *i, int *aws)
+{
+	t_token_type	t;
+	int				len;
+
+	if (is_operator(line + *i, &t, &len))
+	{
+		*i += len;
+		*aws = 1;
+		return (1);
+	}
+	return (0);
+}
+
+/* dentro de comillas dobles: gestiona escapes especiales y cierre */
+static int	handle_in_dquote(char *line, int *i, t_quote *q, int *aws)
+{
+	if (line[*i] == '\\' && (line[*i + 1] == '$' || line[*i + 1] == '`'
+			|| line[*i + 1] == '"' || line[*i + 1] == '\\'
+			|| line[*i + 1] == '\n'))
+	{
+		if (line[*i + 1] == '\n')
+			shift_left_two(line, *i);
+		else
+			*i += (line[*i + 1] ? 2 : 1);
+		*aws = 0;
+		return (1);
+	}
+	if (line[*i] == '"')
+	{
+		*q = NO_QUOTE;
+		*i += 1;
+		*aws = 0;
+		return (1);
+	}
+	*i += 1;
+	*aws = 0;
+	return (1);
+}
+
+/* paso fuera de comillas: backslash, comillas, #, operador, espacio, avanzar */
+static void	step_outside(char *line, int *i, t_quote *q, int *aws)
+{
+	char	c;
+
+	c = line[*i];
+	if (handle_bs_out(line, i, aws))
+		return ;
+	if (enter_quote_out(c, q, i, aws))
+		return ;
+	if (is_comment(line, c, *aws, *i))
+		return ;
+	if (ft_isspace(c))
+	{
+		*aws = 1;
+		*i += 1;
+		return ;
+	}
+	if (handle_operator_out(line, i, aws))
+		return ;
+	*aws = 0;
+	*i += 1;
+}
+
+/* paso en comillas simples: todo literal hasta encontrar ' */
+static void	step_in_squote(const char *line, int *i, t_quote *q, int *aws)
+{
+	if (line[*i] == '\'')
+	{
+		*q = NO_QUOTE;
+		*i += 1;
+		*aws = 0;
+		return ;
+	}
+	*i += 1;
+	*aws = 0;
+}
+
 void	strip_comment_if_applicable(char *line)
 {
-	int					i;
-	t_quote				q;
-	char				c;
-	int					j;
-	t_token_type		t;
-	int					len;
+	int		i;
+	int		at_word_start;
+	t_quote	q;
 
-	i = 0;
-	q = NO_QUOTE;
-	int at_word_start = 1;
-		/* al principio de la línea estamos al inicio de palabra */
 	if (!line)
 		return ;
+	i = 0;
+	q = NO_QUOTE;
+	at_word_start = 1;
 	while (line[i])
 	{
-		c = line[i];
-		/* Gestión de escapes fuera/dentro de comillas según bash */
 		if (q == NO_QUOTE)
-		{
-			if (c == '\\')
-			{
-				if (line[i + 1] == '\n')
-				{
-					/* continuación de línea: elimina ambos */
-					/* desplazamos resto hacia atrás */
-					j = i;
-					while (line[j + 2])
-					{
-						line[j] = line[j + 2];
-						j++;
-					}
-					line[j] = '\0';
-					continue ;
-				}
-				/* salta el próximo carácter como literal */
-				if (line[i + 1])
-					i += 2;
-				else
-					i++;
-				at_word_start = 0;
-				continue ;
-			}
-			if (c == '\'')
-			{
-				q = SINGLE_QUOTE;
-				i++;
-				at_word_start = 0;
-				continue ;
-			}
-			if (c == '"')
-			{
-				q = DOUBLE_QUOTE;
-				i++;
-				at_word_start = 0;
-				continue ;
-			}
-			/* Si # comienza palabra y estamos fuera de comillas -> cortar */
-			if (c == '#' && at_word_start)
-			{
-				line[i] = '\0';
-				return ;
-			}
-			/* espacios reinician inicio-de-palabra */
-			if (ft_isspace(c))
-				at_word_start = 1;
-			else
-			{
-				/* si el carácter actual inicia un operador,
-					el siguiente es inicio-de-palabra */
-				if (is_operator(line + i, &t, &len))
-				{
-					i += len;
-					at_word_start = 1;
-					continue ;
-				}
-				at_word_start = 0;
-			}
-			i++;
-		}
+			step_outside(line, &i, &q, &at_word_start);
 		else if (q == SINGLE_QUOTE)
-		{
-			/* dentro de comillas simples: todo literal hasta la siguiente ' */
-			if (c == '\'')
-				q = NO_QUOTE;
-			i++;
-			at_word_start = 0;
-		}
-		else /* DOUBLE_QUOTE */
-		{
-			/* Dentro de dobles comillas, \ sólo escapa $, `, ",
-				\ y newline. :contentReference[oaicite:7]{index=7} */
-			if (c == '\\' && (line[i + 1] == '$' || line[i + 1] == '`' || line[i
-					+ 1] == '"' || line[i + 1] == '\\' || line[i + 1] == '\n'))
-			{
-				if (line[i + 1] == '\n')
-				{
-					/* quita la continuación de línea */
-					j = i;
-					while (line[j + 2])
-					{
-						line[j] = line[j + 2];
-						j++;
-					}
-					line[j] = '\0';
-					continue ;
-				}
-				i += (line[i + 1] ? 2 : 1);
-				at_word_start = 0;
-				continue ;
-			}
-			if (c == '"')
-				q = NO_QUOTE;
-			i++;
-			at_word_start = 0;
-		}
+			step_in_squote(line, &i, &q, &at_word_start);
+		else
+			handle_in_dquote(line, &i, &q, &at_word_start);
+		if (!line[i])
+			break ;
 	}
 }
