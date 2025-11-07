@@ -5,14 +5,18 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/29 15:12:04 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/01 15:23:43 by acoronad         ###   ########.fr       */
+/*   Created: 2025/11/07 08:36:49 by acoronad          #+#    #+#             */
+/*   Updated: 2025/11/07 08:37:51 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
 #include "minishell.h"
 
+/* -------------------------------------------------------------------------- */
+/* Helpers genéricos                                                          */
+/* -------------------------------------------------------------------------- */
+
+/*
 static int	redirect_to(int fd, int std_fd)
 {
 	int	ret;
@@ -27,139 +31,210 @@ static int	redirect_to(int fd, int std_fd)
 	close(fd);
 	return (ret);
 }
+*/
 
-int	handle_heredoc(t_ast *redir)
+/* Heurística: nuestros tmp de heredoc empiezan así */
+static int	is_hd_tmp(const char *p)
 {
-	int	fd;
-
-	fd = heredoc_prepare(redir->redir.delimiter);
-	if (fd < 0)
-		return (1);
-	return (redirect_to(fd, STDIN_FILENO));
-}
-
-int	open_redirection(t_ast *redir)
-{
-	int	fd;
-
-	fd = -1;
-	if (!redir || redir->type != N_REDIR)
-		return (-1);
-	if (redir->redir.redir_type == REDIR_IN)
-		fd = open(redir->redir.filename, O_RDONLY);
-	else if (redir->redir.redir_type == REDIR_OUT
-		|| redir->redir.redir_type == REDIR_FORCE)
-		fd = open(redir->redir.filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else if (redir->redir.redir_type == REDIR_APPEND)
-		fd = open(redir->redir.filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	else if (redir->redir.redir_type == REDIR_ERR)
-		fd = open(redir->redir.filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else if (redir->redir.redir_type == REDIR_APPEND_ERR)
-		fd = open(redir->redir.filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	else if (redir->redir.redir_type == REDIR_ALL)
-		fd = open(redir->redir.filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else if (redir->redir.redir_type == REDIR_APPEND_ALL)
-		fd = open(redir->redir.filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	return (fd);
-}
-
-static int	handle_dup_redir(t_ast *redir)
-{
-	int	target;
-	int	std_fd;
-
-	target = redir->redir.redir_fd;
-	std_fd = (redir->redir.redir_type == REDIR_DUP_OUT) ? STDOUT_FILENO : STDIN_FILENO;
-	if (target == std_fd)
+	if (!p)
 		return (0);
-	if (dup2(target, std_fd) < 0)
+	return (ft_strncmp(p, "/tmp/minish_hd_", 15) == 0);
+}
+
+static int	open_rdonly(const char *p, int *fd)
+{
+	*fd = open(p, O_RDONLY);
+	if (*fd < 0)
 	{
-		perror("minishell: dup2");
+		perror("minishell: open");
 		return (1);
 	}
 	return (0);
 }
 
-int	handle_simple_redir(t_ast *redir)
+static int	open_w_trunc(const char *p, int *fd)
 {
-	int	fd;
-	int	ret;
-
-	fd = open_redirection(redir);
-	ret = 0;
-	if (fd < 0)
+	*fd = open(p, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (*fd < 0)
 	{
-		perror(redir->redir.filename);
+		perror("minishell: open");
 		return (1);
 	}
-	if (redir->redir.redir_type == REDIR_IN)
-		ret = redirect_to(fd, STDIN_FILENO);
-	else if (redir->redir.redir_type == REDIR_OUT
-		|| redir->redir.redir_type == REDIR_FORCE
-		|| redir->redir.redir_type == REDIR_APPEND)
-		ret = redirect_to(fd, STDOUT_FILENO);
-	else if (redir->redir.redir_type == REDIR_ERR
-		|| redir->redir.redir_type == REDIR_APPEND_ERR)
-		ret = redirect_to(fd, STDERR_FILENO);
-	else if (redir->redir.redir_type == REDIR_ALL
-		|| redir->redir.redir_type == REDIR_APPEND_ALL)
-	{
-		if (dup2(fd, STDOUT_FILENO) < 0)
-			ret = 1;
-		else if (dup2(fd, STDERR_FILENO) < 0)
-			ret = 1;
-		close(fd);
-	}
-	return (ret);
+	return (0);
 }
+
+static int	open_w_append(const char *p, int *fd)
+{
+	*fd = open(p, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (*fd < 0)
+	{
+		perror("minishell: open");
+		return (1);
+	}
+	return (0);
+}
+
+static int	dup_into(int fd, int target)
+{
+	if (dup2(fd, target) < 0)
+	{
+		perror("minishell: dup2");
+		close(fd);
+		return (1);
+	}
+	close(fd);
+	return (0);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Aplicadores por tipo                                                       */
+/* -------------------------------------------------------------------------- */
+
+/* IN: soporta unlink temprano si viene de heredoc */
+static int	apply_in(const char *path)
+{
+	int	fd;
+	int	err;
+
+	if (!path || *path == '\0')
+	{
+		ft_dprintf(2, "minishell: ambiguous redirect\n");
+		return (1);
+	}
+	if (open_rdonly(path, &fd))
+		return (1);
+	if (is_hd_tmp(path))
+		unlink(path);
+	err = dup_into(fd, STDIN_FILENO);
+	return (err);
+}
+
+static int	apply_out_common(const char *path, int to_fd, int append)
+{
+	int	fd;
+
+	if (!path || *path == '\0')
+	{
+		ft_dprintf(2, "minishell: ambiguous redirect\n");
+		return (1);
+	}
+	if (append)
+	{
+		if (open_w_append(path, &fd))
+			return (1);
+	}
+	else
+	{
+		if (open_w_trunc(path, &fd))
+			return (1);
+	}
+	return (dup_into(fd, to_fd));
+}
+
+/* Abrimos una vez y duplicamos a 1 y 2 */
+static int	apply_all(const char *path, int append)
+{
+	int	fd;
+
+	if (!path || *path == '\0')
+	{
+		ft_dprintf(2, "minishell: ambiguous redirect\n");
+		return (1);
+	}
+	if (append)
+	{
+		if (open_w_append(path, &fd))
+			return (1);
+	}
+	else
+	{
+		if (open_w_trunc(path, &fd))
+			return (1);
+	}
+	if (dup_into(dup(fd), STDOUT_FILENO))
+	{
+		close(fd);
+		return (1);
+	}
+	if (dup_into(fd, STDERR_FILENO))
+		return (1);
+	return (0);
+}
+
+/* Duplicaciones <&N o >&N (usa redir_fd) */
+static int	validate_fd(int fd)
+{
+	/* opcional: limita fds negativos o demasiado grandes */
+	if (fd < 0)
+	{
+		ft_dprintf(2, "minishell: bad file descriptor: %d\n", fd);
+		return (0);
+	}
+	return (1);
+}
+
+static int	apply_dup(const t_ast *r)
+{
+	int	src;
+
+	src = r->redir.redir_fd;
+	if (!validate_fd(src))
+		return (1);
+	if (r->redir.redir_type == REDIR_DUP_IN)
+		return (dup_into(dup(src), STDIN_FILENO));
+	/* REDIR_DUP_OUT */
+	return (dup_into(dup(src), STDOUT_FILENO));
+}
+
+/* -------------------------------------------------------------------------- */
+/* Nodo individual                                                            */
+/* -------------------------------------------------------------------------- */
+
+static int	apply_one_redir(const t_ast *r)
+{
+	if (r->type != N_REDIR)
+		return (0);
+	if (r->redir.redir_type == REDIR_HEREDOC)
+	{
+		/* No debería llegar aquí: prepare_heredocs debió convertirlo a REDIR_IN */
+		ft_dprintf(2, "minishell: internal error: heredoc not prepared\n");
+		return (1);
+	}
+	if (r->redir.redir_type == REDIR_IN)
+		return (apply_in(r->redir.filename));
+	if (r->redir.redir_type == REDIR_OUT)
+		return (apply_out_common(r->redir.filename, STDOUT_FILENO, 0));
+	if (r->redir.redir_type == REDIR_APPEND)
+		return (apply_out_common(r->redir.filename, STDOUT_FILENO, 1));
+	if (r->redir.redir_type == REDIR_ERR)
+		return (apply_out_common(r->redir.filename, STDERR_FILENO, 0));
+	if (r->redir.redir_type == REDIR_APPEND_ERR)
+		return (apply_out_common(r->redir.filename, STDERR_FILENO, 1));
+	if (r->redir.redir_type == REDIR_ALL)
+		return (apply_all(r->redir.filename, 0));
+	if (r->redir.redir_type == REDIR_APPEND_ALL)
+		return (apply_all(r->redir.filename, 1));
+	if (r->redir.redir_type == REDIR_DUP_IN
+		|| r->redir.redir_type == REDIR_DUP_OUT)
+		return (apply_dup(r));
+	/* REDIR_FORCE u otros -> aquí lo tratamos como OUT con flags extra ya en open_w_trunc */
+	return (0);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Lista de redirecciones                                                     */
+/* -------------------------------------------------------------------------- */
 
 int	apply_redirections(t_ast *redir_list)
 {
 	t_ast	*curr;
-	int		fail;
-	int		fd;
 
 	curr = redir_list;
-	fail = 0;
 	while (curr)
 	{
-		if (curr->type != N_REDIR)
+		if (apply_one_redir(curr))
 			return (1);
-		if (curr->redir.redir_type == REDIR_HEREDOC)
-		{
-			/* === HEREDOC inline, sin handle_heredoc === */
-			fd = heredoc_prepare(curr->redir.delimiter);
-			if (fd < 0)
-			{
-				fail = 1;
-			}
-			else
-			{
-				/* reutilizamos tu helper redirect_to() para enganchar a STDIN */
-				if (dup2(fd, STDIN_FILENO) < 0)
-				{
-					perror("minishell: dup2");
-					close(fd);
-					fail = 1;
-				}
-				else
-				{
-					close(fd);
-				}
-			}
-		}
-		else if (curr->redir.redir_type == REDIR_DUP_IN
-			|| curr->redir.redir_type == REDIR_DUP_OUT)
-		{
-			if (handle_dup_redir(curr))
-				fail = 1;
-		}
-		else
-		{
-			if (handle_simple_redir(curr))
-				fail = 1;
-		}
 		curr = curr->bin.right;
 	}
-	return (fail ? 1 : 0);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 19:53:28 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/06 15:29:08 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/06 16:24:40 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,3 @@ t_ast	*ast_new_subshell(t_ast *child, t_ast *redirections)
 	return (node);
 }
 
-t_ast	*create_command_node(char **argv, t_ast *redir_list_head)
-{
-	t_ast	*cmd;
-
-	cmd = ast_new_command(argv, redir_list_head);
-	if (!cmd)
-		return (NULL);
-	return (cmd);
-}

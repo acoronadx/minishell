@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:24:41 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/06 15:44:12 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/06 16:03:48 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ struct s_ast
             char        *delimiter;
             t_redir_type redir_type;
             int         redir_fd;
+			int         heredoc_quoted;
         } redir;
         struct {
             struct s_ast *left;
@@ -79,6 +80,8 @@ t_ast   *ast_new_redir(char *filename, char *delimiter,
 t_ast   *ast_new_binary(t_node_type type, t_ast *left, t_ast *right);
 t_ast   *ast_new_subshell(t_ast *child, t_ast *redirections);
 t_ast   *create_command_node(char **argv, t_ast *redir_list_head);
+t_ast *ast_new_redir(char *filename, char *delimiter, t_redir_type type,
+		int redir_fd);
 
 /* Parser entrypoint (implementado en tu módulo parser) */
 t_ast   *build_ast(t_token *tokens);

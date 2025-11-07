@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:24:24 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/06 14:48:53 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/06 16:20:33 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ typedef enum e_token_type
         T_APPEND_ALL,   // &>>
         T_FORCE_OUT,    // >|
         T_HEREDOC_STR,  // <<< (Bash-specific)
+		T_REDIR_ERR,    // 2>
+    	T_APPEND_ERR,   // 2>>
         T_DUP_IN,       // <&
         T_DUP_OUT,      // >&
         T_LPAREN,       // (

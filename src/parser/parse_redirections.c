@@ -6,106 +6,73 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 01:03:45 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/05 15:30:04 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/07 07:39:46 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ast.h"
-#include "lexer.h"
 #include "minishell.h"
-#include "parser.h"
 
-static t_redir_type	token_type_to_redir_type(t_token_type type)
+/* Verifica que haya WORD tras el operador y que el tipo sea válido */
+static int      expect_word_after_op(t_token *file_tok, t_redir_type rtype)
 {
-	if (type == T_REDIR_IN)
-		return (REDIR_IN);
-	if (type == T_REDIR_OUT)
-		return (REDIR_OUT);
-	if (type == T_APPEND)
-		return (REDIR_APPEND);
-	if (type == T_HEREDOC)
-		return (REDIR_HEREDOC);
-	if (type == T_REDIR_ALL)
-		return (REDIR_ALL);
-	if (type == T_APPEND_ALL)
-		return (REDIR_APPEND_ALL);
-	if (type == T_FORCE_OUT)
-		return (REDIR_FORCE);
-	if (type == T_DUP_IN)
-		return (REDIR_DUP_IN);
-	if (type == T_DUP_OUT)
-		return (REDIR_DUP_OUT);
-	return (REDIR_INVALID);
+        if (!file_tok || file_tok->type != T_WORD || rtype == REDIR_INVALID)
+        {
+                ft_dprintf(2,
+                "minishell: syntax error near unexpected token '%s'\n",
+                file_tok ? file_tok->value : "newline");
+                return (0);
+        }
+        return (1);
 }
 
-int	is_redirection(t_token *tok)
+/* Inserta al final de la lista enlazada de redirecciones */
+static void     append_redir(t_ast **head, t_ast **tail, t_ast *node)
 {
-	if (!tok)
-		return (0);
-	return (tok->type == T_REDIR_IN || tok->type == T_REDIR_OUT
-		|| tok->type == T_APPEND || tok->type == T_HEREDOC
-		|| tok->type == T_REDIR_ALL || tok->type == T_APPEND_ALL
-		|| tok->type == T_FORCE_OUT || tok->type == T_DUP_IN
-		|| tok->type == T_DUP_OUT);
+        if (!*head)
+        {
+                *head = node;
+                *tail = node;
+        }
+        else
+        {
+                (*tail)->bin.right = node;
+                *tail = node;
+        }
 }
 
-int	parse_redirections(t_token **cur, t_ast **head, t_ast **tail)
+/* Parsea una redirección: OP WORD -> crea nodo y lo añade a la lista */
+static int      parse_one_redirection(t_token **cur, t_ast **head, t_ast **tail)
 {
-	t_token			*redir_tok;
-	t_redir_type	rtype;
-		t_token *file_tok;
-		t_ast *new_redir;
-		int fd;
+        t_redir_type    rtype;
+        t_token         *file_tok;
+        t_ast           *new_redir;
 
-	while (*cur && is_redirection(*cur))
-	{
-		redir_tok = *cur;
-		rtype = token_type_to_redir_type(redir_tok->type);
-		next_token(cur);
-		file_tok = *cur;
-		if (!file_tok || file_tok->type != T_WORD || rtype == REDIR_INVALID)
-		{
-			ft_dprintf(2,
-				"minishell: syntax error near unexpected token '%s'\n",
-				file_tok ? file_tok->value : "newline");
-			return (0);
-		}
-		if (rtype == REDIR_DUP_OUT || rtype == REDIR_DUP_IN)
-		{
-			if (!ft_isposfdstr(file_tok->value))
-			{
-				ft_dprintf(2,
-					"minishell: syntax error near unexpected token '%s'\n",
-					file_tok->value);
-				return (0);
-			}
-			fd = ft_atoi(file_tok->value);
-			new_redir = ast_new_redir(NULL, NULL, rtype, fd);
-		}
-		else if (rtype == REDIR_HEREDOC)
-		{
-			/* Guardamos SOLO el delimitador; se leerá en ejecución */
-			new_redir = ast_new_redir(NULL, ft_strdup(file_tok->value), rtype,
-					-1);
-		}
-		else
-		{
-			new_redir = ast_new_redir(ft_strdup(file_tok->value), NULL, rtype,
-					-1);
-		}
-		if (!new_redir)
-			return (0);
-		next_token(cur);
-		if (!*head)
-		{
-			*head = new_redir;
-			*tail = new_redir;
-		}
-		else
-		{
-			(*tail)->bin.right = new_redir;
-			*tail = new_redir;
-		}
-	}
-	return (1);
+        rtype = token_type_to_redir_type((*cur)->type);
+        next_token(cur);
+        file_tok = *cur;
+        if (!expect_word_after_op(file_tok, rtype))
+                return (0);
+        if (rtype == REDIR_DUP_OUT || rtype == REDIR_DUP_IN)
+                new_redir = build_dup_node(file_tok, rtype);
+        else if (rtype == REDIR_HEREDOC)
+                new_redir = build_heredoc_node(file_tok);
+        else
+                new_redir = build_file_node(file_tok, rtype);
+        if (!new_redir)
+                return (0);
+        next_token(cur);
+        append_redir(head, tail, new_redir);
+        return (1);
+}
+
+int     parse_redirections(t_token **cur, t_ast **head, t_ast **tail)
+{
+        *head = NULL;
+        *tail = NULL;
+        while (*cur && is_redirection(*cur))
+        {
+                if (!parse_one_redirection(cur, head, tail))
+                        return (0);
+        }
+        return (1);
 }

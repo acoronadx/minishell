@@ -1,0 +1,860 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_and_or.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/13 18:38:03 by acoronad          #+#    #+#             */
+/*   Updated: 2025/11/07 07:46:48 by acoronad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+/* Si hay &&/||, fija type y consume; si falta el token siguiente -> error */
+static int  consume_andor_or_report(t_token **cur, t_ast *left,
+                                    t_node_type *out_type)
+{
+    if (!*cur)
+        return (0);
+    if ((*cur)->type == T_AND)
+        *out_type = N_AND;
+    else if ((*cur)->type == T_OR)
+        *out_type = N_OR;
+    else
+        return (0);
+
+    next_token(cur);
+    if (!*cur)
+    {
+        ft_dprintf(2,
+        "minishell: syntax error near unexpected token 'newline'\n");
+        free_ast(left);
+        return (-1);
+    }
+    return (1);
+}
+
+/* Parsea la derecha como pipeline o limpia left en caso de error */
+static t_ast        *parse_right_pipe_or_cleanup(t_token **cur, t_ast *left)
+{
+        t_ast *right;
+
+        right = parse_pipeline(cur);
+        if (!right)
+        {
+                free_ast(left);
+                return (NULL);
+        }
+        return (right);
+}
+
+/* Construye nodo AND/OR o limpia ambas ramas si falla */
+static t_ast        *make_andor_node_or_cleanup(t_node_type type,
+                                                t_ast *left, t_ast *right)
+{
+        t_ast *node;
+
+        node = ast_new_binary(type, left, right);
+        if (!node)
+        {
+                free_ast(left);
+                free_ast(right);
+                return (NULL);
+        }
+        return (node);
+}
+
+/* Itera: left && right  ||  left || right ... */
+static t_ast *andor_tail(t_token **cur, t_ast *left)
+{
+	t_ast        *right;
+	t_ast        *node;
+	t_node_type   type;
+	int           r;
+
+	while (1)
+	{
+		r = consume_andor_or_report(cur, left, &type);
+		if (r <= 0)
+		{
+			if (r == 0)
+				return (left);
+			return (NULL);
+		}
+		right = parse_right_pipe_or_cleanup(cur, left);
+		if (!right)
+			return (NULL);
+		node = make_andor_node_or_cleanup(type, left, right);
+		if (!node)
+			return (NULL);
+		left = node;
+	}
+}
+
+
+t_ast   *parse_and_or(t_token **cur)
+{
+        t_ast *left;
+
+        left = parse_pipeline(cur);
+        if (!left)
+                return (NULL);
+        return (andor_tail(cur, left));
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_arguments.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/28 03:14:32 by acoronad          #+#    #+#             */
+/*   Updated: 2025/11/07 07:25:46 by acoronad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+/* Duplica la capacidad cuando es necesario. Mantiene terminador NULL extra. */
+static char **ensure_capacity(char **argv, int *size, int argc)
+{
+	char	**new_argv;
+	size_t	old_bytes;
+	size_t	new_bytes;
+
+	(void)argc;
+	old_bytes = (size_t)(*size) * sizeof(char *);
+	*size *= 2;
+	new_bytes = (size_t)(*size + 1) * sizeof(char *);
+	new_argv = (char **)ft_realloc(argv, old_bytes, new_bytes);
+	return (new_argv);
+}
+
+/* Inserta value al final y mantiene argv[*argc] == NULL */
+static int push_arg(char ***pargv, int *argc, const char *value)
+{
+	char **argv;
+
+	argv = *pargv;
+	argv[*argc] = ft_strdup(value);
+	if (!argv[*argc])
+		return (0);
+	(*argc)++;
+	argv[*argc] = NULL;
+	*pargv = argv;
+	return (1);
+}
+
+static char	**add_argument(char **argv, int *argc, int *size, const char *value)
+{
+	char **tmp;
+
+	if (*argc >= *size)
+	{
+		tmp = ensure_capacity(argv, size, *argc);
+		if (!tmp)
+		{
+			ft_free_strtab(argv);
+			return (NULL);
+		}
+		argv = tmp;
+	}
+	if (!push_arg(&argv, argc, value))
+	{
+		ft_free_strtab(argv);
+		return (NULL);
+	}
+	return (argv);
+}
+
+char	**parse_arguments(t_token **cur)
+{
+	int		size;
+	int		argc;
+	char	**argv;
+
+	size = 4;
+	argc = 0;
+	argv = malloc(sizeof(char *) * (size + 1));
+	if (!argv)
+		return (NULL);
+	argv[0] = NULL;
+	while (*cur && (*cur)->type == T_WORD)
+	{
+		argv = add_argument(argv, &argc, &size, (*cur)->value);
+		if (!argv)
+			return (NULL);
+		next_token(cur);
+	}
+	if (argc == 0)
+	{
+		free(argv);
+		return (NULL);
+	}
+	return (argv);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_background.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/13 18:36:56 by acoronad          #+#    #+#             */
+/*   Updated: 2025/11/07 07:21:21 by acoronad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+/* Paramos si no hay token o si viene ; | && || ) */
+static int      is_bg_stop(const t_token *tok)
+{
+        if (!tok)
+                return (1);
+        return (tok->type == T_SEMI || tok->type == T_PIPE
+                || tok->type == T_AND || tok->type == T_OR
+                || tok->type == T_RPAREN);
+}
+
+/* Construye N_BACKGROUND o limpia y falla */
+static t_ast    *make_bg_node_or_cleanup(t_ast *left, t_ast *right)
+{
+        t_ast   *node;
+
+        node = ast_new_binary(N_BACKGROUND, left, right);
+        if (!node)
+        {
+                free_ast(left);
+                if (right)
+                        free_ast(right);
+                return (NULL);
+        }
+        return (node);
+}
+
+/* Parsea la parte derecha o limpia left si falla */
+static t_ast    *parse_right_sequence_or_cleanup(t_token **cur, t_ast *left)
+{
+        t_ast   *right;
+
+        right = parse_sequence(cur);
+        if (!right)
+        {
+                free_ast(left);
+                return (NULL);
+        }
+        return (right);
+}
+
+/* Bucle: left & [right]?  (permite & final sin comando a la derecha) */
+static t_ast    *background_tail(t_token **cur, t_ast *left)
+{
+        t_ast   *right;
+        t_ast   *node;
+
+        while (*cur && (*cur)->type == T_BG)
+        {
+                next_token(cur);
+                if (is_bg_stop(*cur))
+                {
+                        node = make_bg_node_or_cleanup(left, NULL);
+                        if (!node)
+                                return (NULL);
+                        return (node); /* '&' final: cerramos la cadena */
+                }
+                right = parse_right_sequence_or_cleanup(cur, left);
+                if (!right)
+                        return (NULL);
+                node = make_bg_node_or_cleanup(left, right);
+                if (!node)
+                        return (NULL);
+                left = node;
+        }
+        return (left);
+}
+
+t_ast   *parse_background(t_token **cur)
+{
+        t_ast   *left;
+
+        left = parse_sequence(cur);
+        if (!left)
+                return (NULL);
+        return (background_tail(cur, left));
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_command_and_redirection.c                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/26 06:56:48 by acoronad          #+#    #+#             */
+/*   Updated: 2025/11/01 15:18:17 by acoronad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+t_ast	*parse_command_and_redirections(t_token **cur)
+{
+	if (*cur && (*cur)->type == T_LPAREN)
+		return (parse_subshell(cur));
+	if (*cur && ((*cur)->type == T_WORD || is_redirection(*cur)))
+		return (parse_simple_command(cur));
+	ft_dprintf(2, "minishell: syntax error near unexpected token '%s'\n",
+		*cur ? (*cur)->value : "newline");
+	return (NULL);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_pipeline.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/13 18:38:38 by acoronad          #+#    #+#             */
+/*   Updated: 2025/11/07 07:17:23 by acoronad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+/* Si hay '|' lo consume; si luego no hay token, error y free(left) */
+static int      consume_pipe_or_report(t_token **cur, t_ast *left)
+{
+        if (!(*cur) || (*cur)->type != T_PIPE)
+                return (0);
+        next_token(cur);
+        if (!*cur)
+        {
+                ft_dprintf(2,
+                "minishell: syntax error near unexpected token 'newline'\n");
+                free_ast(left);
+                return (-1);
+        }
+        return (1);
+}
+
+/* Parsea el comando derecho o libera left en caso de error */
+static t_ast    *parse_right_cmd_or_cleanup(t_token **cur, t_ast *left)
+{
+        t_ast   *right;
+
+        right = parse_command_and_redirections(cur);
+        if (!right)
+        {
+                free_ast(left);
+                return (NULL);
+        }
+        return (right);
+}
+
+/* Construye nodo N_PIPE o limpia ambos lados si falla */
+static t_ast    *make_pipe_node_or_cleanup(t_ast *left, t_ast *right)
+{
+        t_ast   *node;
+
+        node = ast_new_binary(N_PIPE, left, right);
+        if (!node)
+        {
+                free_ast(left);
+                free_ast(right);
+                return (NULL);
+        }
+        return (node);
+}
+
+/* Bucle: left | right | right2 ... */
+static t_ast    *pipeline_tail(t_token **cur, t_ast *left)
+{
+        t_ast   *right;
+        t_ast   *node;
+        int     r;
+
+        while (1)
+        {
+                r = consume_pipe_or_report(cur, left);
+                if (r <= 0)
+                        return (r == 0 ? left : NULL);
+                right = parse_right_cmd_or_cleanup(cur, left);
+                if (!right)
+                        return (NULL);
+                node = make_pipe_node_or_cleanup(left, right);
+                if (!node)
+                        return (NULL);
+                left = node;
+        }
+}
+
+t_ast   *parse_pipeline(t_token **cur)
+{
+        t_ast   *left;
+
+        left = parse_command_and_redirections(cur);
+        if (!left)
+                return (NULL);
+        return (pipeline_tail(cur, left));
+}/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_redirections.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/26 01:03:45 by acoronad          #+#    #+#             */
+/*   Updated: 2025/11/07 07:39:46 by acoronad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+/* Verifica que haya WORD tras el operador y que el tipo sea válido */
+static int      expect_word_after_op(t_token *file_tok, t_redir_type rtype)
+{
+        if (!file_tok || file_tok->type != T_WORD || rtype == REDIR_INVALID)
+        {
+                ft_dprintf(2,
+                "minishell: syntax error near unexpected token '%s'\n",
+                file_tok ? file_tok->value : "newline");
+                return (0);
+        }
+        return (1);
+}
+
+/* Inserta al final de la lista enlazada de redirecciones */
+static void     append_redir(t_ast **head, t_ast **tail, t_ast *node)
+{
+        if (!*head)
+        {
+                *head = node;
+                *tail = node;
+        }
+        else
+        {
+                (*tail)->bin.right = node;
+                *tail = node;
+        }
+}
+
+/* Parsea una redirección: OP WORD -> crea nodo y lo añade a la lista */
+static int      parse_one_redirection(t_token **cur, t_ast **head, t_ast **tail)
+{
+        t_redir_type    rtype;
+        t_token         *file_tok;
+        t_ast           *new_redir;
+
+        rtype = token_type_to_redir_type((*cur)->type);
+        next_token(cur);
+        file_tok = *cur;
+        if (!expect_word_after_op(file_tok, rtype))
+                return (0);
+        if (rtype == REDIR_DUP_OUT || rtype == REDIR_DUP_IN)
+                new_redir = build_dup_node(file_tok, rtype);
+        else if (rtype == REDIR_HEREDOC)
+                new_redir = build_heredoc_node(file_tok);
+        else
+                new_redir = build_file_node(file_tok, rtype);
+        if (!new_redir)
+                return (0);
+        next_token(cur);
+        append_redir(head, tail, new_redir);
+        return (1);
+}
+
+int     parse_redirections(t_token **cur, t_ast **head, t_ast **tail)
+{
+        *head = NULL;
+        *tail = NULL;
+        while (*cur && is_redirection(*cur))
+        {
+                if (!parse_one_redirection(cur, head, tail))
+                        return (0);
+        }
+        return (1);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_redirection_utils.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/07 07:31:30 by acoronad          #+#    #+#             */
+/*   Updated: 2025/11/07 07:36:39 by acoronad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+t_redir_type token_type_to_redir_type(t_token_type type)
+{
+    if (type == T_REDIR_IN)
+		return REDIR_IN;
+    if (type == T_REDIR_OUT)
+		return REDIR_OUT;
+    if (type == T_APPEND)
+		return REDIR_APPEND;
+    if (type == T_HEREDOC)
+		return REDIR_HEREDOC;
+    if (type == T_REDIR_ERR)
+		return REDIR_ERR;
+    if (type == T_APPEND_ERR)
+		return REDIR_APPEND_ERR;
+    if (type == T_REDIR_ALL)
+		return REDIR_ALL;
+    if (type == T_APPEND_ALL)
+		return REDIR_APPEND_ALL;
+    if (type == T_FORCE_OUT)
+		return REDIR_FORCE;
+    if (type == T_DUP_IN)
+		return REDIR_DUP_IN;
+    if (type == T_DUP_OUT)
+		return REDIR_DUP_OUT;
+    return REDIR_INVALID;
+}
+
+int is_redirection(t_token *tok)
+{
+    if (!tok) return 0;
+    return (tok->type == T_REDIR_IN || tok->type == T_REDIR_OUT
+        || tok->type == T_APPEND   || tok->type == T_HEREDOC
+        || tok->type == T_REDIR_ERR   
+        || tok->type == T_APPEND_ERR  
+        || tok->type == T_REDIR_ALL || tok->type == T_APPEND_ALL
+        || tok->type == T_FORCE_OUT || tok->type == T_DUP_IN
+        || tok->type == T_DUP_OUT);
+}
+
+/* >&/ <& : duplicación de FD (requiere un entero positivo) */
+t_ast    *build_dup_node(t_token *file_tok, t_redir_type rtype)
+{
+        int     fd;
+
+        if (!ft_isposfdstr(file_tok->value))
+        {
+                ft_dprintf(2,
+                "minishell: syntax error near unexpected token '%s'\n",
+                file_tok->value);
+                return (NULL);
+        }
+        fd = ft_atoi(file_tok->value);
+        return (ast_new_redir(NULL, NULL, rtype, fd));
+}
+
+/* << : here-doc (guardar delimitador y flag de quoted) */
+t_ast    *build_heredoc_node(t_token *file_tok)
+{
+        t_ast   *node;
+
+        node = ast_new_redir(NULL, ft_strdup(file_tok->value),
+                             REDIR_HEREDOC, -1);
+        if (!node)
+                return (NULL);
+        node->redir.heredoc_quoted = (file_tok->quoted != NO_QUOTE);
+        return (node);
+}
+
+/* >, >>, < : redirección con nombre de archivo */
+t_ast    *build_file_node(t_token *file_tok, t_redir_type rtype)
+{
+        return (ast_new_redir(ft_strdup(file_tok->value), NULL, rtype, -1));
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_sequence.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/25 22:23:59 by acoronad          #+#    #+#             */
+/*   Updated: 2025/11/07 07:15:24 by acoronad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+/* Si hay ';' lo consume; si falta el token siguiente, reporta y libera left */
+static int      consume_semicolon_or_report(t_token **cur, t_ast *left)
+{
+        if (!(*cur) || (*cur)->type != T_SEMI)
+                return (0);
+        next_token(cur);
+        if (!*cur)
+        {
+                ft_dprintf(2,
+                "minishell: syntax error near unexpected token 'newline'\n");
+                free_ast(left);
+                return (-1);
+        }
+        return (1);
+}
+
+/* Parsea el lado derecho o, si falla, libera left y devuelve NULL */
+static t_ast    *parse_right_or_cleanup(t_token **cur, t_ast *left)
+{
+        t_ast   *right;
+
+        right = parse_and_or(cur);
+        if (!right)
+        {
+                free_ast(left);
+                return (NULL);
+        }
+        return (right);
+}
+
+/* Construye nodo N_SEQUENCE o limpia ambos lados si falla */
+static t_ast    *make_seq_node_or_cleanup(t_ast *left, t_ast *right)
+{
+        t_ast   *node;
+
+        node = ast_new_binary(N_SEQUENCE, left, right);
+        if (!node)
+        {
+                free_ast(left);
+                free_ast(right);
+                return (NULL);
+        }
+        return (node);
+}
+
+/* Bucle de secuencia: left ; right ; right2 ; ... */
+static t_ast    *sequence_tail(t_token **cur, t_ast *left)
+{
+        t_ast   *right;
+        t_ast   *node;
+        int     r;
+
+        while (1)
+        {
+                r = consume_semicolon_or_report(cur, left);
+                if (r <= 0)
+                        return (r == 0 ? left : NULL);
+                right = parse_right_or_cleanup(cur, left);
+                if (!right)
+                        return (NULL);
+                node = make_seq_node_or_cleanup(left, right);
+                if (!node)
+                        return (NULL);
+                left = node;
+        }
+}
+
+t_ast   *parse_sequence(t_token **cur)
+{
+        t_ast   *left;
+
+        left = parse_and_or(cur);
+        if (!left)
+                return (NULL);
+        return (sequence_tail(cur, left));
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_simple_command.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/13 18:39:45 by acoronad          #+#    #+#             */
+/*   Updated: 2025/11/07 07:10:39 by acoronad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+
+static int	is_lparen(t_token *tok)
+{
+	if (!tok)
+		return (0);
+	return (tok->type == T_LPAREN);
+}
+
+
+/* ( ... ) [redirs] */
+static t_ast    *handle_subshell_branch(t_token **cur)
+{
+        t_ast   *cmd_node;
+        t_ast   *redir_head;
+        t_ast   *redir_tail;
+
+        redir_head = NULL;
+        redir_tail = NULL;
+        cmd_node = parse_subshell(cur);
+        if (!cmd_node)
+                return (NULL);
+        if (!parse_redirections(cur, &redir_head, &redir_tail))
+        {
+                free_ast(cmd_node);
+                return (NULL);
+        }
+        cmd_node->subshell.redirections = redir_head;
+        return (cmd_node);
+}
+
+/*
+** parse_simple_command:
+**  - Si ve '(' delega en rama de subshell.
+**  - Si no, parsea redirecciones iniciales, argv y redirecciones finales.
+*/
+t_ast   *parse_simple_command(t_token **cur)
+{
+        if (*cur && is_lparen(*cur))
+                return (handle_subshell_branch(cur));
+        return (handle_plain_command(cur));
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_simple_utils.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/13 19:05:39 by acoronad          #+#    #+#             */
+/*   Updated: 2025/11/07 07:10:11 by acoronad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+/* [redirs] iniciales */
+static int      parse_leading_redirs(t_token **cur, t_ast **head, t_ast **tail)
+{
+        if (!parse_redirections(cur, head, tail))
+                return (0);
+        return (1);
+}
+
+/* Caso bash: permitir solo redirecciones sin argv; si no hay redirs -> error */
+static t_ast    *handle_no_argv_case(t_ast *redir_head)
+{
+        if (redir_head)
+                return (ast_new_command(NULL, redir_head));
+        ft_dprintf(2, "minishell: syntax error: empty command\n");
+        return (NULL);
+}
+
+/* [redirs] finales; en error, limpiar argv y redirs */
+static int      parse_trailing_redirs_ok(t_token **cur, t_ast **head,
+                                         t_ast **tail, char **argv)
+{
+        if (!parse_redirections(cur, head, tail))
+        {
+                ft_free_strtab(argv);
+                free_ast(*head);
+                return (0);
+        }
+        return (1);
+}
+
+/* Construcción del nodo comando o limpieza si falla */
+static t_ast    *create_cmd_or_cleanup(char **argv, t_ast *redir_head)
+{
+        t_ast   *cmd_node;
+
+        cmd_node = ast_new_command(argv, redir_head);
+        if (!cmd_node)
+        {
+                ft_free_strtab(argv);
+                free_ast(redir_head);
+                return (NULL);
+        }
+        return (cmd_node);
+}
+
+t_ast    *handle_plain_command(t_token **cur)
+{
+        t_ast   *redir_head;
+        t_ast   *redir_tail;
+        char    **argv;
+
+        redir_head = NULL;
+        redir_tail = NULL;
+        if (!parse_leading_redirs(cur, &redir_head, &redir_tail))
+                return (NULL);
+        argv = parse_arguments(cur);
+        if (!argv)
+                return (handle_no_argv_case(redir_head));
+        if (!parse_trailing_redirs_ok(cur, &redir_head, &redir_tail, argv))
+                return (NULL);
+        return (create_cmd_or_cleanup(argv, redir_head));
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_subshell.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/26 00:59:14 by acoronad          #+#    #+#             */
+/*   Updated: 2025/11/07 07:03:48 by acoronad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+/* Avanza después de '(' y valida que no acabe el input inmediatamente. */
+static int	consume_open_paren(t_token **cur)
+{
+	next_token(cur);
+	if (!*cur)
+	{
+		ft_dprintf(2,
+			"minishell: syntax error: unexpected end of input after '('\n");
+		return (0);
+	}
+	return (1);
+}
+
+/* Exige ')' como siguiente token, lo consume o informa error y libera sub_ast. */
+static int	check_and_consume_rparen(t_token **cur, t_ast *sub_ast)
+{
+	if (!(*cur) || (*cur)->type != T_RPAREN)
+	{
+		ft_dprintf(2, "minishell: syntax error: missing ')'\n");
+		free_ast(sub_ast);
+		return (0);
+	}
+	next_token(cur);
+	return (1);
+}
+
+/* Crea el nodo subshell o libera en caso de fallo. */
+static t_ast	*make_subshell_node(t_ast *sub_ast)
+{
+	t_ast	*node;
+
+	node = ast_new_subshell(sub_ast, NULL);
+	if (!node)
+	{
+		free_ast(sub_ast);
+		return (NULL);
+	}
+	return (node);
+}
+
+/*
+** parse_subshell:
+**  - Se asume que el token actual es '(' (ya reconocido por el caller).
+**  - Avanza tras '(' y parsea el cuerpo con parse_background().
+**  - Exige ')' y la consume.
+**  - Devuelve un nodo AST de tipo subshell.
+*/
+t_ast	*parse_subshell(t_token **cur)
+{
+	t_ast	*sub_ast;
+
+	if (!consume_open_paren(cur))
+		return (NULL);
+	sub_ast = parse_background(cur);
+	if (!sub_ast)
+		return (NULL);
+	if (!check_and_consume_rparen(cur, sub_ast))
+		return (NULL);
+	return (make_subshell_node(sub_ast));
+}

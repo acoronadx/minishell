@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 14:20:54 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/04 14:04:21 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/07 08:09:48 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,3 +174,26 @@ int	execute_command(t_ast *node, t_shell *shell)
 	ft_free_strtab(env);
 	return (shell->exit_status);
 }
+
+/*
+// exec_simple.c (esquema)
+int exec_simple(t_ast *cmd, t_shell *sh)
+{
+	pid_t pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		set_child_signals();
+		if (!expand_command(cmd, sh->env))           // $VAR + quitar comillas; opcional globbing
+			_exit(1);
+		if (!apply_redirections(cmd))                // usa tmpfiles de heredoc ya preparados
+			_exit(1);
+		execve(cmd->argv[0], cmd->argv, sh->envp);
+		perror("execve");
+		_exit(127);
+	}
+	set_parent_signals();
+	return wait_child_update_status(pid, &sh->exit_status);
+}
+*/

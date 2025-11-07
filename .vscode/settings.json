@@ -10,6 +10,7 @@
 		"lexer.h": "c",
 		"minishell.h": "c",
 		"copyminishell": "c",
-		"copyms": "c"
+		"copyms": "c",
+		"copyparser": "c"
 	}
 }
