@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 15:11:12 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/07 15:32:08 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/07 17:46:11 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	is_ifs_space(unsigned char c)
 }
 
 /* Divide SOLO palabras (T_WORD) respetando comillas y backslashes */
-static t_token	*split_word_respecting_quotes(const char *s)
+t_token	*split_word_respecting_quotes(const char *s)
 {
 	t_token	*head;
 	size_t	n;

@@ -11,6 +11,7 @@
 		"minishell.h": "c",
 		"copyminishell": "c",
 		"copyms": "c",
-		"copyparser": "c"
+		"copyparser": "c",
+		"copyexpand": "c"
 	}
 }

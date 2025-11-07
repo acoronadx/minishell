@@ -6,21 +6,15 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 15:41:31 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/07 15:47:00 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/07 17:12:13 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* -- Signal handling (heredoc mode) ---------------------------------------- */
-
-/* Minimal stub: duplicate line without expansion (wire real expansion later). */
-static char	*expand_for_heredoc(char *line, t_shell *sh)
-{
-	(void)sh;
-	return (ft_strdup(line));
-}
-
+/* -------------------------------------------------------------------------- */
+/* Señales para modo heredoc                                                  */
+/* -------------------------------------------------------------------------- */
 
 static void	hd_sigint(int sig)
 {
@@ -32,7 +26,6 @@ static void	hd_sigint(int sig)
 	rl_done = 1;
 }
 
-/* Install SIGINT custom handler, ignore SIGQUIT. */
 static void	hd_push_signals(struct sigaction *old_int, struct sigaction *old_quit)
 {
 	struct sigaction	sa;
@@ -55,7 +48,9 @@ static void	hd_pop_signals(struct sigaction *old_int, struct sigaction *old_quit
 	sigaction(SIGQUIT, old_quit, NULL);
 }
 
-/* -- Optional line expansion: only when not quoted ------------------------- */
+/* -------------------------------------------------------------------------- */
+/* Expansión de línea en heredoc: solo $..., si el delimitador NO estaba quote*/
+/* -------------------------------------------------------------------------- */
 
 static char	*hd_expand_line_opt(char *line, t_shell *sh, int quoted)
 {
@@ -63,68 +58,17 @@ static char	*hd_expand_line_opt(char *line, t_shell *sh, int quoted)
 
 	if (quoted)
 		return (line);
-	out = expand_for_heredoc(line, sh); /* currently duplicates 'line' */
+	/* Usa tu API de expansión ligera: solo $..., sin split ni glob */
+	out = expand_heredoc_line(line, sh);
 	if (!out)
 		return (NULL);
 	free(line);
 	return (out);
 }
 
-
-/* -- Unique tmp path (no mkstemp): /tmp/minish_hd_<pid>_<ctr> -------------- */
-
-static int	hd_make_tmp(int *out_fd, char **out_path)
-{
-	static unsigned int	ctr;
-	char				*pid_s;
-	char				*ctr_s;
-	char				*tmp;
-	char				*name;
-	int					fd;
-
-	pid_s = ft_itoa((int)getpid());
-	if (!pid_s)
-		return (0);
-	ctr_s = ft_itoa((int)ctr++);
-	if (!ctr_s)
-	{
-		free(pid_s);
-		return (0);
-	}
-	/* name = "/tmp/minish_hd_" + pid + "_" */
-	tmp = ft_strjoin("/tmp/minish_hd_", pid_s);
-	free(pid_s);
-	if (!tmp)
-	{
-		free(ctr_s);
-		return (0);
-	}
-	name = ft_strjoin(tmp, "_");
-	free(tmp);
-	if (!name)
-	{
-		free(ctr_s);
-		return (0);
-	}
-	/* *out_path = name + ctr_s */
-	*out_path = ft_strjoin(name, ctr_s);
-	free(name);
-	free(ctr_s);
-	if (!*out_path)
-		return (0);
-
-	fd = open(*out_path, O_CREAT | O_EXCL | O_WRONLY, 0600);
-	if (fd < 0)
-	{
-		free(*out_path);
-		*out_path = NULL;
-		return (0);
-	}
-	*out_fd = fd;
-	return (1);
-}
-
-/* -- Write heredoc until delimiter or Ctrl-C -------------------------------- */
+/* -------------------------------------------------------------------------- */
+/* Entrada de texto del heredoc -> escribe en el extremo de escritura del pipe*/
+/* -------------------------------------------------------------------------- */
 
 static int	hd_write_to_fd(int fdw, const char *delim, int quoted, t_shell *sh)
 {
@@ -150,64 +94,47 @@ static int	hd_write_to_fd(int fdw, const char *delim, int quoted, t_shell *sh)
 	return (g_signal ? 0 : 1);
 }
 
-/* -- Convert HEREDOC redirection node into an input redirection ------------- */
-
-static int	ast_redir_convert_to_in(t_ast *r, const char *tmp_path)
-{
-	char	*dup;
-
-	dup = ft_strdup(tmp_path);
-	if (!dup)
-		return (0);
-	r->redir.redir_type = REDIR_IN;
-	if (r->redir.delimiter)
-	{
-		free(r->redir.delimiter);
-		r->redir.delimiter = NULL;
-	}
-	if (r->redir.filename)
-	{
-		free(r->redir.filename);
-		r->redir.filename = NULL;
-	}
-	r->redir.filename = dup;
-	return (1);
-}
-
-/* -- Handle a single heredoc node ------------------------------------------ */
+/* -------------------------------------------------------------------------- */
+/* HEREDOC -> PIPE: crea pipe, escribe y convierte el nodo a REDIR_IN (FD)    */
+/* -------------------------------------------------------------------------- */
 
 static int	prepare_one_heredoc_node(t_ast *redir, t_shell *sh)
 {
-	char	*path;
-	int		fd;
-	int		ok;
+	int	p[2];
+	int	ok;
 
-	path = NULL;
-	if (!hd_make_tmp(&fd, &path))
+	if (pipe(p) < 0)
 		return (0);
-	ok = hd_write_to_fd(fd, redir->redir.delimiter,
+	/* p[0] lectura -> se quedará en el AST; p[1] escritura -> se usa aquí */
+	ok = hd_write_to_fd(p[1], redir->redir.delimiter,
 			redir->redir.heredoc_quoted, sh);
-	close(fd);
+	close(p[1]);
 	if (!ok)
 	{
-		if (path)
-			unlink(path);
-		free(path);
+		/* Ctrl-C o error: cerramos lectura y fijamos status 130 */
+		close(p[0]);
 		sh->exit_status = 130;
 		return (0);
 	}
-	if (!ast_redir_convert_to_in(redir, path))
+	/* Convertir el nodo: HEREDOC -> IN con FD interno (sin filename) */
+	redir->redir.redir_type = REDIR_IN;
+	if (redir->redir.delimiter)
 	{
-		unlink(path);
-		free(path);
-		return (0);
+		free(redir->redir.delimiter);
+		redir->redir.delimiter = NULL;
 	}
-	/* Keep path for later unlink after open() in apply_redirections(). */
-	free(path);
+	if (redir->redir.filename)
+	{
+		free(redir->redir.filename);
+		redir->redir.filename = NULL;
+	}
+	redir->redir.heredoc_fd = p[0]; /* NUEVO: lectura del pipe para stdin */
 	return (1);
 }
 
-/* -- Iterate redirection list (stored in bin.right as a chain) -------------- */
+/* -------------------------------------------------------------------------- */
+/* Recorre la lista de redirecciones (bin.right) y prepara heredocs           */
+/* -------------------------------------------------------------------------- */
 
 static int	prepare_redirs_list(t_ast *head, t_shell *sh)
 {
@@ -226,7 +153,9 @@ static int	prepare_redirs_list(t_ast *head, t_shell *sh)
 	return (1);
 }
 
-/* -- AST walk left-to-right ------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/* Recorrido del AST izquierda->derecha                                       */
+/* -------------------------------------------------------------------------- */
 
 static int	walk_prepare_heredocs(t_ast *n, t_shell *sh)
 {
@@ -253,7 +182,9 @@ static int	walk_prepare_heredocs(t_ast *n, t_shell *sh)
 	return (1);
 }
 
-/* -- Public API ------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/* API pública                                                                */
+/* -------------------------------------------------------------------------- */
 
 int	prepare_heredocs(t_ast *root, t_shell *sh)
 {

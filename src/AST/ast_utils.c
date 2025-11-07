@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 19:53:28 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/06 16:24:40 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/07 18:10:29 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,19 @@ t_ast	*ast_new_redir(char *filename, char *delimiter, t_redir_type type,
 	t_ast	*node;
 
 	node = malloc(sizeof(t_ast));
-	if (!node)
-		return (NULL);
+    if (!node)
+	{
+		free(filename);
+		free(delimiter);
+		return NULL;
+	}
 	node->type = N_REDIR;
 	node->redir.filename = filename;
 	node->redir.delimiter = delimiter;
 	node->redir.redir_type = type;
 	node->redir.redir_fd = redir_fd;
+	node->redir.heredoc_fd = -1;          /* <-- importante para pipe de heredoc */
+    node->redir.heredoc_quoted = 0;
 	return (node);
 }
 

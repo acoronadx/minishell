@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 20:17:25 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/07 16:20:48 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/07 18:57:06 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ char   *expand_tilde_internal(const char *str, t_shell *shell);
 size_t  get_tilde_prefix_len(const char *str);
 void    perform_word_splitting(t_shell *shell);
 void    remove_quotes(t_token *tokens);
+char	*expand_heredoc_line(const char *line, t_shell *shell);
+t_token	*split_word_respecting_quotes(const char *s);  /* split respetando comillas */
+char	*quote_remove_like_bash(const char *s);  /* quote-removal como bash */
+char	*quote_remove_for_delim(const char *s); /* quote-removal para delimitador heredoc */
 
 /* Utils que ya tienes */
 char   *find_var(t_env *env, char *name);

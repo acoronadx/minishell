@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 14:49:39 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/07 14:44:50 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/07 18:36:44 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	shell_exec(t_shell *shell)
 	shell->tokens = lexer(shell->line);
 	if (!shell->tokens)
 		return (set_syntax_err(shell));
+	mark_heredoc_delims(shell->tokens);
 	expand_variables(shell);
 	shell->ast = build_ast(shell->tokens);
 	free_token_list(shell->tokens);

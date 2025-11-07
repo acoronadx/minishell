@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:24:41 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/06 16:03:48 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/07 16:52:01 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ struct s_ast
             char        *delimiter;
             t_redir_type redir_type;
             int         redir_fd;
+			int         heredoc_fd;     /* = -1 normal, >=0 si heredoc via pipe */
 			int         heredoc_quoted;
         } redir;
         struct {

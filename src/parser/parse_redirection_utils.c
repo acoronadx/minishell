@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 07:31:30 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/07 15:05:19 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/07 19:06:03 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,20 +65,33 @@ t_ast    *build_dup_node(t_token *file_tok, t_redir_type rtype)
         }
         fd = ft_atoi(file_tok->value);
         return (ast_new_redir(NULL, NULL, rtype, fd));
+}    int           heredoc_fd;     /* NUEVO: = -1 normal, >=0 si heredoc via pipe */
+
+t_ast *build_heredoc_node(t_token *file_tok)
+{
+    t_ast *node;
+    char  *delim;
+
+    if (!file_tok || file_tok->type != T_WORD)
+        return NULL;
+    /* Quitar comillas al delimitador según reglas de bash */
+    delim = quote_remove_for_delim(file_tok->value);
+    if (!delim)
+        return NULL;
+    /* Creamos redirección tipo HEREDOC sin filename ni fd aún */
+    node = ast_new_redir(/*left*/NULL, /*filename*/NULL, REDIR_HEREDOC, -1);
+    if (!node)
+    {
+        free(delim);
+        return NULL;
+    }
+    node->redir.delimiter       = delim;                      /* limpio */
+    node->redir.heredoc_quoted  = (file_tok->quoted != NO_QUOTE);
+    node->redir.heredoc_fd      = -1; 
+    /* node->redir.filename     = NULL;  ast_new_redir ya lo deja así */
+    return node;
 }
 
-/* << : here-doc (guardar delimitador y flag de quoted) */
-t_ast    *build_heredoc_node(t_token *file_tok)
-{
-	t_ast   *node;
-	
-	node = ast_new_redir(NULL, ft_strdup(file_tok->value),
-			REDIR_HEREDOC, -1);
-	if (!node)
-		return (NULL);
-	node->redir.heredoc_quoted = (file_tok->quoted != NO_QUOTE);
-	return (node);
-}
 
 /* >, >>, < : redirección con nombre de archivo */
 t_ast    *build_file_node(t_token *file_tok, t_redir_type rtype)

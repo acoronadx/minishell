@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:24:24 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/07 15:37:41 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/07 18:36:12 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ typedef struct s_token
         t_quote         quoted;     /* comillado delimitador del token (si aplica) */
         struct s_token  *next;
 		int				is_hdoc_delim; /* 1 si es el delimitador tras << */
-		int				needs_split;   /* 1 si debe word-splitting en runtime */
+		int             hdoc_was_quoted;   /* NUEVO: 1 si traía comillas */
+//		int				needs_split;   /* 1 si debe word-splitting en runtime */
 }       t_token;
 
 /* ------------------------- API del lexer ------------------------- */
@@ -68,6 +69,7 @@ int             try_add_token(t_token **lst, char *str, t_token_type type, t_quo
 
 /* extracción */
 int             get_operator(const char *line, int i, t_token **lst);
+void			mark_heredoc_delims(t_token *head);
 int             get_word(const char *line, int i, t_token **lst);
 
 /* detección */
