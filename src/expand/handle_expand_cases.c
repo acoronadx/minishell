@@ -6,12 +6,10 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 00:08:05 by acoronad          #+#    #+#             */
-/*   Updated: 2025/10/26 14:33:35 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/07 15:31:46 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
-#include "expand.h"
 #include "minishell.h"
 
 size_t	handle_exit_status_len(t_shell *shell)

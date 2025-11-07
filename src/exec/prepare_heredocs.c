@@ -5,15 +5,24 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/07 08:15:00 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/07 08:41:49 by acoronad         ###   ########.fr       */
+/*   Created: 2025/11/07 15:41:31 by acoronad          #+#    #+#             */
+/*   Updated: 2025/11/07 15:47:00 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* --- Señales específicas del modo heredoc (sin nuevas globals) --- */
-static void hd_sigint(int sig)
+/* -- Signal handling (heredoc mode) ---------------------------------------- */
+
+/* Minimal stub: duplicate line without expansion (wire real expansion later). */
+static char	*expand_for_heredoc(char *line, t_shell *sh)
+{
+	(void)sh;
+	return (ft_strdup(line));
+}
+
+
+static void	hd_sigint(int sig)
 {
 	(void)sig;
 	g_signal = 1;
@@ -23,49 +32,113 @@ static void hd_sigint(int sig)
 	rl_done = 1;
 }
 
-static void hd_push_signals(struct sigaction *old_int, struct sigaction *old_quit)
+/* Install SIGINT custom handler, ignore SIGQUIT. */
+static void	hd_push_signals(struct sigaction *old_int, struct sigaction *old_quit)
 {
-	struct sigaction sa;
+	struct sigaction	sa;
 
 	g_signal = 0;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_handler = hd_sigint;
 	sa.sa_flags = 0;
 	sigaction(SIGINT, &sa, old_int);
-	sigaction(SIGQUIT, NULL, old_quit);
-	signal(SIGQUIT, SIG_IGN);
+
+	sigemptyset(&sa.sa_mask);
+	sa.sa_handler = SIG_IGN;
+	sa.sa_flags = 0;
+	sigaction(SIGQUIT, &sa, old_quit);
 }
 
-static void hd_pop_signals(struct sigaction *old_int, struct sigaction *old_quit)
+static void	hd_pop_signals(struct sigaction *old_int, struct sigaction *old_quit)
 {
 	sigaction(SIGINT, old_int, NULL);
 	sigaction(SIGQUIT, old_quit, NULL);
 }
 
-/* --- Hook de expansión línea a línea: solo si !quoted (opcional) --- */
-static char *hd_expand_line_opt(char *line, t_shell *sh, int quoted)
+/* -- Optional line expansion: only when not quoted ------------------------- */
+
+static char	*hd_expand_line_opt(char *line, t_shell *sh, int quoted)
 {
-	(void)sh;
+	char	*out;
+
 	if (quoted)
 		return (line);
-	/* Si ya tienes expansión: char *x = expand_line(line, sh->env); free(line); return x; */
-	return (line); /* por ahora, literal */
+	out = expand_for_heredoc(line, sh); /* currently duplicates 'line' */
+	if (!out)
+		return (NULL);
+	free(line);
+	return (out);
 }
 
-/* --- Escribe el heredoc al fd hasta 'delim' o Ctrl-C --- */
-static int hd_write_to_fd(int fdw, const char *delim, int quoted, t_shell *sh)
+
+/* -- Unique tmp path (no mkstemp): /tmp/minish_hd_<pid>_<ctr> -------------- */
+
+static int	hd_make_tmp(int *out_fd, char **out_path)
 {
-	char *line;
+	static unsigned int	ctr;
+	char				*pid_s;
+	char				*ctr_s;
+	char				*tmp;
+	char				*name;
+	int					fd;
+
+	pid_s = ft_itoa((int)getpid());
+	if (!pid_s)
+		return (0);
+	ctr_s = ft_itoa((int)ctr++);
+	if (!ctr_s)
+	{
+		free(pid_s);
+		return (0);
+	}
+	/* name = "/tmp/minish_hd_" + pid + "_" */
+	tmp = ft_strjoin("/tmp/minish_hd_", pid_s);
+	free(pid_s);
+	if (!tmp)
+	{
+		free(ctr_s);
+		return (0);
+	}
+	name = ft_strjoin(tmp, "_");
+	free(tmp);
+	if (!name)
+	{
+		free(ctr_s);
+		return (0);
+	}
+	/* *out_path = name + ctr_s */
+	*out_path = ft_strjoin(name, ctr_s);
+	free(name);
+	free(ctr_s);
+	if (!*out_path)
+		return (0);
+
+	fd = open(*out_path, O_CREAT | O_EXCL | O_WRONLY, 0600);
+	if (fd < 0)
+	{
+		free(*out_path);
+		*out_path = NULL;
+		return (0);
+	}
+	*out_fd = fd;
+	return (1);
+}
+
+/* -- Write heredoc until delimiter or Ctrl-C -------------------------------- */
+
+static int	hd_write_to_fd(int fdw, const char *delim, int quoted, t_shell *sh)
+{
+	char	*line;
 
 	while (!g_signal)
 	{
 		line = readline("> ");
 		if (!line)
-			break ;
+			break;
 		if (ft_strcmp(line, delim) == 0)
 		{
 			free(line);
-			break ;
+			break;
 		}
 		line = hd_expand_line_opt(line, sh, quoted);
 		if (!line)
@@ -77,22 +150,11 @@ static int hd_write_to_fd(int fdw, const char *delim, int quoted, t_shell *sh)
 	return (g_signal ? 0 : 1);
 }
 
-/* --- Crea tmpfile /tmp/minish_hd_XXXXXX y devuelve fd --- */
-static int hd_mktemp(char *path, size_t cap)
-{
-	int fd;
+/* -- Convert HEREDOC redirection node into an input redirection ------------- */
 
-	if (cap < 32)
-		return (-1);
-	ft_strlcpy(path, "/tmp/minish_hd_XXXXXX", cap);
-	fd = mkstemp(path);
-	return (fd);
-}
-
-/* --- Convierte HEREDOC -> IN, moviendo campos al nodo --- */
-static int ast_redir_convert_to_in(t_ast *r, const char *tmp_path)
+static int	ast_redir_convert_to_in(t_ast *r, const char *tmp_path)
 {
-	char *dup;
+	char	*dup;
 
 	dup = ft_strdup(tmp_path);
 	if (!dup)
@@ -104,43 +166,52 @@ static int ast_redir_convert_to_in(t_ast *r, const char *tmp_path)
 		r->redir.delimiter = NULL;
 	}
 	if (r->redir.filename)
+	{
 		free(r->redir.filename);
+		r->redir.filename = NULL;
+	}
 	r->redir.filename = dup;
 	return (1);
 }
 
-/* --- Resuelve UN heredoc (crear tmp, leer, convertir nodo) --- */
-static int prepare_one_heredoc_node(t_ast *redir, t_shell *sh)
-{
-	char path[PATH_MAX];
-	int  fd;
-	int  ok;
+/* -- Handle a single heredoc node ------------------------------------------ */
 
-	fd = hd_mktemp(path, sizeof(path));
-	if (fd < 0)
+static int	prepare_one_heredoc_node(t_ast *redir, t_shell *sh)
+{
+	char	*path;
+	int		fd;
+	int		ok;
+
+	path = NULL;
+	if (!hd_make_tmp(&fd, &path))
 		return (0);
 	ok = hd_write_to_fd(fd, redir->redir.delimiter,
-	                    redir->redir.heredoc_quoted, sh);
+			redir->redir.heredoc_quoted, sh);
 	close(fd);
 	if (!ok)
 	{
-		unlink(path);
-		sh->exit_status = 130; /* Ctrl-C en heredoc */
+		if (path)
+			unlink(path);
+		free(path);
+		sh->exit_status = 130;
 		return (0);
 	}
 	if (!ast_redir_convert_to_in(redir, path))
 	{
 		unlink(path);
+		free(path);
 		return (0);
 	}
-	/* Nota: puedes unlinkear tras open() en apply_redirections() para limpieza temprana */
+	/* Keep path for later unlink after open() in apply_redirections(). */
+	free(path);
 	return (1);
 }
 
-/* --- Itera la lista de redirecciones de un comando/subshell --- */
-static int prepare_redirs_list(t_ast *head, t_shell *sh)
+/* -- Iterate redirection list (stored in bin.right as a chain) -------------- */
+
+static int	prepare_redirs_list(t_ast *head, t_shell *sh)
 {
-	t_ast *r;
+	t_ast	*r;
 
 	r = head;
 	while (r)
@@ -150,19 +221,20 @@ static int prepare_redirs_list(t_ast *head, t_shell *sh)
 			if (!prepare_one_heredoc_node(r, sh))
 				return (0);
 		}
-		r = r->bin.right; /* lista enlazada en bin.right */
+		r = r->bin.right;
 	}
 	return (1);
 }
 
-/* --- Recorrido en orden izquierda→derecha por el AST --- */
-static int walk_prepare_heredocs(t_ast *n, t_shell *sh)
+/* -- AST walk left-to-right ------------------------------------------------- */
+
+static int	walk_prepare_heredocs(t_ast *n, t_shell *sh)
 {
 	if (!n)
 		return (1);
 	if (n->type == N_PIPE || n->type == N_SEQUENCE
-	 || n->type == N_AND  || n->type == N_OR
-	 || n->type == N_BACKGROUND)
+		|| n->type == N_AND || n->type == N_OR
+		|| n->type == N_BACKGROUND)
 	{
 		if (!walk_prepare_heredocs(n->bin.left, sh))
 			return (0);
@@ -177,19 +249,17 @@ static int walk_prepare_heredocs(t_ast *n, t_shell *sh)
 	if (n->type == N_COMMAND)
 		return (prepare_redirs_list(n->cmd.redirections, sh));
 	if (n->type == N_REDIR)
-	{
-		/* Por si llamaras con una lista suelta */
 		return (prepare_redirs_list(n, sh));
-	}
 	return (1);
 }
 
-/* --- API pública: prepara TODOS los heredocs del árbol --- */
-int prepare_heredocs(t_ast *root, t_shell *sh)
+/* -- Public API ------------------------------------------------------------- */
+
+int	prepare_heredocs(t_ast *root, t_shell *sh)
 {
-	struct sigaction old_int;
-	struct sigaction old_quit;
-	int ok;
+	struct sigaction	old_int;
+	struct sigaction	old_quit;
+	int					ok;
 
 	hd_push_signals(&old_int, &old_quit);
 	ok = walk_prepare_heredocs(root, sh);

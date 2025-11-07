@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:24:24 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/06 16:20:33 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/07 15:37:41 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ typedef struct s_token
         t_token_type    type;
         t_quote         quoted;     /* comillado delimitador del token (si aplica) */
         struct s_token  *next;
+		int				is_hdoc_delim; /* 1 si es el delimitador tras << */
+		int				needs_split;   /* 1 si debe word-splitting en runtime */
 }       t_token;
 
 /* ------------------------- API del lexer ------------------------- */

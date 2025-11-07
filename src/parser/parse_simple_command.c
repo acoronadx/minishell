@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:39:45 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/07 14:58:29 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/07 15:47:32 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static t_ast    *handle_subshell_branch(t_token **cur)
 */
 t_ast   *parse_simple_command(t_token **cur)
 {
-    if (*cur && is_lparen(*cur))
-        return (handle_subshell_branch(cur));
+	if (*cur && is_lparen(*cur))
+		return (handle_subshell_branch(cur));
 	return (handle_plain_command(cur));
 }

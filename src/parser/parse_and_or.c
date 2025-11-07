@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:38:03 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/07 15:07:41 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/07 15:09:09 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ static t_ast *andor_tail(t_token **cur, t_ast *left)
 		left = node;
 	}
 }
-
 
 t_ast   *parse_and_or(t_token **cur)
 {

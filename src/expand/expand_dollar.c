@@ -6,12 +6,10 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 00:15:35 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/01 15:01:01 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/07 15:31:36 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
-#include "expand.h"
 #include "minishell.h"
 
 /* ========= helpers existentes (sin cambios de interfaz) ========= */

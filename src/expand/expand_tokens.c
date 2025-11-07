@@ -1,41 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   calculate_expand_len.c                             :+:      :+:    :+:   */
+/*   expand_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/28 00:16:36 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/07 15:31:41 by acoronad         ###   ########.fr       */
+/*   Created: 2025/11/07 15:40:22 by acoronad          #+#    #+#             */
+/*   Updated: 2025/11/07 16:18:35 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t	handle_dollar_len(const char *str, int *i, t_shell *shell)
+static int	copy_expanded_dollar(const char *str, int *i, t_shell *shell,
+		char *dst, int *j)
 {
 	char	*expanded;
-	size_t	len;
+	int		ii;
+	size_t	n;
 
-	(*i)++;                                 /* saltar '$' */
-	expanded = expand_value(str, i, shell); /* avanza *i tras el nombre */
+	ii = *i + 1;
+	expanded = expand_value(str, &ii, shell);
 	if (!expanded)
-		return ((size_t)-1);
-	len = ft_strlen(expanded);
+		return (-1);
+	n = ft_strlen(expanded);
+	ft_memcpy(dst + *j, expanded, n);
+	*j += (int)n;
 	free(expanded);
-	return (len);
+	*i = ii;
+	return (0);
 }
 
-size_t	calculate_expanded_len(const char *str, t_shell *shell)
+char	*expand_token(const char *str, t_shell *shell)
 {
-	size_t	total;
+	char	*res;
+	size_t	need;
 	int		i;
+	int		j;
 	t_quote	q;
-	size_t	add;
 	char	*t;
 
-	total = 0;
+	if (!str)
+		return (NULL);
+	need = calculate_expanded_len(str, shell);
+	if (need == (size_t)-1)
+		return (NULL);
+	res = (char *)malloc(need + 1);
+	if (!res)
+		return (NULL);
 	i = 0;
+	j = 0;
 	q = NO_QUOTE;
 	while (str[i])
 	{
@@ -45,8 +59,7 @@ size_t	calculate_expanded_len(const char *str, t_shell *shell)
 				q = SINGLE_QUOTE;
 			else if (q == SINGLE_QUOTE)
 				q = NO_QUOTE;
-			total += 1;
-			i++;
+			res[j++] = str[i++];
 			continue ;
 		}
 		if (str[i] == '"')
@@ -55,16 +68,15 @@ size_t	calculate_expanded_len(const char *str, t_shell *shell)
 				q = DOUBLE_QUOTE;
 			else if (q == DOUBLE_QUOTE)
 				q = NO_QUOTE;
-			total += 1;
-			i++;
+			res[j++] = str[i++];
 			continue ;
 		}
 		if (str[i] == '\\')
 		{
 			if (q == SINGLE_QUOTE)
 			{
-				total += 1;
-				i += 1;
+				res[j++] = '\\';
+				i++;
 				continue ;
 			}
 			if (q == DOUBLE_QUOTE)
@@ -76,15 +88,15 @@ size_t	calculate_expanded_len(const char *str, t_shell *shell)
 				}
 				if (str[i + 1])
 				{
-					total += 2;
+					res[j++] = '\\';
+					res[j++] = str[i + 1];
 					i += 2;
 					continue ;
-				} /* '\'+char */
-				total += 1;
-				i += 1;
-				continue ; /* '\' final */
+				}
+				res[j++] = '\\';
+				i++;
+				continue ;
 			}
-			/* NO_QUOTE */
 			if (str[i + 1] == '\n')
 			{
 				i += 2;
@@ -92,20 +104,22 @@ size_t	calculate_expanded_len(const char *str, t_shell *shell)
 			}
 			if (str[i + 1] == '$')
 			{
-				total += 1;
-				i += 2;
+				i++;
+				res[j++] = '$';
+				i++;
 				continue ;
-			} /* \$ -> '$' */
-			total += 1;
-			i += 1;
-			continue ; /* preservamos '\' */
+			}
+			res[j++] = '\\';
+			i++;
+			continue ;
 		}
 		if (q != SINGLE_QUOTE && str[i] == '$')
 		{
-			add = handle_dollar_len(str, &i, shell);
-			if (add == (size_t)-1)
-				return ((size_t)-1);
-			total += add;
+			if (copy_expanded_dollar(str, &i, shell, res, &j) < 0)
+			{
+				free(res);
+				return (NULL);
+			}
 			continue ;
 		}
 		if (str[i] == '~' && (i == 0 || ft_isspace((unsigned char)str[i - 1])
@@ -113,14 +127,18 @@ size_t	calculate_expanded_len(const char *str, t_shell *shell)
 		{
 			t = expand_tilde_internal(str + i, shell);
 			if (!t)
-				return ((size_t)-1);
-			total += ft_strlen(t);
-			i += get_tilde_prefix_len(str + i);
+			{
+				free(res);
+				return (NULL);
+			}
+			ft_strcpy(res + j, t);
+			j += (int)ft_strlen(t);
+			i += (int)get_tilde_prefix_len(str + i);
 			free(t);
 			continue ;
 		}
-		total += 1;
-		i++;
+		res[j++] = str[i++];
 	}
-	return (total);
+	res[j] = '\0';
+	return (res);
 }

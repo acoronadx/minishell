@@ -6,12 +6,10 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 02:46:11 by acoronad          #+#    #+#             */
-/*   Updated: 2025/10/26 14:33:46 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/07 15:31:25 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
-#include "expand.h"
 #include "minishell.h"
 
 char	*expand_tilde_internal(const char *str, t_shell *shell)

@@ -6,11 +6,10 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 13:49:35 by acoronad          #+#    #+#             */
-/*   Updated: 2025/10/31 22:11:35 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/07 15:31:53 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "expand.h"
 #include "minishell.h"
 
 static char	*quote_remove_like_bash(const char *s)
