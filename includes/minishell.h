@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 14:18:27 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/05 14:35:24 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/07 22:46:25 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@
 # include "env.h"       /* define t_env */
 # include "lexer.h"
 # include "parser.h"
+# include "expand.h"
 # include "ast.h"
 # include "exec.h"
-# include "expand.h"
 # include "builtins.h"
 # include "signals.h"
 

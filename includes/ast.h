@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:24:41 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/07 16:52:01 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/07 22:34:15 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef enum e_redir_type
 struct s_ast
 {
     t_node_type type;
+	struct s_ast	*next;
     union
     {
         struct {

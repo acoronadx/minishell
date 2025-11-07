@@ -6,12 +6,11 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:22:50 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/07 19:47:55 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/07 20:36:45 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
-#include "minishell.h"
 
 static int	is_all_n(const char *s)
 {

@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 14:08:04 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/07 08:27:12 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/07 23:04:50 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,19 @@ char	*find_executable(char *cmd, t_shell *shell);
 
 /* Errores */
 int		print_exec_error(t_shell *shell, const char *cmd, int err_code);
+
+/* Nota:
+** - 'quoted' debe ser 1 si el delimitador del heredoc venía citado y 0 si no.
+** - La expansión de línea se delega en expand_heredoc_line(), que
+**   ya puedes tener implementada en tu módulo de expansiones.
+*/
+
+int	hd_loop(t_shell *sh, int fdw, const char *delim, int quoted);
+
+/* Prepara todos los heredocs del AST (pipes con el contenido). */
+int prepare_heredocs_ast(t_shell *sh, t_ast *root);
+/* Cierra y limpia todos los heredocs abiertos del AST. */
+void	abort_heredocs_ast(t_ast *root);
+
 
 #endif

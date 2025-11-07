@@ -6,12 +6,11 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:28:12 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/01 16:53:03 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/07 20:36:32 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
-#include "minishell.h"
 
 // ----------- EXIT -----------
 

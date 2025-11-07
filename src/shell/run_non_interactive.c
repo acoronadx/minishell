@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 20:32:53 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/07 20:19:59 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/07 20:33:29 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,20 @@ void	run_non_interactive(t_shell *shell)
 // Imprime prompt en no-interactivo (solo para pruebas japotest y lucaskuhn).
 // Usa EXACTAMENTE la misma cadena que en interactivo (sin colores).
 
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   run_non_interactive.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/22 20:32:53 by acoronad          #+#    #+#             */
+/*   Updated: 2025/11/07 21:45:00 by acoronad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
 void	strip_nl(char *s)
 {
 	size_t	len;
@@ -85,29 +99,12 @@ void	strip_nl(char *s)
 	}
 }
 
-/*
- * Prompt para modo no TTY (compatibilidad con Japotest y LucasKuhn).
- * Usa la MISMA cadena que en interactivo, pero sin colores.
- */
-
 static void	print_prompt_non_tty(void)
 {
 	write(1, "miniyo$ ", 8);
 	write(1, "\n", 1);
 }
 
-/* Declaraciones externas que ya tienes en tu proyecto */
-void	setup_exec_parent_signals(void);
-int		shell_exec(t_shell *shell);
-char	*get_next_line(int fd);
-
-/*
- * run_non_interactive:
- * - Lee de stdin con GNL.
- * - Imprime un prompt "dummy" antes de cada lectura para que los testers
- *   lo detecten y lo filtren (no afecta a tu lógica).
- * - NO imprime "exit" al terminar.
- */
 void	run_non_interactive(t_shell *shell)
 {
 	char	*line;
