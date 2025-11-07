@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:39:45 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/07 07:10:39 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/07 14:58:29 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,22 @@ static int	is_lparen(t_token *tok)
 /* ( ... ) [redirs] */
 static t_ast    *handle_subshell_branch(t_token **cur)
 {
-        t_ast   *cmd_node;
-        t_ast   *redir_head;
-        t_ast   *redir_tail;
+    t_ast   *cmd_node;
+    t_ast   *redir_head;
+    t_ast   *redir_tail;
 
-        redir_head = NULL;
-        redir_tail = NULL;
-        cmd_node = parse_subshell(cur);
-        if (!cmd_node)
-                return (NULL);
-        if (!parse_redirections(cur, &redir_head, &redir_tail))
-        {
-                free_ast(cmd_node);
-                return (NULL);
-        }
-        cmd_node->subshell.redirections = redir_head;
-        return (cmd_node);
+    redir_head = NULL;
+    redir_tail = NULL;
+    cmd_node = parse_subshell(cur);
+    if (!cmd_node)
+            return (NULL);
+    if (!parse_redirections(cur, &redir_head, &redir_tail))
+    {
+            free_ast(cmd_node);
+            return (NULL);
+    }
+    cmd_node->subshell.redirections = redir_head;
+    return (cmd_node);
 }
 
 /*
@@ -49,7 +49,7 @@ static t_ast    *handle_subshell_branch(t_token **cur)
 */
 t_ast   *parse_simple_command(t_token **cur)
 {
-        if (*cur && is_lparen(*cur))
-                return (handle_subshell_branch(cur));
-        return (handle_plain_command(cur));
+    if (*cur && is_lparen(*cur))
+        return (handle_subshell_branch(cur));
+	return (handle_plain_command(cur));
 }

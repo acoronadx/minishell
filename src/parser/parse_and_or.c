@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:38:03 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/07 07:46:48 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/07 15:07:41 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static int  consume_andor_or_report(t_token **cur, t_ast *left,
         *out_type = N_OR;
     else
         return (0);
-
     next_token(cur);
     if (!*cur)
     {

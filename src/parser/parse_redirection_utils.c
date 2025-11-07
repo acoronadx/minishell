@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 07:31:30 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/07 07:36:39 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/07 15:05:19 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,18 @@ t_ast    *build_dup_node(t_token *file_tok, t_redir_type rtype)
 /* << : here-doc (guardar delimitador y flag de quoted) */
 t_ast    *build_heredoc_node(t_token *file_tok)
 {
-        t_ast   *node;
-
-        node = ast_new_redir(NULL, ft_strdup(file_tok->value),
-                             REDIR_HEREDOC, -1);
-        if (!node)
-                return (NULL);
-        node->redir.heredoc_quoted = (file_tok->quoted != NO_QUOTE);
-        return (node);
+	t_ast   *node;
+	
+	node = ast_new_redir(NULL, ft_strdup(file_tok->value),
+			REDIR_HEREDOC, -1);
+	if (!node)
+		return (NULL);
+	node->redir.heredoc_quoted = (file_tok->quoted != NO_QUOTE);
+	return (node);
 }
 
 /* >, >>, < : redirección con nombre de archivo */
 t_ast    *build_file_node(t_token *file_tok, t_redir_type rtype)
 {
-        return (ast_new_redir(ft_strdup(file_tok->value), NULL, rtype, -1));
+    return (ast_new_redir(ft_strdup(file_tok->value), NULL, rtype, -1));
 }
