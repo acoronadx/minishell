@@ -5,14 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/05 15:38:56 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/06 14:30:16 by acoronad         ###   ########.fr       */
+/*   Created: 2025/11/08 16:58:00 by acoronad          #+#    #+#             */
+/*   Updated: 2025/11/08 17:11:01 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	copy_escaped_pair(const char *src, size_t *i, char *out, size_t *j)
+static void	copy_escaped_pair(const char *src, size_t *i,
+			char *out, size_t *j)
 {
 	*i += 1;
 	out[*j] = src[*i];
@@ -20,7 +21,8 @@ static void	copy_escaped_pair(const char *src, size_t *i, char *out, size_t *j)
 	*i += 1;
 }
 
-static void	dq_copy_loop(const char *s, size_t n, char *out, size_t *i, size_t *j)
+static void	dq_copy_loop(const char *s, size_t n,
+			char *out, size_t *i, size_t *j)
 {
 	while (*i < n)
 	{
@@ -35,7 +37,8 @@ static void	dq_copy_loop(const char *s, size_t n, char *out, size_t *i, size_t *
 	}
 }
 
-static void	unq_copy_loop(const char *s, size_t n, char *out, size_t *i, size_t *j)
+static void	unq_copy_loop(const char *s, size_t n,
+			char *out, size_t *i, size_t *j)
 {
 	while (*i < n)
 	{

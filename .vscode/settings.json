@@ -12,6 +12,7 @@
 		"copyminishell": "c",
 		"copyms": "c",
 		"copyparser": "c",
-		"copyexpand": "c"
+		"copyexpand": "c",
+		"90remake": "c"
 	}
 }

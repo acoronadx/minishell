@@ -6,21 +6,12 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:36:06 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/06 16:01:37 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/08 17:21:23 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_ast	*create_command_node(char **argv, t_ast *redir_list_head)
-{
-	t_ast	*cmd;
-
-	cmd = ast_new_command(argv, redir_list_head);
-	if (!cmd)
-		return (NULL);
-	return (cmd);
-}
 /*
 ** Función principal del parser: construye el AST a partir de la lista de tokens.
 ** Devuelve la raíz del AST o NULL en caso de error.

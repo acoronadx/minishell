@@ -6,7 +6,7 @@
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:25:33 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/06 14:30:37 by acoronad         ###   ########.fr       */
+/*   Updated: 2025/11/08 17:08:43 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static void	squote_step(const char *s, int *i, t_quote *q)
 	*i += 1;
 }
 
-/* dentro de comillas dobles: \ escapa $, `, ", \ y newline */
 static void	dquote_step(const char *s, int *i, t_quote *q)
 {
 	if (s[*i] == '\\' && (s[*i + 1] == '$' || s[*i + 1] == '`'

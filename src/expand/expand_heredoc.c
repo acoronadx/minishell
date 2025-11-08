@@ -5,14 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/07 22:41:05 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/07 23:22:31 by acoronad         ###   ########.fr       */
+/*   Created: 2025/11/08 16:58:00 by acoronad          #+#    #+#             */
+/*   Updated: 2025/11/08 17:11:33 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* helpers: ≤25 líneas cada función, sin for/ternario */
 
 static size_t	var_len(const char *s)
 {
@@ -29,8 +27,6 @@ static int	append_sub(char **dst, const char *src, size_t n)
 	char	*cut;
 	char	*join;
 
-	cut = NULL;
-	join = NULL;
 	cut = ft_substr(src, 0, n);
 	if (!cut)
 		return (-1);
@@ -45,35 +41,28 @@ static int	append_sub(char **dst, const char *src, size_t n)
 
 static int	append_cstr(char **dst, const char *s)
 {
-	size_t	n;
-
 	if (!s)
 		return (0);
-	n = ft_strlen(s);
-	return (append_sub(dst, s, n));
+	return (append_sub(*&dst, s, ft_strlen(s)));
 }
 
-/* Solo expansión de parámetros en heredoc no citado. */
+/* Expansión mínima en heredoc no citado */
 char	*expand_heredoc_line(t_shell *sh, const char *line)
 {
-	size_t	i;
-	size_t	n;
-	char	*res;
-	char	*name;
-	char	*val;
+	size_t		i;
+	size_t		n;
+	char		*res;
+	char		*name;
+	const char	*val;
 
 	i = 0;
-	res = NULL;
-	name = NULL;
-	val = NULL;
 	res = ft_strdup("");
 	if (!res)
 		return (NULL);
 	while (line[i])
 	{
 		if (line[i] == '\\' && line[i + 1]
-			&& (line[i + 1] == '$' || line[i + 1] == '\\'
-				|| line[i + 1] == '`'))
+			&& (line[i + 1] == '$' || line[i + 1] == '\\'))
 		{
 			if (append_sub(&res, &line[i + 1], 1) < 0)
 				return (free(res), NULL);
@@ -90,10 +79,10 @@ char	*expand_heredoc_line(t_shell *sh, const char *line)
 		i++;
 		if (line[i] == '?')
 		{
-			val = ft_itoa(sh->exit_status);
-			if (!val || append_cstr(&res, val) < 0)
-				return (free(val), free(res), NULL);
-			free(val);
+			char *tmp = ft_itoa(sh->exit_status);
+			if (!tmp || append_cstr(&res, tmp) < 0)
+				return (free(tmp), free(res), NULL);
+			free(tmp);
 			i++;
 			continue ;
 		}
@@ -108,10 +97,8 @@ char	*expand_heredoc_line(t_shell *sh, const char *line)
 				return (free(res), NULL);
 			val = get_env_value(sh, name);
 			free(name);
-			name = NULL;
 			if (append_cstr(&res, val) < 0)
-				return (free(val), free(res), NULL);
-			free(val);
+				return (free(res), NULL);
 			if (line[i + n] == '}')
 				i += n + 1;
 			else
@@ -130,10 +117,8 @@ char	*expand_heredoc_line(t_shell *sh, const char *line)
 			return (free(res), NULL);
 		val = get_env_value(sh, name);
 		free(name);
-		name = NULL;
 		if (append_cstr(&res, val) < 0)
-			return (free(val), free(res), NULL);
-		free(val);
+			return (free(res), NULL);
 		i += n;
 	}
 	return (res);

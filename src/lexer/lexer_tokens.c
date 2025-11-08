@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoronad <acoronad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/11 16:36:48 by acoronad          #+#    #+#             */
-/*   Updated: 2025/11/06 14:29:19 by acoronad         ###   ########.fr       */
+/*   Created: 2025/11/08 16:58:00 by acoronad          #+#    #+#             */
+/*   Updated: 2025/11/08 17:07:22 by acoronad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ t_token	*token_new(char *value, t_token_type type, t_quote quote)
 	tok->type = type;
 	tok->quoted = quote;
 	tok->next = NULL;
+	tok->is_hdoc_delim = 0;
+	tok->hdoc_was_quoted = 0;
 	return (tok);
 }
 
